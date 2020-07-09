@@ -16,7 +16,6 @@ npm install --save use-mask-input
 import React, { Component } from 'react'
 
 import MyComponent from 'use-mask-input'
-import 'use-mask-input/dist/index.css'
 
 class Example extends Component {
   render() {

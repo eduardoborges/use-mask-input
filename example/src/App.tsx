@@ -1,10 +1,16 @@
 import React from 'react'
 
-import { ExampleComponent } from 'use-mask-input'
-import 'use-mask-input/dist/index.css'
+import useMaskInput from 'use-mask-input';
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+
+  const ref = useMaskInput({
+    mask: '999-999'
+  })
+
+  return (
+    <input type="text" ref={ref} />
+  )
 }
 
 export default App
