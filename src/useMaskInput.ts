@@ -4,7 +4,7 @@ import Inputmask from 'inputmask'
 import type { Options } from 'inputmask'
 
 interface UseInputMaskOptions {
-  mask: string
+  mask: Options['mask']
   register?(element: HTMLElement): void
   options?: Options
 }
