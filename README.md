@@ -1,10 +1,13 @@
 # use-mask-input
 
-✏️ A react Hook for build elegant input masks.
-
-Compatible with React Hook Form
-
 [![NPM](https://img.shields.io/npm/v/use-mask-input.svg)](https://www.npmjs.com/package/use-mask-input) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+A React Hook for build elegant input masks.
+
+## Features
+
+- ✨ Compatible with [React Hook Form](https://github.com/react-hook-form/react-hook-form)
+- 🎯 No complex API
 
 ## Install
 
@@ -14,7 +17,7 @@ npm install --save use-mask-input
 yarn add use-mask-input
 ```
 
-## Usage
+## Quickstart
 
 ```tsx
 import React from 'react'
