@@ -4,10 +4,17 @@
 
 A React Hook for build elegant input masks.
 
+## Todo
+
+[ ] Enhance bundle sizes
+[ ] Make tests :P
+[ ] Better example page with GH pages
+
 ## Features
 
-- ✨ Compatible with [React Hook Form](https://github.com/react-hook-form/react-hook-form)
-- 🎯 No complex API
+✨  Compatible with [React Hook Form](https://github.com/react-hook-form/react-hook-form)
+
+🎯  No complex API
 
 ## Install
 
