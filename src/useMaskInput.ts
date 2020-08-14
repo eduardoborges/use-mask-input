@@ -1,21 +1,21 @@
-/* eslint-disable no-unused-vars */
-import * as React from 'react'
-import Inputmask from 'inputmask'
-import type { Options } from 'inputmask'
+import { useEffect, useRef } from 'react'
+import Inputmask, { Options as InputMaskOptions } from 'inputmask'
 
 interface UseInputMaskOptions {
-  mask: Options['mask']
+  mask: InputMaskOptions['mask']
   register?(element: HTMLElement): void
-  options?: Options
+  options?: InputMaskOptions
 }
 
 const useInputMask = (props: UseInputMaskOptions) => {
   const { mask, register, options } = props
 
-  const ref = React.useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLInputElement>(null)
 
-  React.useLayoutEffect(() => {
-    if (!ref.current) return
+  useEffect(() => {
+    if (!ref.current) {
+      return
+    }
 
     const maskInput = Inputmask({
       mask,
@@ -23,11 +23,11 @@ const useInputMask = (props: UseInputMaskOptions) => {
     })
 
     maskInput.mask(ref.current)
-  }, [mask, options, register])
 
-  if (register && ref.current) {
-    register(ref.current)
-  }
+    if (register && ref.current) {
+      register(ref.current)
+    }
+  }, [mask, register, options])
 
   return ref
 }
