@@ -22,6 +22,13 @@ jobs:
         with:
           node-version: 18
 
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
       - name: Setup NPM GH_TOKEN
         run: |
           npm config set _authToken=${{ secrets.NPM_TOKEN }}
