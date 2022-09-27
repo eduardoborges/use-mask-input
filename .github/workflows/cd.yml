@@ -22,6 +22,10 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup NPM GH_TOKEN
+        run: |
+          npm config set _authToken=${{ secrets.NPM_TOKEN }}
+
       - name: Install Deps
         run: npm ci
 
