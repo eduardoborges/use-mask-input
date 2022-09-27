@@ -1,5 +1,4 @@
 import React from 'react';
-
 import useMaskInput from '../useMaskInput';
 
 function App() {
