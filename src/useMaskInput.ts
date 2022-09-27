@@ -1,35 +1,35 @@
-import { useEffect, useRef } from 'react'
-import Inputmask, { Options as InputMaskOptions } from 'inputmask'
+import { useEffect, useRef } from 'react';
+import Inputmask from 'inputmask';
 
 interface UseInputMaskOptions {
-  mask: InputMaskOptions['mask']
+  mask: Inputmask.Options['mask']
   register?(element: HTMLElement): void
-  options?: InputMaskOptions
+  options?: Inputmask.Options
 }
 
 const useInputMask = (props: UseInputMaskOptions) => {
-  const { mask, register, options } = props
+  const { mask, register, options } = props;
 
-  const ref = useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!ref.current) {
-      return
+      return;
     }
 
     const maskInput = Inputmask({
       mask,
-      ...options
-    })
+      ...options,
+    });
 
-    maskInput.mask(ref.current)
+    maskInput.mask(ref.current);
 
     if (register && ref.current) {
-      register(ref.current)
+      register(ref.current);
     }
-  }, [mask, register, options])
+  }, [mask, register, options]);
 
-  return ref
-}
+  return ref;
+};
 
-export default useInputMask
+export default useInputMask;

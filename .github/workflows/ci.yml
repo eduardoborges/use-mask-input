@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - open
+      - synchronize
+      - edited
+
+jobs:
+  check_sv:
+    name: Check Semantic Version PR
+    runs-on: "ubuntu-latest"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: amannn/action-semantic-pull-request@v4
+  tests:
+    name: Run Unit Tests
+    needs: check_sv
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Run Unit Tests
+        run: echo "Hello"

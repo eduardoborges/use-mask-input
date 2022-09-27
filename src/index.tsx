@@ -1,1 +1,1 @@
-export { default } from './useMaskInput'
+export { default } from './useMaskInput';
