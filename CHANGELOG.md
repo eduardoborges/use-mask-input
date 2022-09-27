@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/eduardoborges/use-mask-input/compare/2.0.1...2.1.0) (2022-09-27)
+
+
+### Features
+
+* add react-hook-form 7 integration ([0fd5bfc](https://github.com/eduardoborges/use-mask-input/commit/0fd5bfca4f8a686b9d89eba1f319c055073f51ed))
+
 ## [2.0.1](https://github.com/eduardoborges/use-mask-input/compare/2.0.0...2.0.1) (2022-09-27)
 
 
