@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/eduardoborges/use-mask-input/compare/2.0.0...2.0.1) (2022-09-27)
+
+
+### Bug Fixes
+
+* enhance actions time ([6ea226c](https://github.com/eduardoborges/use-mask-input/commit/6ea226cf1e49f46ff476ad7c1619c136a54a1954))
+
 # [2.0.0](https://github.com/eduardoborges/use-mask-input/compare/1.1.0...2.0.0) (2022-09-27)
 
 
