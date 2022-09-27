@@ -35,6 +35,7 @@
     "@semantic-release/release-notes-generator": "10.0.3",
     "@types/inputmask": "^5.0.3",
     "@types/jest": "29.0.3",
+    "@types/lodash.flowright": "^3.5.7",
     "@types/node": "18",
     "@types/react": "^17.x",
     "@types/react-dom": "^17.x",
@@ -60,7 +61,10 @@
     "dist"
   ],
   "dependencies": {
-    "inputmask": "^5.0.7"
+    "inputmask": "^5.0.7",
+    "lodash.compose": "^2.4.1",
+    "lodash.flowright": "^3.5.0",
+    "react-hook-form": "^7.36.1"
   },
   "bundleDependencies": [
     "inputmask"

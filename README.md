@@ -44,28 +44,24 @@ const App = () => {
 ## Usage with React Hook Forms
 
 ```tsx
-import React from 'react'
-import useMaskInput from 'use-mask-input';
+import React from 'react';
 import { useForm } from 'react-hook-form';
+import useMaskInput, { maskRegister } from 'use-mask-input';
 
-const App = () => {
-  const { register, handleSubmit, errors } = useForm();
+function App() {
+  const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const maskedPhoneRef = useMaskInput({
-    mask: ['(99) 9999 9999', '(99) 9 9999 9999'],
-    register: register,
-  })
+  ...
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input name="phone" ref={maskedPhoneRef} /> {/* register an input */}
-      <input type="submit" />
+    <form onSubmit={onSubmit}>
+      <input
+        type="text"
+        {...maskRegister(register('phone'), ['(99) 9999 9999', '(99) 9 9999 9999'])}
+      />
+      <button type="submit">Submit</button>
     </form>
-  )
+  );
 }
 ```
 
