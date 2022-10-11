@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/eduardoborges/use-mask-input/compare/2.1.0...3.0.0) (2022-10-11)
+
+
+### Features
+
+* simplify API & add react-final-form support. ([981588d](https://github.com/eduardoborges/use-mask-input/commit/981588d54121e66d550eb5df9fe64b5de01d70c6))
+
+
+### BREAKING CHANGES
+
+* update api
+
 # [2.1.0](https://github.com/eduardoborges/use-mask-input/compare/2.0.1...2.1.0) (2022-09-27)
 
 
