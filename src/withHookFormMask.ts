@@ -4,7 +4,7 @@ import Inputmask from 'inputmask';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import flowright from 'lodash.flowright';
 
-const maskRegister = (
+const withHookFormMask = (
   registerReturn: UseFormRegisterReturn,
   mask: Inputmask.Options['mask'],
   options?: Inputmask.Options,
@@ -33,4 +33,4 @@ const maskRegister = (
   };
 };
 
-export default maskRegister;
+export default withHookFormMask;

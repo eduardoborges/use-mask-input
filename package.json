@@ -61,9 +61,11 @@
     "dist"
   ],
   "dependencies": {
+    "final-form": "^4.20.7",
     "inputmask": "^5.0.7",
     "lodash.compose": "^2.4.1",
     "lodash.flowright": "^3.5.0",
+    "react-final-form": "^6.5.9",
     "react-hook-form": "^7.36.1"
   },
   "bundleDependencies": [
