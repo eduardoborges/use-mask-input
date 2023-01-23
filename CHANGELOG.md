@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/eduardoborges/use-mask-input/compare/3.0.0...3.0.1) (2023-01-23)
+
+
+### Bug Fixes
+
+* security fixes ([aad0816](https://github.com/eduardoborges/use-mask-input/commit/aad08168b9349a6199a3bfa0d1340a5f20cae732))
+
 # [3.0.0](https://github.com/eduardoborges/use-mask-input/compare/2.1.0...3.0.0) (2022-10-11)
 
 
