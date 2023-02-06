@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/eduardoborges/use-mask-input/compare/3.0.1...3.0.2) (2023-02-06)
+
+
+### Bug Fixes
+
+* remove unused deps and fix vulnerabilities ([a49c5d5](https://github.com/eduardoborges/use-mask-input/commit/a49c5d55b485553fe9a79c38af900fc4def24774))
+
 ## [3.0.1](https://github.com/eduardoborges/use-mask-input/compare/3.0.0...3.0.1) (2023-01-23)
 
 
