@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/space-before-blocks */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Inputmask from 'inputmask';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import type { UseFormRegisterReturn } from 'react-hook-form';
 import flowright from 'lodash.flowright';
 
 const withHookFormMask = (
