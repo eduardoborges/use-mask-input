@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/eduardoborges/use-mask-input/compare/3.0.3...3.0.4) (2023-02-09)
+
+
+### Bug Fixes
+
+* fix invalid resolve entry for package fix [#8](https://github.com/eduardoborges/use-mask-input/issues/8) ([91e3fc2](https://github.com/eduardoborges/use-mask-input/commit/91e3fc28b7180bbc6c608dd33eefd92d1c21da78))
+
 ## [3.0.3](https://github.com/eduardoborges/use-mask-input/compare/3.0.2...3.0.3) (2023-02-09)
 
 
