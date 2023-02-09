@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          always-auth: true
+          token: ${{ env.NPM_TOKEN }}
 
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -28,10 +30,6 @@ jobs:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
-
-      - name: Setup NPM GH_TOKEN
-        run: |
-          npm config set _authToken=${{ secrets.NPM_TOKEN }}
 
       - name: Install Deps
         run: npm ci
