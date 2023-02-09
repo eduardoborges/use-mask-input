@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -7,6 +8,7 @@ import { Form, Field } from 'react-final-form';
 import { withHookFormMask, withMask } from '../index';
 
 function App() {
+  const [lib, setLib] = React.useState<'hook-form' | 'final-form'>('hook-form');
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
@@ -18,16 +20,27 @@ function App() {
       <h3>Using simple ref</h3>
       <input type="text" ref={withMask(['(99) 9999 9999', '(99) 9 9999 9999'])} />
       <hr />
-      <h3>Using react-hook-form</h3>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          {...withHookFormMask(register('phone'), ['(99) 9999 9999', '(99) 9 9999 9999'])}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <select onChange={(e) => setLib(e.target.value as any)}>
+        <option value="hook-form">Hook Form</option>
+        <option value="final-form">Final Form</option>
+      </select>
       <hr />
 
+      {lib === 'hook-form' && (
+        <>
+          <h3>Using react-hook-form</h3>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <input
+              type="text"
+              {...withHookFormMask(register('phone'), ['(99) 9999 9999', '(99) 9 9999 9999'])}
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </>
+      )}
+
+      <hr />
+      {lib === 'final-form' && (
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit: _handleSubmit }) => (
@@ -47,6 +60,7 @@ function App() {
           </form>
         )}
       />
+      )}
     </>
   );
 }

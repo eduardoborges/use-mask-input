@@ -13,9 +13,7 @@ const useInputMask = (props: UseInputMaskOptions) => {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
+    if (!ref.current) return;
 
     const maskInput = Inputmask({
       mask,

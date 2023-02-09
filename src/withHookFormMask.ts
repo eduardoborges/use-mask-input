@@ -22,7 +22,7 @@ const withHookFormMask = (
     });
 
     newRef = flowright(ref, (_ref) => {
-      maskInput.mask(_ref);
+      if (_ref) maskInput.mask(_ref);
       return _ref;
     });
   }
