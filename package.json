@@ -5,12 +5,13 @@
   "author": "eduardoborges",
   "license": "MIT",
   "repository": "https://github.com/eduardoborges/use-mask-input",
+  "type": "module",
   "source": "./src/index.tsx",
   "exports": {
-    "require": "./dist/index.js",
-    "default": "./dist/index.modern.mjs"
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
   "types": "./dist/index.d.ts",
