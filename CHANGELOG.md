@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/eduardoborges/use-mask-input/compare/3.0.2...3.0.3) (2023-02-09)
+
+
+### Bug Fixes
+
+* can access nodeName on component unmount fix [#7](https://github.com/eduardoborges/use-mask-input/issues/7) ([a881272](https://github.com/eduardoborges/use-mask-input/commit/a881272be60b77287d68208472280c52331d82e7))
+
 ## [3.0.2](https://github.com/eduardoborges/use-mask-input/compare/3.0.1...3.0.2) (2023-02-06)
 
 
