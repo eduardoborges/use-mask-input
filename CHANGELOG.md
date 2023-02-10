@@ -1,3 +1,10 @@
+## [3.0.6](https://github.com/eduardoborges/use-mask-input/compare/3.0.5...3.0.6) (2023-02-10)
+
+
+### Bug Fixes
+
+* fix regression for cra exports ([b149d78](https://github.com/eduardoborges/use-mask-input/commit/b149d7822dac99db3f308671a13b8fbbe148010c))
+
 ## [3.0.5](https://github.com/eduardoborges/use-mask-input/compare/3.0.4...3.0.5) (2023-02-09)
 
 
