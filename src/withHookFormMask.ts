@@ -1,6 +1,6 @@
 import Inputmask from 'inputmask';
 
-import { flow } from './utils';
+import { compose } from './utils';
 import { Mask, Options, Register } from './types';
 
 export const withHookFormMask = (register: Register, mask: Mask, options?: Options) => {
@@ -16,7 +16,7 @@ export const withHookFormMask = (register: Register, mask: Mask, options?: Optio
       ...options,
     });
 
-    newRef = flow((_ref: HTMLElement) => {
+    newRef = compose((_ref: HTMLElement) => {
       if (_ref) maskInput.mask(_ref);
       return _ref;
     }, ref);
