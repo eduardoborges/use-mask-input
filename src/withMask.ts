@@ -1,10 +1,11 @@
 import Inputmask from 'inputmask';
+import { isServer } from './utils';
+import { Input, Mask, Options } from './types';
 
-const withFinalFormMask = (
-  mask: Inputmask.Options['mask'],
-  options?: Inputmask.Options,
-) => (input: HTMLElement | HTMLInputElement | null) => {
+export const withMask = (mask: Mask, options?: Options) => (input: Input) => {
   //
+  if (isServer) return input;
+
   const maskInput = Inputmask({
     mask,
     ...options,
@@ -16,5 +17,3 @@ const withFinalFormMask = (
 
   return input;
 };
-
-export default withFinalFormMask;

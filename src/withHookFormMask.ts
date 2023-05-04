@@ -1,19 +1,14 @@
-/* eslint-disable @typescript-eslint/space-before-blocks */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Inputmask from 'inputmask';
-import type { UseFormRegisterReturn } from 'react-hook-form';
-import flowright from 'lodash.flowright';
 
-const withHookFormMask = (
-  registerReturn: UseFormRegisterReturn,
-  mask: Inputmask.Options['mask'],
-  options?: Inputmask.Options,
-) => {
+import { flow } from './utils';
+import { Mask, Options, Register } from './types';
+
+export const withHookFormMask = (register: Register, mask: Mask, options?: Options) => {
   //
   let newRef;
 
-  if (registerReturn){
-    const { ref } = registerReturn;
+  if (register) {
+    const { ref } = register;
 
     const maskInput = Inputmask({
       mask,
@@ -21,16 +16,14 @@ const withHookFormMask = (
       ...options,
     });
 
-    newRef = flowright(ref, (_ref) => {
+    newRef = flow((_ref: HTMLElement) => {
       if (_ref) maskInput.mask(_ref);
       return _ref;
-    });
+    }, ref);
   }
 
   return {
-    ...registerReturn,
+    ...register,
     ref: newRef,
   };
 };
-
-export default withHookFormMask;
