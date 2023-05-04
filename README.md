@@ -1,28 +1,25 @@
-# use-mask-input
+<center>
 
-[![NPM](https://img.shields.io/npm/v/use-mask-input.svg)](https://www.npmjs.com/package/use-mask-input) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Bundle Size](https://badgen.net/bundlephobia/minzip/use-mask-input)](https://bundlephobia.com/result?p=use-mask-input)
+<h1>use-mask-input</h1>
 
-A React Hook for build elegant and simple input masks.
+[![NPM](https://img.shields.io/npm/v/use-mask-input.svg)](https://www.npmjs.com/package/use-mask-input) [![Bundle Size](https://badgen.net/bundlephobia/minzip/use-mask-input)](https://bundlephobia.com/result?p=use-mask-input)
 
-## Todo
-- [x] Add react-final-form support
-- [x] Simplify API
-- [ ] Make tests :P
-- [ ] Better example page with GH pages
-
+🥸 A React Hook for build elegant and simple input masks.
+</center>
 
 ## Features
-
+- 🎯  Simple API
 - ✨  Compatible with [React Hook Form](https://github.com/react-hook-form/react-hook-form)
 - 🏁  Compatible with [React Final Form](https://github.com/final-form/react-final-form)
-- 🎯  Simple API
+
+## Know Issues
+
+- Not compatible with Next.js, but we are working on it
 
 ## Install
 
-```bash
-npm install --save use-mask-input
-## or
-yarn add use-mask-input
+```sh
+npm i use-mask-input
 ```
 
 ## Quickstart
@@ -64,10 +61,12 @@ function App() {
 
 ## Usage with React Final Form
 
+Just use `withMask` normaly.
+
 ```jsx
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { withHookFormMask } from 'use-mask-input';
+import { withMask } from 'use-mask-input';
 
 function App() {
   ...
@@ -89,7 +88,3 @@ function App() {
   );
 }
 ```
-
-## License
-
-MIT © [eduardoborges](https://github.com/eduardoborges)
