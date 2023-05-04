@@ -4,16 +4,24 @@ export const isServer = !(
   && window.document.createElement
 );
 
-export function flow(...funcs: Function[]): (...args: Function[]) => any {
-  const { length } = funcs;
-  return (...args: Function[]) => {
-    let i = 0;
-    let result = length ? funcs[i].apply(this, args) : args[0];
-    while (++i < length) {
-      if (funcs[i]) {
-        result = funcs[i].call(this, result);
-      }
-    }
-    return result;
-  };
-}
+export const pipe = <T extends any[], R>(
+  fn1: (...args: T) => R,
+  ...fns: Array<(a: R) => R>
+) => {
+  const piped = fns.reduce(
+    (prevFn, nextFn) => (value: R) => nextFn(prevFn(value)),
+    (value) => value,
+  );
+  return (...args: T) => piped(fn1(...args));
+};
+
+export const compose = <R>(
+  fn1: (a: R) => R, ...fns: Array<(a: R) => R>
+) => fns.reduce((prevFn, nextFn) => (value) => prevFn(nextFn(value)), fn1);
+
+const sum = compose(
+  (x: number) => x + 1,
+  (x: number) => x + 1,
+);
+
+console.log(sum(1));
