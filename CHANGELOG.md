@@ -1,3 +1,17 @@
+# [3.1.0](https://github.com/eduardoborges/use-mask-input/compare/3.0.6...3.1.0) (2023-05-04)
+
+
+### Bug Fixes
+
+* refactor code and add compose function to `utils.ts` ([49a7459](https://github.com/eduardoborges/use-mask-input/commit/49a7459c0976443f04426c2cc14d29172fe413ad))
+* refactor withHookFormMask to use compose instead of flow. ([85b8bc5](https://github.com/eduardoborges/use-mask-input/commit/85b8bc59b112341ad76b09d7acc167c98d8bd352))
+* small refactors, remove lodash dep and add exports suggar ([95286a8](https://github.com/eduardoborges/use-mask-input/commit/95286a87c4ea3c2bf0f25a418413078da9d17c7b))
+
+
+### Features
+
+* Add React Hook Form to dependencies and install git hooks ([f7496c2](https://github.com/eduardoborges/use-mask-input/commit/f7496c23a429363bc47e03f18c9ce8eb3be41ab0))
+
 ## [3.0.6](https://github.com/eduardoborges/use-mask-input/compare/3.0.5...3.0.6) (2023-02-10)
 
 
