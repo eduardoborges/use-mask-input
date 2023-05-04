@@ -18,13 +18,19 @@ function build() {
 };
 
 function prepare() {
-  echo "📦 👋 Preparing package...";
+  echo "👋 Installing git hooks...";
+  npx simple-git-hooks >> /dev/null;
   build;
 };
 
 function test() {
   echo "🧪 Running tests...";
-  npx vitest;
+  npx vitest --dir ./src --run;
+};
+
+function lint() {
+  echo "🧹 Linting...";
+  npx eslint ./src --ext ts,tsx;
 };
 
 function clean() {

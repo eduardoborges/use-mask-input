@@ -1,6 +1,6 @@
 build/
 dist/
+examples/
 node_modules/
 .snapshots/
 *.min.js
-vite.config.ts
