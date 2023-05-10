@@ -5,24 +5,21 @@ on:
     branches:
       - main
     types:
-      - open
       - synchronize
       - edited
 
 jobs:
-  check_sv:
-    name: Check Semantic Version PR
+  semantic_pr:
     runs-on: "ubuntu-latest"
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-      - uses: amannn/action-semantic-pull-request@v4
+      - uses: amannn/action-semantic-pull-request@v5
 
   tests:
-    name: Run Unit Tests
-    needs: check_sv
+    needs: semantic_pr
     runs-on: "ubuntu-latest"
     steps:
       - name: Run Unit Tests
-        run: echo "Hello"
+        run: npm test

@@ -1,9 +1,7 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - "main"
+  workflow_dispatch:
 
 jobs:
   release:
@@ -19,17 +17,9 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
+          cache: "npm"
           node-version: 18
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
+      - run: npm install
 
-      - name: Install Deps
-        run: npm install
-
-      - name: Semantic Release
-        run: npx semantic-release --ci
+      - run: npx semantic-release --ci
