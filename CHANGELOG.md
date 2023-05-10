@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/eduardoborges/use-mask-input/compare/3.1.1...3.1.2) (2023-05-10)
+
+
+### Bug Fixes
+
+* add inputmask extension support ([eecc00a](https://github.com/eduardoborges/use-mask-input/commit/eecc00a0601ff5bc340c50886a6ab35174006096))
+
 ## [3.1.1](https://github.com/eduardoborges/use-mask-input/compare/3.1.0...3.1.1) (2023-05-10)
 
 
