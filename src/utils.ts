@@ -18,10 +18,3 @@ export const pipe = <T extends any[], R>(
 export const compose = <R>(
   fn1: (a: R) => R, ...fns: Array<(a: R) => R>
 ) => fns.reduce((prevFn, nextFn) => (value) => prevFn(nextFn(value)), fn1);
-
-const sum = compose(
-  (x: number) => x + 1,
-  (x: number) => x + 1,
-);
-
-console.log(sum(1));
