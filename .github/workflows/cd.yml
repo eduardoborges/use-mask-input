@@ -1,40 +1,26 @@
 name: CD
 
 on:
-  workflow_dispatch:
   release:
     types:
       - "published"
 
 jobs:
-  test:
-    name: Publish to NPM
+  publish:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
       - uses: actions/setup-node@v3
         with:
+          cache: 'npm'
           node-version: 18
           always-auth: true
           token: ${{ env.NPM_TOKEN }}
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
+      - run: npm ci
 
-      - name: Install Deps
-        run: npm ci
-
-      - name: Publish to NPM
-        run: npm publish
+      - run: npm publish
 

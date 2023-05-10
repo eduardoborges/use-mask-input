@@ -1,8 +1,10 @@
 name: Release
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
+concurrency:
+  group: "release"
+  cancel-in-progress: true
 jobs:
   release:
     runs-on: "ubuntu-latest"
@@ -20,6 +22,5 @@ jobs:
           cache: "npm"
           node-version: 18
 
-      - run: npm install
-
-      - run: npx semantic-release --ci
+      - run: npm ci
+      - run: npx semantic-release
