@@ -20,6 +20,9 @@ jobs:
   health_check:
     needs: semantic_pr
     runs-on: "ubuntu-latest"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
