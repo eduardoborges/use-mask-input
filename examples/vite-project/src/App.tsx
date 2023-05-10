@@ -15,8 +15,13 @@ function App() {
   return (
     <>
       <h3>Using simple ref</h3>
-      <input type="text" ref={withMask(['(99) 9999 9999', '(99) 9 9999 9999'])} />
+      <input type="text" ref={withMask(null, {
+        inputFormat: "yyyy-mm-dd",
+        alias: "datetime",
+      })} />
+
       <hr />
+
       <select onChange={(e) => setLib(e.target.value as any)}>
         <option value="hook-form">Hook Form</option>
         <option value="final-form">Final Form</option>
@@ -28,8 +33,8 @@ function App() {
           <h3>Using react-hook-form</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              type="text"
               {...withHookFormMask(register('phone'), ['(99) 9999 9999', '(99) 9 9999 9999'])}
+              type="text"
             />
             <button type="submit">Submit</button>
           </form>
@@ -40,8 +45,8 @@ function App() {
       {lib === 'final-form' && (
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit: _handleSubmit }) => (
-          <form onSubmit={_handleSubmit}>
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
             <h3>working with example react-final-form </h3>
             <Field
               name="phone"
