@@ -31,7 +31,7 @@ export default [
   },
   {
     input,
-    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    output: [{ file: `${out}.d.ts`, format: 'es' }],
     plugins: [dts()],
   },
 ];
