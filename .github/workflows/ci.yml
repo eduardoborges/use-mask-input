@@ -20,6 +20,23 @@ jobs:
   tests:
     needs: semantic_pr
     runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [12, 14, 16, 18, 20]
+
     steps:
-      - name: Run Unit Tests
-        run: npm run test
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v2
+        with:
+          cache: "npm"
+          node-version: ${{ matrix.node }}
+
+      - if: ${{ matrix.node }} >= 10 && ${{ matrix.node }} <= 14
+        run: npm install
+
+      - if: ${{ matrix.node }} >= 16
+        run: npm ci
+
+      - run: npm run test
