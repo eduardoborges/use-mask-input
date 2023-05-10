@@ -42,4 +42,27 @@ function hello() {
   echo "👋 Hello!" $args;
 };
 
+function example() {
+  echo "👋 Select your example project to run: ";
+  examples="$(ls ./examples)";
+
+  select example in $examples; do
+    if [ -n "$example" ]; then
+      build;
+      echo "🚀 Starting $example...";
+      cd ./examples/$example;
+      # if example is cra, run npm start
+      # else run npm run dev
+      if [ "$example" = "cra" ]; then
+        npm start;
+      else
+        npm run dev;
+      fi
+      break;
+    else
+      echo "👋 Select your example project to run: ";
+    fi
+  done
+};
+
 eval $cmd $args

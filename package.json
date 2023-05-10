@@ -3,12 +3,11 @@
   "version": "3.1.0",
   "description": "A react Hook for build elegant input masks. Compatible with React Hook Form",
   "author": "eduardoborges",
-  "license": "MIT",
   "repository": "https://github.com/eduardoborges/use-mask-input",
-  "source": "src/index.tsx",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "source": "./src/index.tsx",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     "import": "./dist/index.js",
     "require": "./dist/index.cjs",
@@ -19,10 +18,12 @@
     "npm": ">=7"
   },
   "scripts": {
-    "build": "./scripts.sh build",
-    "lint": "./scripts.sh lint",
-    "test": "./scripts.sh test",
-    "prepare": "./scripts.sh prepare"
+    "build": "./sh build",
+    "dev": "./sh dev",
+    "lint": "./sh lint",
+    "test": "./sh test",
+    "prepare": "./sh prepare",
+    "example": "./sh example"
   },
   "files": [
     "dist",
@@ -32,8 +33,8 @@
     "inputmask": "5.0.8"
   },
   "peerDependencies": {
-    "react": ">=16.4 || ^17.0.0 || ^18.0.0",
-    "react-dom": ">=16.4 || ^17.0.0 || ^18.0.0"
+    "react": ">=16.4 || 17 || 18",
+    "react-dom": ">=16.4 || 17 || 18"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.3",
