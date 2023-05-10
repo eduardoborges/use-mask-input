@@ -1,3 +1,12 @@
+## [3.1.1](https://github.com/eduardoborges/use-mask-input/compare/3.1.0...3.1.1) (2023-05-10)
+
+
+### Bug Fixes
+
+* change dependency type ([#13](https://github.com/eduardoborges/use-mask-input/issues/13)) ([1c87dc7](https://github.com/eduardoborges/use-mask-input/commit/1c87dc723540cd51e1dc40f1a162611aa53e9c11))
+* downgrade required node to 16 ([#11](https://github.com/eduardoborges/use-mask-input/issues/11)) ([d829d2f](https://github.com/eduardoborges/use-mask-input/commit/d829d2f5c34aa0b30ab6f68d42fbc5a068b53b70))
+* regression issue with react hook form and ci ([#31](https://github.com/eduardoborges/use-mask-input/issues/31)) ([bf104b2](https://github.com/eduardoborges/use-mask-input/commit/bf104b2a1ca7ccb0b7a1d573ba07bdfe95dd8949)), closes [#11](https://github.com/eduardoborges/use-mask-input/issues/11) [#13](https://github.com/eduardoborges/use-mask-input/issues/13)
+
 # [3.1.0](https://github.com/eduardoborges/use-mask-input/compare/3.0.6...3.1.0) (2023-05-04)
 
 
