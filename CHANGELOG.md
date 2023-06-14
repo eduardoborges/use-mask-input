@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/eduardoborges/use-mask-input/compare/3.1.2...3.2.0) (2023-06-14)
+
+
+### Features
+
+* now works with Next! ([7730de2](https://github.com/eduardoborges/use-mask-input/commit/7730de24237f8df0eede8cf464620b6d1c87c558))
+
 ## [3.1.2](https://github.com/eduardoborges/use-mask-input/compare/3.1.1...3.1.2) (2023-05-10)
 
 
