@@ -30,7 +30,7 @@
     "src"
   ],
   "dependencies": {
-    "inputmask": "5.0.8"
+    "inputmask": "5.0.9-beta.16"
   },
   "peerDependencies": {
     "react": ">=16.4 || 17 || 18",
