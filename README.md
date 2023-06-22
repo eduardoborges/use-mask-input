@@ -6,8 +6,6 @@ A React Hook for build elegant and simple input masks.
 
 ---
 
-## Map o contents
-
 ## Table of Contents
 
 - [Installation](#install)
@@ -124,6 +122,7 @@ It is possible to define some parts in the mask as optional. This is done by usi
 This mask will allow input like (99) 99999-9999 or (99) 9999-9999.
 
 ### Dynamic Types
+
 Dynamic masks can change during input. To define a dynamic part use { }.
 
 {n} => n repeats {n|j} => n repeats, with j jitmasking {n,m} => from n to m repeats {n,m|j} => from n to m repeats, with j jitmasking
@@ -154,6 +153,36 @@ By example:
 ```
 ### Alias Types
 
+A Lot of common default "alises" presets, you can use like that:
+```tsx
+<input                         // the alias
+  {...registerWithMask("date", "datetime", {
+    inputFormat: "yyyy-mm-dd",
+  })}
+  type="text"
+/>
+```
+
+You can use together with options like  `inputFormat`, `prefix`, `sufix`, etc. Checkout [API docs](#api)
+
+The avaliable ones is:
+
+ - `datetime`
+ - `email`
+ - `ip`
+ - `datetime`
+ - `cpf`
+ - `email`
+ - `numeric`
+ - `currency`
+ - `decimal`
+ - `integer`
+ - `percentage`
+ - `url`
+ - `ip`
+ - `mac`
+ - `ssn`
+
 ### Alternator masks
 
 The alternator syntax is like an OR statement. The mask can be one of the 3 choices specified in the alternator.
@@ -161,6 +190,36 @@ The alternator syntax is like an OR statement. The mask can be one of the 3 choi
 To define an alternator use the |. ex: "a|9" => a or 9 "(aaa)|(999)" => aaa or 999 "(aaa|999|9AA)" => aaa or 999 or 9AA
 "aaaa|9999" => aaa a or 9 999
 
-Also make sure to read about the keepStatic option.
+```tsx
+<input
+  {...registerWithMask("phone", "9999-9999|99999-9999")}
+  type="text"
+/>
+
+// or just passing an array
+<input
+  {...registerWithMask("phone", ["9999-9999", "99999-9999"])}
+  type="text"
+/>
+
+```
+
 
 ### Preprocessing masks
+
+You can define the mask as a function that can allow you to preprocess the resulting mask. Example sorting for multiple masks or retrieving mask definitions dynamically through ajax. The preprocessing fn should return a valid mask definition.
+
+```tsx
+<input
+  {...registerWithMask("phone", function () {
+    /* do stuff */ return ["[1-]AAA-999", "[1-]999-AAA"];
+  })}
+  type="text"
+/>
+
+```
+
+
+## API
+
+(TODO)
