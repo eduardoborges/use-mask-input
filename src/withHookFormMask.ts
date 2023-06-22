@@ -1,9 +1,13 @@
 import Inputmask from 'inputmask';
 import { RefCallback } from 'react';
 import { flow } from './utils';
-import { Mask, Options, Register } from './types';
+import { Mask, Options, UseFormRegisterReturn } from './types';
 
-export const withHookFormMask = (register: Register, mask: Mask, options?: Options): Register => {
+export const withHookFormMask = (
+  register: UseFormRegisterReturn,
+  mask: Mask,
+  options?: Options,
+):UseFormRegisterReturn => {
   //
   let newRef;
 
