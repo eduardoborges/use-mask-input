@@ -8,6 +8,7 @@ node_modules
 build
 dist
 .rpt2_cache
+coverage
 
 # misc
 .DS_Store
