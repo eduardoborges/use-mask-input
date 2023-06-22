@@ -1,16 +1,23 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, Field } from 'react-final-form';
-import { withHookFormMask, withMask } from '../../../src';
+import { useHookFormMask, withMask } from '../../../src';
 import "./App.css";
 
 function App() {
   const [lib, setLib] = React.useState<'hook-form' | 'final-form'>('hook-form');
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      phone: '',
+      email: '',
+    }
+  });
 
   const onSubmit = (data: any) => {
     console.log(data);
   };
+
+  const registerWithMask = useHookFormMask(register);
 
   return (
     <>
@@ -33,7 +40,10 @@ function App() {
           <h3>Using react-hook-form</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              {...withHookFormMask(register('phone'), ['(99) 9999 9999', '(99) 9 9999 9999'])}
+              {...registerWithMask("phone", "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]", {
+                nullable: true,
+                required: true,
+              })}
               type="text"
             />
             <button type="submit">Submit</button>
