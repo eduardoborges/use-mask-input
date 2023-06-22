@@ -14,7 +14,7 @@ export function useHookFormMask<
 
     const { ref, ...restRegister } = registerFn(fieldName);
 
-    const maskInput = Inputmask(getMaskOptions(mask, options || {}));
+    const maskInput = Inputmask(getMaskOptions(mask, options));
 
     const newRef = flow((_ref: HTMLElement) => {
       if (_ref) maskInput.mask(_ref);

@@ -1,10 +1,11 @@
 import { Mask, Options } from '../types';
 
-export const getMaskOptions = (mask: Mask, _options?: Options) => {
+export const getMaskOptions = (mask?: Mask, _options?: Options) => {
   const options: Options = {
     ..._options,
     jitMasking: false,
   };
+  if (!mask) return options;
 
   if (mask === 'datetime') {
     return {
@@ -105,14 +106,6 @@ export const getMaskOptions = (mask: Mask, _options?: Options) => {
   if (mask === 'ssn') {
     return {
       alias: 'ssn',
-      ...options,
-    };
-  }
-
-  // regex
-  if (mask === 'regex') {
-    return {
-      alias: 'regex',
       ...options,
     };
   }
