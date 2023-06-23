@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
 import Inputmask from 'inputmask';
 import { getMaskOptions, isServer } from './utils';
+import { Mask, Options } from './types';
 
 interface UseInputMaskOptions {
-  mask: Inputmask.Options['mask']
+  mask: Mask,
   register?(element: HTMLElement): void
-  options?: Inputmask.Options
+  options?: Options
 }
 
 const useInputMask = (props: UseInputMaskOptions) => {
