@@ -11,11 +11,16 @@ A React Hook for build elegant and simple input masks.
 - [Installation](#install)
 - [Usage](#quickstart)
 - [Masking Types](#masking-types)
-  - [Static Masks](#static-types)
+  - [Static Masking Type](#static-masking-type)
+  - [Optional Masking Type](#optional-masking-type)
+  - [Dynamic Masking Type](#dynamic-masking-type)
+  - [Alias Masking Type](#alias-masking-type)
+  - [Alternator Masking Type](#alias-masking-type)
+  - [Preprocessing Masking Type](#preprocessing-masking-type)
 
 ## Features
 - 🎯  Simple API
-- 💎  Works with Next.js
+- 💎  Works like a charm with *Next.js*
 - ✨  Compatible with [React Hook Form](https://github.com/react-hook-form/react-hook-form)
 - 🏁  Compatible with [React Final Form](https://github.com/final-form/react-final-form)
 ## Install
@@ -98,7 +103,7 @@ function App() {
 
 The `mask` params cabe be
 
-### Static Types
+### Static Masking Type
 
 These are the very basics of masking. The mask is defined and will not change during the input.
 
@@ -109,7 +114,7 @@ These are the very basics of masking. The mask is defined and will not change du
 />
 ```
 
-### Optional Types
+### Optional Masking Type
 
 It is possible to define some parts in the mask as optional. This is done by using `[ ]`. By example:
 
@@ -121,7 +126,7 @@ It is possible to define some parts in the mask as optional. This is done by usi
 ```
 This mask will allow input like (99) 99999-9999 or (99) 9999-9999.
 
-### Dynamic Types
+### Dynamic Masking Type
 
 Dynamic masks can change during input. To define a dynamic part use { }.
 
@@ -151,7 +156,7 @@ By example:
 />
 
 ```
-### Alias Types
+### Alias Masking Type
 
 A Lot of common default "alises" presets, you can use like that:
 ```tsx
@@ -183,7 +188,7 @@ The avaliable ones is:
  - `mac`
  - `ssn`
 
-### Alternator masks
+### Alternator Masking Type
 
 The alternator syntax is like an OR statement. The mask can be one of the 3 choices specified in the alternator.
 
@@ -205,7 +210,7 @@ To define an alternator use the |. ex: "a|9" => a or 9 "(aaa)|(999)" => aaa or 9
 ```
 
 
-### Preprocessing masks
+### Preprocessing Masking Type
 
 You can define the mask as a function that can allow you to preprocess the resulting mask. Example sorting for multiple masks or retrieving mask definitions dynamically through ajax. The preprocessing fn should return a valid mask definition.
 
