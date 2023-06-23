@@ -8,8 +8,11 @@ function App() {
   const [lib, setLib] = React.useState<'hook-form' | 'final-form'>('hook-form');
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      phone: '',
-      email: '',
+      cardNumber: '',
+      cardHolder: '',
+      cardExpiration: '',
+      cardCvv: '',
+      cpf: '',
     }
   });
 
@@ -22,7 +25,7 @@ function App() {
   return (
     <>
       <h3>Using simple ref</h3>
-      <input type="text" ref={withMask(null, {
+      <input type="text" ref={withMask(["AAA"], {
         inputFormat: "yyyy-mm-dd",
         alias: "datetime",
       })} />
@@ -40,12 +43,45 @@ function App() {
           <h3>Using react-hook-form</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              {...registerWithMask("phone", "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]", {
-                nullable: true,
+              placeholder='Card Number'
+              type="text"
+              {...registerWithMask("cardNumber", ["9999 9999 9999 9999","99999 9999 9999 9999"], {
                 required: true,
               })}
-              type="text"
             />
+            <br/>
+            <input
+              placeholder='Card Holder'
+              type="text"
+              {...registerWithMask("cardHolder", "[A| ]{1,20}[ ]", {
+                required: true,
+              })}
+            />
+            <br/>
+            <input
+              placeholder='Card Expiration'
+              type="text"
+              {...registerWithMask("cardExpiration", "99/99", {
+                required: true,
+              })}
+            />
+            <br/>
+            <input
+              placeholder='Card CVV'
+              type="text"
+              {...registerWithMask("cardCvv", "(999)|(9999)", {
+                required: true,
+              })}
+            />
+            <br/>
+            <input
+              placeholder='CPF'
+              type="text"
+              {...registerWithMask("cpf", "cpf", {
+                required: true,
+              })}
+            />
+            <br />
             <button type="submit">Submit</button>
           </form>
         </>
