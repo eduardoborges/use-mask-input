@@ -1,111 +1,86 @@
 import { Mask, Options } from '../types';
 
-export const getMaskOptions = (mask?: Mask, _options?: Options) => {
+export const getMaskOptions = (mask?: Mask, _options?: Options): Options => {
   const options: Options = {
     ..._options,
     jitMasking: false,
   };
   if (!mask) return options;
 
-  if (mask === 'datetime') {
-    return {
+  const masks: Record<string, Inputmask.Options> = {
+    datetime: {
       alias: 'datetime',
       inputFormat: 'dd/mm/yyyy',
       placeholder: 'dd/mm/yyyy',
       ...options,
-    };
-  }
-
-  if (mask === 'cpf') {
-    return {
+    },
+    cpf: {
       mask: '999.999.999-99',
       placeholder: '___.___.___-__',
       ...options,
-    };
-  }
-
-  if (mask === 'email') {
-    return {
+    },
+    cnpj: {
+      mask: '99.999.999/9999-99',
+      placeholder: '__.___.___/____-__',
+      ...options,
+    },
+    email: {
       alias: 'email',
       placeholder: '',
       ...options,
-    };
-  }
-  if (mask === 'numeric') {
-    return {
+    },
+    numeric: {
       alias: 'numeric',
       placeholder: '',
       ...options,
-    };
-  }
-
-  // currency
-  if (mask === 'currency') {
-    return {
+    },
+    currency: {
       alias: 'currency',
       prefix: '$ ',
       placeholder: '',
       ...options,
-    };
-  }
-
-  // decimal
-  if (mask === 'decimal') {
-    return {
+    },
+    decimal: {
       alias: 'decimal',
       placeholder: '',
       ...options,
-    };
-  }
-
-  // integer
-  if (mask === 'integer') {
-    return {
+    },
+    integer: {
       alias: 'integer',
       placeholder: '',
       ...options,
-    };
-  }
-
-  // percentage
-  if (mask === 'percentage') {
-    return {
+    },
+    percentage: {
       alias: 'percentage',
       placeholder: ' %',
       suffix: ' %',
       ...options,
-    };
-  }
-
-  // url
-  if (mask === 'url') {
-    return {
+    },
+    url: {
       alias: 'url',
       placeholder: 'https://',
       ...options,
-    };
-  }
-
-  // url
-  if (mask === 'ip') {
-    return {
+    },
+    ip: {
       alias: 'ip',
       ...options,
-    };
-  }
-
-  // mac
-  if (mask === 'mac') {
-    return {
+    },
+    mac: {
       alias: 'mac',
       ...options,
-    };
-  }
-
-  // ssn
-  if (mask === 'ssn') {
-    return {
+    },
+    ssn: {
       alias: 'ssn',
+      ...options,
+    },
+
+  };
+
+  if (typeof mask === 'string') {
+    if (masks[mask]) return masks[mask];
+  } else if (typeof mask === 'object') {
+    return {
+      ...mask,
       ...options,
     };
   }
