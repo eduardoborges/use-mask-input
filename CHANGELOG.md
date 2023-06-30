@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/eduardoborges/use-mask-input/compare/3.2.0...3.3.0) (2023-06-30)
+
+
+### Features
+
+* new useHookFormMask API ([#35](https://github.com/eduardoborges/use-mask-input/issues/35)) ([52609eb](https://github.com/eduardoborges/use-mask-input/commit/52609eb57d77f4cd95a8ccbe868f9e4cbcdc2e47))
+
 # [3.2.0](https://github.com/eduardoborges/use-mask-input/compare/3.1.2...3.2.0) (2023-06-14)
 
 
