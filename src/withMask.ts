@@ -1,15 +1,13 @@
 import Inputmask from 'inputmask';
-import { isServer } from './utils';
+import { getMaskOptions, isServer } from './utils';
 import { Input, Mask, Options } from './types';
 
-export const withMask = (mask?: Mask, options?: Options) => (input: Input) => {
+export const withMask = (mask: Mask, options?: Options) => (input: Input) => {
   //
   if (isServer) return input;
+  if (mask === null) return input;
 
-  const maskInput = Inputmask({
-    mask: mask || undefined,
-    ...options,
-  });
+  const maskInput = Inputmask(getMaskOptions(mask, options));
 
   if (input) {
     maskInput.mask(input);

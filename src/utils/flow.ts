@@ -1,9 +1,3 @@
-export const isServer = !(
-  typeof window !== 'undefined'
-  && window.document
-  && window.document.createElement
-);
-
 export function flow(...funcs: Array<Function>) : Function {
   const { length } = funcs;
   let index = length;

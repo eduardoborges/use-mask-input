@@ -1,6 +1,6 @@
-import type { UseFormRegisterReturn } from 'react-hook-form';
+/* eslint-disable import/no-extraneous-dependencies */
+export type { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 
-export type Register = UseFormRegisterReturn;
-export type Mask = Inputmask.Options['mask'];
+export type Mask = 'email' | 'cpf' | 'datetime' | 'numeric' | 'currency' | 'decimal' | 'integer' | (string & {}) | (string[] & {}) | null;
 export type Options = Inputmask.Options;
 export type Input = HTMLInputElement | HTMLTextAreaElement | HTMLElement | HTMLInputElement | null;

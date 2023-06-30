@@ -25,7 +25,7 @@ function prepare() {
 
 function test() {
   echo "🧪 Running tests...";
-  npx vitest --dir ./src --run;
+  npx vitest --dir ./src --run --coverage;
 };
 
 function lint() {

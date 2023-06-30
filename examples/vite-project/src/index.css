@@ -47,6 +47,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin-bottom: 5px;
 }
 
 input {
@@ -59,6 +60,7 @@ input {
   background-color: #1a1a1a;
   color: #ffffff;
   transition: border-color 0.25s;
+  margin-bottom: 5px;
 }
 
 button:hover {

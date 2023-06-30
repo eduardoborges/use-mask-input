@@ -14,7 +14,7 @@
     "react-dom": "^18.2.0",
     "final-form": "4.20.9",
     "react-final-form": "6.5.9",
-    "react-hook-form": "^7.43.9"
+    "react-hook-form": "7.45.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

@@ -1,21 +1,31 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, Field } from 'react-final-form';
-import { withHookFormMask, withMask } from '../../../src';
+import { useHookFormMask, withMask } from '../../../src';
 import "./App.css";
 
 function App() {
   const [lib, setLib] = React.useState<'hook-form' | 'final-form'>('hook-form');
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      cardNumber: '',
+      cardHolder: '',
+      cardExpiration: '',
+      cardCvv: '',
+      cpf: '',
+    }
+  });
 
   const onSubmit = (data: any) => {
     console.log(data);
   };
 
+  const registerWithMask = useHookFormMask(register);
+
   return (
     <>
       <h3>Using simple ref</h3>
-      <input type="text" ref={withMask(null, {
+      <input type="text" ref={withMask(["AAA"], {
         inputFormat: "yyyy-mm-dd",
         alias: "datetime",
       })} />
@@ -33,9 +43,45 @@ function App() {
           <h3>Using react-hook-form</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              {...withHookFormMask(register('phone'), ['(99) 9999 9999', '(99) 9 9999 9999'])}
+              placeholder='Card Number'
               type="text"
+              {...registerWithMask("cardNumber", ["9999 9999 9999 9999","99999 9999 9999 9999"], {
+                required: true,
+              })}
             />
+            <br/>
+            <input
+              placeholder='Card Holder'
+              type="text"
+              {...registerWithMask("cardHolder", "[A| ]{1,20}[ ]", {
+                required: true,
+              })}
+            />
+            <br/>
+            <input
+              placeholder='Card Expiration'
+              type="text"
+              {...registerWithMask("cardExpiration", "99/99", {
+                required: true,
+              })}
+            />
+            <br/>
+            <input
+              placeholder='Card CVV'
+              type="text"
+              {...registerWithMask("cardCvv", "(999)|(9999)", {
+                required: true,
+              })}
+            />
+            <br/>
+            <input
+              placeholder='CPF'
+              type="text"
+              {...registerWithMask("cpf", "cpf", {
+                required: true,
+              })}
+            />
+            <br />
             <button type="submit">Submit</button>
           </form>
         </>

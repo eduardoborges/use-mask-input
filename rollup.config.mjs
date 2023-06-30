@@ -22,10 +22,16 @@ export default [
     ],
     output: [
       {
-        file: `${out}.js`, format: 'esm', sourcemap, exports,
+        file: `${out}.js`,
+        format: 'esm',
+        sourcemap,
+        exports,
       },
       {
-        file: `${out}.cjs`, format: 'cjs', sourcemap, exports,
+        file: `${out}.cjs`,
+        format: 'cjs',
+        sourcemap,
+        exports,
       },
     ],
   },
