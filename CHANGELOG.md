@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/eduardoborges/use-mask-input/compare/3.3.0...3.3.1) (2023-08-03)
+
+
+### Bug Fixes
+
+* **package.json:** add type module ([34faa1e](https://github.com/eduardoborges/use-mask-input/commit/34faa1e41ab27a5a18530988c4df51da6bacc3f5))
+
 # [3.3.0](https://github.com/eduardoborges/use-mask-input/compare/3.2.0...3.3.0) (2023-06-30)
 
 
