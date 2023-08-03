@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, Field } from 'react-final-form';
-import { useHookFormMask, withMask } from '../../../src';
+import { useHookFormMask, withMask } from 'use-mask-input';
 import "./App.css";
 
 function App() {
