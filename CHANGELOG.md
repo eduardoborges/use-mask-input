@@ -1,3 +1,11 @@
+## [3.3.2](https://github.com/eduardoborges/use-mask-input/compare/3.3.1...3.3.2) (2023-08-10)
+
+
+### Bug Fixes
+
+* **ci:** adjust ci to run on beta ([1aa0978](https://github.com/eduardoborges/use-mask-input/commit/1aa09789bf1fbe0b5a86703c6da186fd3854150f))
+* fix Missing type=module in package.json [#44](https://github.com/eduardoborges/use-mask-input/issues/44) ([f193a20](https://github.com/eduardoborges/use-mask-input/commit/f193a2032572a43e3bde4220feffb9976d05bb2c))
+
 ## [3.3.2-beta.1](https://github.com/eduardoborges/use-mask-input/compare/3.3.1...3.3.2-beta.1) (2023-08-10)
 
 
