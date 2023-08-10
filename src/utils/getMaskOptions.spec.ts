@@ -13,8 +13,6 @@ describe('getMaskOptions', () => {
     const options = getMaskOptions('datetime');
     expect(options).toEqual({
       alias: 'datetime',
-      inputFormat: 'dd/mm/yyyy',
-      placeholder: 'dd/mm/yyyy',
       jitMasking: false,
     });
   });

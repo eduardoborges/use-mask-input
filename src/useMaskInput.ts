@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import Inputmask from 'inputmask';
+import inputmask from 'inputmask';
 import { getMaskOptions, isServer } from './utils';
 import { Mask, Options } from './types';
 
@@ -9,7 +9,7 @@ interface UseInputMaskOptions {
   options?: Options
 }
 
-const useInputMask = (props: UseInputMaskOptions) => {
+export const useInputMask = (props: UseInputMaskOptions) => {
   const { mask, register, options } = props;
   const ref = useRef<HTMLInputElement>(null);
   if (isServer) return ref;
@@ -18,7 +18,7 @@ const useInputMask = (props: UseInputMaskOptions) => {
     if (!isServer) {
       if (!ref.current) return;
 
-      const maskInput = Inputmask(getMaskOptions(mask, options));
+      const maskInput = inputmask(getMaskOptions(mask, options));
 
       maskInput.mask(ref.current);
 
@@ -30,5 +30,3 @@ const useInputMask = (props: UseInputMaskOptions) => {
 
   return ref;
 };
-
-export default useInputMask;

@@ -1,4 +1,4 @@
-import Inputmask from 'inputmask';
+import inputmask from 'inputmask';
 import { RefCallback } from 'react';
 import {
   FieldValues, Path, UseFormRegister, RegisterOptions,
@@ -14,7 +14,7 @@ export function useHookFormMask<
 
     const { ref, ...restRegister } = registerFn(fieldName);
 
-    const maskInput = Inputmask(getMaskOptions(mask, options));
+    const maskInput = inputmask(getMaskOptions(mask, options));
 
     const newRef = flow((_ref: HTMLElement) => {
       if (_ref) maskInput.mask(_ref);

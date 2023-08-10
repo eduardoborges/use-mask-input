@@ -38,6 +38,11 @@ function clean() {
   rm -rf dist;
 };
 
+function postinstall() {
+  echo "👋 Running patches...";
+  npx patch-package;
+};
+
 function hello() {
   echo "👋 Hello!" $args;
 };
