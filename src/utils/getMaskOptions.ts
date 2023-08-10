@@ -10,18 +10,6 @@ export const getMaskOptions = (mask?: Mask, _options?: Options): Options => {
   const masks: Record<string, Inputmask.Options> = {
     datetime: {
       alias: 'datetime',
-      inputFormat: 'dd/mm/yyyy',
-      placeholder: 'dd/mm/yyyy',
-      ...options,
-    },
-    cpf: {
-      mask: '999.999.999-99',
-      placeholder: '___.___.___-__',
-      ...options,
-    },
-    cnpj: {
-      mask: '99.999.999/9999-99',
-      placeholder: '__.___.___/____-__',
       ...options,
     },
     email: {
@@ -74,16 +62,29 @@ export const getMaskOptions = (mask?: Mask, _options?: Options): Options => {
       ...options,
     },
 
+    // alias for brazilians <3
+    'brl-currency': {
+      alias: 'currency',
+      prefix: 'R$ ',
+      placeholder: '0,00',
+      displayFormat: 'currency',
+      radixPoint: ',',
+      autoUnmask: true,
+      ...options,
+    },
+    cpf: {
+      mask: '999.999.999-99',
+      placeholder: '___.___.___-__',
+      ...options,
+    },
+    cnpj: {
+      mask: '99.999.999/9999-99',
+      placeholder: '__.___.___/____-__',
+      ...options,
+    },
   };
 
-  if (typeof mask === 'string') {
-    if (masks[mask]) return masks[mask];
-  } else if (typeof mask === 'object') {
-    return {
-      ...mask,
-      ...options,
-    };
-  }
+  if (typeof mask === 'string' && masks[mask]) return masks[mask];
 
   return {
     mask,

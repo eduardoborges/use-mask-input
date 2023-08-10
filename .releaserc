@@ -1,5 +1,5 @@
 {
-  "branches": ["main"],
+  "branches": ["main", { "name": "beta", "prerelease": true }],
   "baseBranch": "main",
   "tagFormat": "${version}",
   "plugins": [
@@ -8,7 +8,7 @@
     "@semantic-release/changelog",
     "@semantic-release/github",
     ["@semantic-release/npm", {
-      "npmPublish": false
+      "npmPublish": true
     }],
     "@semantic-release/git"
   ]

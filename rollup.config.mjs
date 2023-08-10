@@ -1,13 +1,13 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
 import { readPackageSync } from 'read-pkg';
-import { swc } from 'rollup-plugin-swc3';
+import esbuild from 'rollup-plugin-esbuild';
+import commonjs from '@rollup/plugin-commonjs';
 import dts from 'rollup-plugin-dts';
+import resolve from '@rollup/plugin-node-resolve';
 
 const pkg = readPackageSync();
 
 const input = 'src/index.tsx';
-const external = Object.keys({ ...pkg.dependencies, ...pkg.peerDependencies });
+const external = Object.keys({ ...pkg.peerDependencies });
 const sourcemap = true;
 const exports = 'named';
 const out = 'dist/index';
@@ -18,7 +18,11 @@ export default [
     input,
     external,
     plugins: [
-      swc({ sourceMaps: sourcemap }),
+      commonjs(),
+      resolve(),
+      esbuild({
+        sourceMap: sourcemap,
+      }),
     ],
     output: [
       {
@@ -32,6 +36,7 @@ export default [
         format: 'cjs',
         sourcemap,
         exports,
+        name: pkg.name,
       },
     ],
   },

@@ -1,7 +1,9 @@
 name: Release
-
-on: workflow_dispatch
-
+on:
+  push:
+    branches:
+      - "main"
+      - "beta"
 concurrency:
   group: "release"
   cancel-in-progress: true
@@ -17,10 +19,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           cache: "npm"
-          node-version: 18
+          node-version: 20
 
-      - run: npm ci
-      - run: npx semantic-release
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Release
+        run: npx semantic-release

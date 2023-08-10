@@ -4,9 +4,11 @@ on:
   pull_request:
     branches:
       - main
+      - beta
     types:
       - synchronize
       - edited
+      - opened
 
 jobs:
   semantic_pr:
@@ -20,13 +22,13 @@ jobs:
   health_check:
     needs: semantic_pr
     runs-on: "ubuntu-latest"
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
         node: [16, 18, 20]
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3

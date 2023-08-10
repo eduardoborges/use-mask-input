@@ -1,22 +1,28 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, Field } from 'react-final-form';
-import { withHookFormMask, withMask } from 'use-mask-input';
-
+import { withHookFormMask, withMask, useHookFormMask } from 'use-mask-input';
 import './App.css';
 
 function App() {
   const [lib, setLib] = useState('hook-form');
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues:{
+      phone: ''
+    }
+  });
+
+  const registerWithMask = useHookFormMask(register);
 
   const onSubmit = (data: any) => {
     console.log(data);
+    console.log(withMask('9999-9999'));
   };
 
   return (
     <>
       <h3>Using simple ref</h3>
-      <input type="text" ref={withMask(['(99) 9999 9999', '(99) 9 9999 9999'])} />
+      <input ref={withMask("brl-currency")} type="text" />
       <hr />
       <select onChange={(e) => setLib(e.target.value)}>
         <option value="hook-form">Hook Form</option>
@@ -29,8 +35,7 @@ function App() {
           <h3>Using react-hook-form</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              type="text"
-              {...withHookFormMask(register('phone'), ['(99) 9999 9999', '(99) 9 9999 9999'])}
+              {...registerWithMask("phone", ['999','(99) 9 9999 9999'])}
             />
             <button type="submit">Submit</button>
           </form>

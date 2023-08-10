@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   },
   "include": ["src", "examples", "*.config.*"],
   "exclude": ["node_modules", "dist"]
