@@ -1,3 +1,10 @@
+## [3.3.3](https://github.com/eduardoborges/use-mask-input/compare/3.3.2...3.3.3) (2023-08-14)
+
+
+### Bug Fixes
+
+* **scripts:** remove unused postinstall script ([4a62989](https://github.com/eduardoborges/use-mask-input/commit/4a6298991d02c16af3dcda3edcb8dae4b8874f8a))
+
 ## [3.3.2](https://github.com/eduardoborges/use-mask-input/compare/3.3.1...3.3.2) (2023-08-10)
 
 
