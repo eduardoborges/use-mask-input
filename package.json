@@ -23,8 +23,7 @@
     "dev": "./scripts.sh dev",
     "lint": "./scripts.sh lint",
     "test": "./scripts.sh test",
-    "prepare": "./scripts.sh prepare",
-    "postinstall": "./scripts.sh postinstall"
+    "prepare": "./scripts.sh prepare"
   },
   "files": [
     "dist",
