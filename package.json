@@ -28,7 +28,6 @@
   "files": [
     "dist",
     "src",
-    "scripts.sh",
     "README.md",
     "CHANGELOG.md"
   ],
