@@ -47,7 +47,7 @@ const App = () => {
 ```jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { withHookFormMask } from 'use-mask-input';
+import { useHookFormMask } from 'use-mask-input';
 
 function App() {
   const { register, handleSubmit } = useForm();
