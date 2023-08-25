@@ -1,0 +1,3 @@
+{
+  "reject": ["react", "react-dom", "@types/react", "@types/react-dom", "@types/node", "typescript"]
+}
