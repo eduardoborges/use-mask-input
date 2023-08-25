@@ -1,10 +1,11 @@
-# 🥸 use-mask-input
+<div align="center">
+  <h1>🥸 use-mask-input</h1>
+  <h4>A React Hook for build elegant and simple input masks.</h4>
 
-[![NPM](https://img.shields.io/npm/v/use-mask-input.svg)](https://www.npmjs.com/package/use-mask-input) [![Bundle Size](https://badgen.net/bundlephobia/minzip/use-mask-input)](https://bundlephobia.com/result?p=use-mask-input)
+  ![npm](https://img.shields.io/npm/v/use-mask-input) ![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/use-mask-input?color=green-light) ![npm](https://img.shields.io/npm/dw/use-mask-input)
 
-A React Hook for build elegant and simple input masks.
+</div>
 
----
 
 ## Table of Contents
 
@@ -17,6 +18,7 @@ A React Hook for build elegant and simple input masks.
   - [Alias Masking Type](#alias-masking-type)
   - [Alternator Masking Type](#alias-masking-type)
   - [Preprocessing Masking Type](#preprocessing-masking-type)
+
 
 ## Features
 - 🎯  Simple API
