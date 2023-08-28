@@ -13,11 +13,14 @@ on:
 jobs:
   semantic_pr:
     runs-on: "ubuntu-latest"
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: amannn/action-semantic-pull-request@v5
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Semantic Pull Request
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
   health_check:
     needs: semantic_pr
@@ -30,12 +33,23 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           cache: "npm"
           node-version: ${{ matrix.node }}
-      - run: npm ci
-      - run: npm run test
-      - run: npm run lint
-      - run: npm run build
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm run test
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Run Build
+        run: npm run build
