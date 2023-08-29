@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main
       - beta
@@ -9,6 +9,9 @@ on:
       - synchronize
       - edited
       - opened
+
+permissions:
+  pull-requests: write
 
 jobs:
   semantic_pr:
@@ -20,7 +23,7 @@ jobs:
       - name: Semantic Pull Request
         uses: amannn/action-semantic-pull-request@v5
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
   health_check:
     needs: semantic_pr
