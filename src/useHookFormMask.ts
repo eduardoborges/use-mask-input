@@ -12,7 +12,7 @@ export function useHookFormMask<
   return (fieldName: Path<T>, mask: Mask, options?: Options & D) => {
     if (!registerFn) throw new Error('registerFn is required');
 
-    const { ref, ...restRegister } = registerFn(fieldName);
+    const { ref, ...restRegister } = registerFn(fieldName, options);
 
     const maskInput = inputmask(getMaskOptions(mask, options));
 
