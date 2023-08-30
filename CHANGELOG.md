@@ -1,3 +1,10 @@
+## [3.3.5](https://github.com/eduardoborges/use-mask-input/compare/3.3.4...3.3.5) (2023-08-30)
+
+
+### Bug Fixes
+
+* **types:** fix mask options with any type ([7b643b1](https://github.com/eduardoborges/use-mask-input/commit/7b643b1e6afc27ad4e49d5b528e31d1ff6427a8b))
+
 ## [3.3.4](https://github.com/eduardoborges/use-mask-input/compare/3.3.3...3.3.4) (2023-08-29)
 
 
