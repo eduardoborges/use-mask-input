@@ -2,8 +2,8 @@ import { Mask, Options } from '../types';
 
 export const getMaskOptions = (mask?: Mask, _options?: Options): Options => {
   const options: Options = {
-    ..._options,
     jitMasking: false,
+    ..._options,
   };
   if (!mask) return options;
 
