@@ -1,3 +1,10 @@
+## [3.3.7](https://github.com/eduardoborges/use-mask-input/compare/3.3.6...3.3.7) (2023-11-09)
+
+
+### Bug Fixes
+
+* fix options spread in getMaskOptions function ([e857424](https://github.com/eduardoborges/use-mask-input/commit/e85742442a375f85edfd819475071b29b4bc0af8))
+
 ## [3.3.6](https://github.com/eduardoborges/use-mask-input/compare/3.3.5...3.3.6) (2023-10-02)
 
 
