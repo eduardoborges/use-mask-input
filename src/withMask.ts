@@ -4,14 +4,12 @@ import { Input, Mask, Options } from './types';
 
 export const withMask = (mask: Mask, options?: Options) => (input: Input) => {
   //
-  if (isServer) return input;
-  if (mask === null) return input;
+  if (isServer) return;
+  if (mask === null) return;
 
   const maskInput = Inputmask(getMaskOptions(mask, options));
 
   if (input) {
     maskInput.mask(input);
   }
-
-  return input;
 };
