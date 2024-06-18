@@ -1,3 +1,10 @@
+## [3.3.8](https://github.com/eduardoborges/use-mask-input/compare/3.3.7...3.3.8) (2024-06-18)
+
+
+### Bug Fixes
+
+* prepare withMask function to React 19 ref breaking changes ([#83](https://github.com/eduardoborges/use-mask-input/issues/83)) ([4756fe8](https://github.com/eduardoborges/use-mask-input/commit/4756fe807e29e6b2dfb54b5dc75c1667769de13f))
+
 ## [3.3.7](https://github.com/eduardoborges/use-mask-input/compare/3.3.6...3.3.7) (2023-11-09)
 
 
