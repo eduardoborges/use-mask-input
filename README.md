@@ -103,7 +103,7 @@ function App() {
 
 ## Masking types
 
-The `mask` params cabe be
+The `mask` params can be
 
 ### Static Masking Type
 
@@ -160,7 +160,7 @@ By example:
 ```
 ### Alias Masking Type
 
-A Lot of common default "alises" presets, you can use like that:
+A Lot of common default "aliases" presets, you can use like that:
 ```tsx
 <input                         // the alias
   {...registerWithMask("date", "datetime", {
@@ -170,7 +170,7 @@ A Lot of common default "alises" presets, you can use like that:
 />
 ```
 
-You can use together with options like  `inputFormat`, `prefix`, `sufix`, etc. Checkout [API docs](#api)
+You can use together with options like  `inputFormat`, `prefix`, `suffix`, etc. Checkout [API docs](#api)
 
 The avaliable ones is:
 
