@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/eduardoborges/use-mask-input/compare/3.3.8...3.4.0) (2024-07-23)
+
+
+### Features
+
+* update mask type to match the avaliable types. ([#88](https://github.com/eduardoborges/use-mask-input/issues/88)) ([2e17b79](https://github.com/eduardoborges/use-mask-input/commit/2e17b794ec2290dde1a911e632ee0090663602a7))
+
 ## [3.3.8](https://github.com/eduardoborges/use-mask-input/compare/3.3.7...3.3.8) (2024-06-18)
 
 
