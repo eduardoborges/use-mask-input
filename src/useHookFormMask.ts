@@ -1,10 +1,12 @@
 import inputmask from 'inputmask';
 import { RefCallback } from 'react';
 import {
-  FieldValues, Path, UseFormRegister, RegisterOptions,
+  FieldValues, Path,
+  RegisterOptions,
+  UseFormRegister,
 } from 'react-hook-form';
-import { flow, getMaskOptions } from './utils';
 import { Mask, Options } from './types';
+import { flow, getMaskOptions } from './utils';
 
 export function useHookFormMask<
   T extends FieldValues, D extends RegisterOptions,
@@ -17,7 +19,13 @@ export function useHookFormMask<
     const maskInput = inputmask(getMaskOptions(mask, options));
 
     const newRef = flow((_ref: HTMLElement) => {
-      if (_ref) maskInput.mask(_ref);
+      const { nodeName } = _ref;
+
+      if (nodeName !== 'INPUT') {
+        maskInput.mask(_ref.querySelector('input') as HTMLElement);
+      } else {
+        maskInput.mask(_ref);
+      }
       return _ref;
     }, ref) as RefCallback<HTMLElement>;
 
