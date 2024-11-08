@@ -19,12 +19,14 @@ export function useHookFormMask<
     const maskInput = inputmask(getMaskOptions(mask, options));
 
     const newRef = flow((_ref: HTMLElement) => {
-      const { nodeName } = _ref;
+      if (_ref) {
+        const { nodeName } = _ref;
 
-      if (nodeName !== 'INPUT') {
-        maskInput.mask(_ref.querySelector('input') as HTMLElement);
-      } else {
-        maskInput.mask(_ref);
+        if (nodeName !== 'INPUT') {
+          maskInput.mask(_ref.querySelector('input') as HTMLElement);
+        } else {
+          maskInput.mask(_ref);
+        }
       }
       return _ref;
     }, ref) as RefCallback<HTMLElement>;
