@@ -36,7 +36,6 @@
     "react-dom": ">=16.4 || 17 || 18 || 20"
   },
   "devDependencies": {
-    "inputmask": "5.0.10-beta.11",
     "@rollup/plugin-commonjs": "25.0.7",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@semantic-release/changelog": "6.0.3",
@@ -60,6 +59,7 @@
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "inputmask": "^5.0.10-beta.10",
     "patch-package": "^8.0.0",
     "react-hook-form": "7.47.0",
     "read-pkg": "8.1.0",
