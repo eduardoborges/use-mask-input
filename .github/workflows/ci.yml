@@ -23,6 +23,9 @@ jobs:
   health_check:
     needs: semantic_pr
     runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        node-version: [16, 18, 20, 22]
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -34,7 +37,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: "npm"
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
         run: npm ci
