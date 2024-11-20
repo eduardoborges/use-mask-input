@@ -36,7 +36,7 @@
     "react-dom": ">=16.4 || 17 || 18 || 20"
   },
   "devDependencies": {
-    "inputmask": "5.0.10-beta.9",
+    "inputmask": "5.0.10-beta.11",
     "@rollup/plugin-commonjs": "25.0.7",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@semantic-release/changelog": "6.0.3",
