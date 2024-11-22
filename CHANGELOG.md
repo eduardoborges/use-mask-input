@@ -1,3 +1,10 @@
+## [3.4.2](https://github.com/eduardoborges/use-mask-input/compare/3.4.1...3.4.2) (2024-11-22)
+
+
+### Bug Fixes
+
+* mui textfield disappearing ([#95](https://github.com/eduardoborges/use-mask-input/issues/95)) ([fa0caf6](https://github.com/eduardoborges/use-mask-input/commit/fa0caf66fe05f33e5a5aeaf3e92b38352ca46abb))
+
 ## [3.4.1](https://github.com/eduardoborges/use-mask-input/compare/3.4.0...3.4.1) (2024-11-22)
 
 
