@@ -1,3 +1,11 @@
+## [3.4.1](https://github.com/eduardoborges/use-mask-input/compare/3.4.0...3.4.1) (2024-11-22)
+
+
+### Bug Fixes
+
+* update inputmask to version 5.0.10-beta.11 ([#98](https://github.com/eduardoborges/use-mask-input/issues/98)) ([08a16a5](https://github.com/eduardoborges/use-mask-input/commit/08a16a5c947485729d1a88f15b1d812e68f95cee))
+* update packages ([6a4fc39](https://github.com/eduardoborges/use-mask-input/commit/6a4fc3944fb6804a705454ecd513277fe359c621))
+
 # [3.4.0](https://github.com/eduardoborges/use-mask-input/compare/3.3.8...3.4.0) (2024-07-23)
 
 
