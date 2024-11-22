@@ -12,9 +12,9 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "final-form": "4.20.9",
+    "final-form": "4.20.10",
     "react-final-form": "6.5.9",
-    "react-hook-form": "7.45.0",
+    "react-hook-form": "7.53.2",
     "use-mask-input": "../../"
   },
   "devDependencies": {
@@ -22,11 +22,11 @@
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^8.38.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.3.4",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^5.4.11"
   }
 }

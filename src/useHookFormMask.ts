@@ -9,12 +9,12 @@ import { Mask, Options } from './types';
 export function useHookFormMask<
   T extends FieldValues, D extends RegisterOptions,
 >(registerFn: UseFormRegister<T>) {
-  return (fieldName: Path<T>, mask: Mask, options?: Options & D) => {
+  return (fieldName: Path<T>, mask: Mask, options?: (D & Options) | Options | D) => {
     if (!registerFn) throw new Error('registerFn is required');
 
-    const { ref, ...restRegister } = registerFn(fieldName, options);
+    const { ref, ...restRegister } = registerFn(fieldName, options as any);
 
-    const maskInput = inputmask(getMaskOptions(mask, options));
+    const maskInput = inputmask(getMaskOptions(mask, options as any));
 
     const newRef = flow((_ref: HTMLElement) => {
       if (_ref) maskInput.mask(_ref);
