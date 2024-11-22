@@ -63,6 +63,7 @@ export const getMaskOptions = (mask?: Mask, _options?: Options): Options => {
     },
 
     // alias for brazilians <3
+    // ty <3
     'brl-currency': {
       alias: 'currency',
       prefix: 'R$ ',
