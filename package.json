@@ -1,11 +1,10 @@
 {
   "name": "use-mask-input",
-  "private": true,
   "version": "4.0.0-alpha.1",
   "type": "module",
   "description": "A React hook & Vue composable for building elegant input masks. Compatible with React Hook Form.",
   "repository": {
-    "url": "https://github.com/eduardoborges/use-mask-input.git",
+    "url": "git+https://github.com/eduardoborges/use-mask-input.git",
     "type": "git"
   },
   "license": "MIT",
