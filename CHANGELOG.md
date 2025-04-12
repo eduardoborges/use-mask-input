@@ -1,3 +1,10 @@
+# [3.5.0-alpha.1](https://github.com/eduardoborges/use-mask-input/compare/3.4.2...3.5.0-alpha.1) (2025-04-12)
+
+
+### Features
+
+* full rewrite init ([9c40e5f](https://github.com/eduardoborges/use-mask-input/commit/9c40e5fe71a2c2f6c5016f834505d35e4ffbe856))
+
 ## [3.4.2](https://github.com/eduardoborges/use-mask-input/compare/3.4.1...3.4.2) (2024-11-22)
 
 
