@@ -1,7 +1,16 @@
-import { Options as MaskOptions } from './inputmask.types';
+export type MaskAPI = {
+  format: (value: string) => string;
+  bind: (input: Input) => () => void;
+};
 
-export type { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
+export type Input = HTMLInputElement | HTMLTextAreaElement | HTMLInputElement | null;
 
-export type Mask = 'datetime' | 'email' | 'numeric' | 'currency' | 'decimal' | 'integer' | 'percentage' | 'url' | 'ip' | 'mac' | 'ssn' | 'brl-currency' | 'cpf' | 'cnpj' | (string & {}) | (string[] & {}) | null;
-export type Options = MaskOptions;
-export type Input = HTMLInputElement | HTMLTextAreaElement | HTMLElement | HTMLInputElement | null;
+export type Pattern = string;
+
+export type PatternOptions = {
+  decimal: {
+    symbol?: string;
+    thousandSeparator?: string;
+    decimalSeparator?: string;
+  }
+} | undefined;
