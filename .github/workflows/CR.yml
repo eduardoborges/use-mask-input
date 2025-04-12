@@ -1,9 +1,8 @@
-name: Release
+name: CR
+
 on:
   push:
-    branches:
-      - "main"
-      - "beta"
+    branches: [main, beta, alpha]
 
 concurrency:
   group: "release"
@@ -22,19 +21,23 @@ jobs:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup Node
+      - name: setup node
         uses: actions/setup-node@v4
         with:
           cache: "npm"
           node-version: 20
 
-      - name: Install dependencies
+      - name: install dependencies
         run: npm ci
 
-      - name: Generate Release
+      - name: build
+        run: npm run build
+
+      - name: generate release
         run: npx semantic-release
