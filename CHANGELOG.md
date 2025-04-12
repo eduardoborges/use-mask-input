@@ -1,3 +1,15 @@
+# [4.0.0-alpha.1](https://github.com/eduardoborges/use-mask-input/compare/3.4.2...4.0.0-alpha.1) (2025-04-12)
+
+
+### Features
+
+* full rewrite init ([0e31ebc](https://github.com/eduardoborges/use-mask-input/commit/0e31ebc3943f1d022457096244be7e6fad685926))
+
+
+### BREAKING CHANGES
+
+* entire API was rewritten – previous usage is no longer supported.
+
 # [3.5.0-alpha.1](https://github.com/eduardoborges/use-mask-input/compare/3.4.2...3.5.0-alpha.1) (2025-04-12)
 
 

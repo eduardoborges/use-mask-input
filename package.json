@@ -1,7 +1,7 @@
 {
   "name": "use-mask-input",
   "private": true,
-  "version": "3.5.0-alpha.1",
+  "version": "4.0.0-alpha.1",
   "type": "module",
   "description": "A React hook & Vue composable for building elegant input masks. Compatible with React Hook Form.",
   "repository": {
