@@ -1,5 +1,10 @@
 {
-  "branches": ["main", { "name": "beta", "prerelease": true }],
+  "$schema": "https://json.schemastore.org/semantic-release.json",
+  "branches": [
+    "main",
+    { "name": "beta", "prerelease": true },
+    { "name": "alpha", "prerelease": true }
+  ],
   "baseBranch": "main",
   "tagFormat": "${version}",
   "plugins": [
