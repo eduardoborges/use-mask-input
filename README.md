@@ -229,4 +229,80 @@ You can define the mask as a function that can allow you to preprocess the resul
 
 ## API
 
-(TODO)
+### `withMask(mask, options?)`  
+Attach a mask to an input via a `ref`:  
+```ts
+const attach = withMask('999-9999', { clearIncomplete: true });
+<input ref={attach} />;
+```
+
+- **mask**: `string` \| `string[]` \| `(opts: Options) => string \| string[]`  
+- **options**: `Options` (see below)
+
+---
+
+### `useHookFormMask(registerFn)`  
+Integrate masking with React-Hook-Form’s `register`:  
+```ts
+const maskedRegister = useHookFormMask(register);
+<input {...maskedRegister('phone', '999-9999', { showMaskOnFocus: true })} />;
+```
+
+---
+
+### `Options`  
+
+| Option                     | Description                                                                                          | Type                         | Default                                            |
+|----------------------------|------------------------------------------------------------------------------------------------------|------------------------------|----------------------------------------------------|
+| `mask`                     | Static mask, array of masks, or function returning mask(s)                                          | `string \| string[] \| fn`   | —                                                  |
+| `regex`                    | Treat the mask as a regular expression                                                              | `string`                     | —                                                  |
+| `placeholder`              | Character shown for empty slots                                                                     | `string`                     | `"_"`                                              |
+| `optionalmarker`           | Delimiters for optional sections                                                                     | `{ start: string; end: string }` | `{ start: "[", end: "]" }`                    |
+| `quantifiermarker`         | Delimiters for repetition ranges                                                                     | `{ start: string; end: string }` | `{ start: "{", end: "}" }`                    |
+| `groupmarker`              | Delimiters for grouping                                                                              | `{ start: string; end: string }` | `{ start: "(", end: ")" }`                    |
+| `alternatormarker`         | Character separating alternator options                                                              | `string`                     | `"|"`                                              |
+| `escapeChar`               | Character to escape mask meta-symbols                                                                | `string`                     | `"\\"`                                             |
+| `definitions`              | Custom symbol→validator mappings                                                                     | `Record<string,Definition>`  | —                                                  |
+| `alias`                    | Built-in preset (“datetime”, “currency”, etc.)                                                       | `string`                     | —                                                  |
+| `inputFormat`              | Format string for datetime alias                                                                     | `string`                     | —                                                  |
+| `outputFormat`             | Format of unmasked datetime value                                                                    | `string`                     | —                                                  |
+| `displayFormat`            | Visual format when losing focus (datetime alias)                                                     | `string`                     | —                                                  |
+| `clearMaskOnLostFocus`     | Trim placeholders on blur                                                                            | `boolean`                    | `true`                                             |
+| `showMaskOnFocus`          | Show full mask when focused                                                                          | `boolean`                    | `true`                                             |
+| `showMaskOnHover`          | Show mask when hovering                                                                              | `boolean`                    | `true`                                             |
+| `clearIncomplete`          | Clear input if not fully filled on blur                                                              | `boolean`                    | `false`                                            |
+| `removeMaskOnSubmit`       | Strip mask chars on form submit                                                                       | `boolean`                    | `false`                                            |
+| `autoUnmask`               | Always return unmasked value                                                                         | `boolean`                    | `false`                                            |
+| `jitMasking`               | Just-in-time masking (only show entered chars)                                                       | `boolean`                    | `false`                                            |
+| `nullable`                 | Return `""` if no input                                                                              | `boolean`                    | `true`                                             |
+| `noValuePatching`          | Disable `.value` patching hacks                                                                      | `boolean`                    | `false`                                            |
+| `insertMode`               | Insert vs overwrite                                                                                   | `boolean`                    | `true`                                             |
+| `insertModeVisual`         | Highlight caret in overwrite mode                                                                     | `boolean`                    | `true`                                             |
+| `positionCaretOnClick`     | Caret placement on click: `"none"`, `"lvp"`, `"radixFocus"`, `"select"`, `"ignore"`                  | `string`                     | `"lvp"`                                            |
+| `positionCaretOnTab`       | Move caret to last valid position on Tab                                                             | `boolean`                    | `true`                                             |
+| `tabThrough`               | Tab between mask sections                                                                            | `boolean`                    | `false`                                            |
+| `skipOptionalPartCharacter`| Character to skip optional blocks                                                                    | `string`                     | `" "`                                              |
+| `numericInput`             | Keep caret at end for numeric                                                                           | `boolean`                    | `false`                                            |
+| `rightAlign`               | Right-align numeric                                                                                   | `boolean`                    | `true`                                             |
+| `radixPoint`               | Decimal separator                                                                                     | `string`                     | `""`                                               |
+| `groupSeparator`           | Thousands separator                                                                                   | `string`                     | `""`                                               |
+| `digits`                   | Fractional digits count or range                                                                      | `number \| string`           | `"*"`                                              |
+| `digitsOptional`           | Allow skipping fractional digits                                                                     | `boolean`                    | `true`                                             |
+| `enforceDigitsOnBlur`      | Force show fractional digits on blur                                                                  | `boolean`                    | `false`                                            |
+| `allowMinus`               | Permit minus sign                                                                                     | `boolean`                    | `true`                                             |
+| `negationSymbol`           | Symbols for negative (e.g. `{ front: "-", back: "" }`)                                               | `object`                     | `{ front: "-", back: "" }`                         |
+| `prefix`                   | Static text prepended                                                                                  | `string`                     | `""`                                               |
+| `suffix`                   | Static text appended                                                                                   | `string`                     | `""`                                               |
+| `SetMaxOnOverflow`         | Clamp value at `max` if exceeded                                                                      | `boolean`                    | `false`                                            |
+| `min`                      | Minimum allowed (numeric/datetime)                                                                    | `string \| number`           | —                                                  |
+| `max`                      | Maximum allowed (numeric/datetime)                                                                    | `string \| number`           | —                                                  |
+| `step`                     | `Ctrl+↑/↓` increment step (numeric)                                                                   | `number`                     | `1`                                                |
+| `repeat`                   | Repeat mask N times or `"*"` for infinite                                                             | `number \| string`           | `0`                                                |
+| `greedy`                   | Greedy vs non-greedy repeat                                                                            | `boolean`                    | `false`                                            |
+| `keepStatic`               | Delay switching in alternator/multi-mask scenarios                                                    | `boolean \| null`            | (multi-mask: `true`)                               |
+| `importDataAttributes`     | Read HTML `data-inputmask-*` attrs                                                                     | `boolean`                    | `true`                                             |
+| `supportsInputType`        | Allow masking on specified `inputmode` types                                                          | `string[]`                   | `["text","tel","url",`<br>`"password","search"]`    |
+| `ignorables`               | Key codes to ignore                                                                                   | `number[]`                   | —                                                  |
+| `prefillYear`              | Pre-fill century in datetime alias                                                                    | `boolean`                    | `true`                                             |
+| `casing`                   | Force letter casing: `"upper"`, `"lower"`, `"title"`                                                   | `string`                     | —                                                  |
+| `inputmode`                | Hint for on-screen keyboards (HTML `inputmode`)                                                       | `string`                     | `"verbatim"`                                       |
