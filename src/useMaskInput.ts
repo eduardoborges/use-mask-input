@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import inputmask from 'inputmask';
-import { getMaskOptions, isServer } from './utils';
+import { getMaskOptions } from './utils';
 import { Mask, Options } from './types';
 
 interface UseInputMaskOptions {
