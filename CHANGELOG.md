@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/eduardoborges/use-mask-input/compare/3.4.2...3.5.0) (2025-07-14)
+
+
+### Features
+
+* Export types module for better TypeScript support ([#123](https://github.com/eduardoborges/use-mask-input/issues/123)) ([a4ee805](https://github.com/eduardoborges/use-mask-input/commit/a4ee805fa54490a11cd5f686fbf0fdf89f5761f4))
+
 ## [3.4.2](https://github.com/eduardoborges/use-mask-input/compare/3.4.1...3.4.2) (2024-11-22)
 
 
