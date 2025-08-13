@@ -1,13 +1,108 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <input type="text" id="input" />
-    <script type="module" src="/src/index.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presets API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .input-group {
+      margin: 20px 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>use-mask-input Presets API Test</h1>
+
+  <div class="input-group">
+    <label for="cpf">CPF:</label>
+    <input type="text" id="cpf" placeholder="Enter CPF">
+  </div>
+
+  <div class="input-group">
+    <label for="cnpj">CNPJ:</label>
+    <input type="text" id="cnpj" placeholder="Enter CNPJ">
+  </div>
+
+  <div class="input-group">
+    <label for="cpf-cnpj">CPF/CNPJ:</label>
+    <input type="text" id="cpf-cnpj" placeholder="Enter CPF/CNPJ">
+  </div>
+
+  <div class="input-group">
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" placeholder="Enter phone">
+  </div>
+
+  <div class="input-group">
+    <label for="currency">Currency:</label>
+    <input type="text" id="currency" placeholder="Enter amount">
+  </div>
+
+  <div class="input-group">
+    <label for="date">Date:</label>
+    <input type="text" id="date" placeholder="Enter date">
+  </div>
+
+  <div class="input-group">
+    <label for="credit-card">Credit Card:</label>
+    <input type="text" id="credit-card" placeholder="Enter credit card">
+  </div>
+
+  <script type="module" lang="ts">
+    import { mask, presets } from './src/index.ts';
+
+    // Test the new presets API
+    const cpfInput = document.getElementById('cpf');
+    const cnpjInput = document.getElementById('cnpj');
+    const phoneInput = document.getElementById('phone');
+    const currencyInput = document.getElementById('currency');
+    const dateInput = document.getElementById('date');
+    const creditCardInput = document.getElementById('credit-card');
+    const cpfCnpjInput = document.getElementById('cpf-cnpj');
+
+    mask(presets.CPF).bind(cpfInput);
+
+    mask(presets.CNPJ).bind(cnpjInput);
+
+    mask([presets.CPF, presets.CNPJ]).bind(cpfCnpjInput);
+
+    mask(presets.PHONE).bind(phoneInput);
+
+    mask(presets.CURRENCY, {
+      decimal: {
+        symbol: 'R$ ',
+        decimalSeparator: ',',
+        thousandSeparator: '.',
+      }
+    }).bind(currencyInput);
+
+    mask(presets.DATE).bind(dateInput);
+
+    mask(presets.CREDIT_CARD).bind(creditCardInput);
+
+    console.log('Presets API test loaded successfully!');
+    console.log('Available presets:', presets);
+  </script>
+</body>
+
 </html>
