@@ -1,3 +1,16 @@
+# [4.0.0-alpha.1](https://github.com/eduardoborges/use-mask-input/compare/3.4.2...4.0.0-alpha.1) (2025-08-13)
+
+
+### Features
+
+* enhance input masking with new presets and improved HTML structure ([0b877f6](https://github.com/eduardoborges/use-mask-input/commit/0b877f6091ea70d4c20258f02d6072c4934c7df3))
+* full rewrite init ([5a88d22](https://github.com/eduardoborges/use-mask-input/commit/5a88d22f031f4107f1674e6ab39de9382ae393aa))
+
+
+### BREAKING CHANGES
+
+* entire API was rewritten – previous usage is no longer supported.
+
 # [4.0.0-alpha.1](https://github.com/eduardoborges/use-mask-input/compare/3.4.2...4.0.0-alpha.1) (2025-04-12)
 
 
