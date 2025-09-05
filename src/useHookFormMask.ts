@@ -1,22 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import-x/no-extraneous-dependencies */
 import inputmask from 'inputmask';
-import { RefCallback } from 'react';
-import {
+
+import { flow, getMaskOptions } from './utils';
+import interopDefaultSync from './utils/moduleInterop';
+
+import type { RefCallback } from 'react';
+import type {
   FieldValues, Path,
   RegisterOptions,
   UseFormRegister,
+  UseFormRegisterReturn,
 } from 'react-hook-form';
-import { Mask, Options } from './types';
-import { flow, getMaskOptions } from './utils';
 
-export function useHookFormMask<
+import type { Mask, Options } from './types';
+
+export default function useHookFormMask<
   T extends FieldValues, D extends RegisterOptions,
 >(registerFn: UseFormRegister<T>) {
-  return (fieldName: Path<T>, mask: Mask, options?: (D & Options) | Options | D) => {
+  return (fieldName: Path<T>, mask: Mask, options?: (
+    D & Options) | Options | D): UseFormRegisterReturn<Path<T>> => {
     if (!registerFn) throw new Error('registerFn is required');
 
     const { ref, ...restRegister } = registerFn(fieldName, options as any);
 
-    const maskInput = inputmask(getMaskOptions(mask, options as any));
+    const maskInput = interopDefaultSync(inputmask)(getMaskOptions(mask, options as any));
 
     const newRef = flow((_ref: HTMLElement) => {
       if (_ref) {
@@ -33,7 +41,7 @@ export function useHookFormMask<
 
     return {
       ...restRegister,
-      ref: newRef as RefCallback<HTMLElement>,
+      ref: newRef,
     };
   };
 }

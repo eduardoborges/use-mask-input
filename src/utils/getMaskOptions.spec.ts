@@ -1,5 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { getMaskOptions } from './getMaskOptions';
+import { describe, expect, it } from 'vitest';
+
+import getMaskOptions from './getMaskOptions';
 
 describe('getMaskOptions', () => {
   it('returns default options when no mask is provided', () => {

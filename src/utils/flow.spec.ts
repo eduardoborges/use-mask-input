@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import {
-  describe, it, expect, MockedFunction,
+  describe, expect, it,
 } from 'vitest';
 
-import { flow } from './flow';
+import flow from './flow';
 
 describe('flow', () => {
   it('returns a function', () => {
@@ -16,9 +17,9 @@ describe('flow', () => {
   });
 
   it('throws an error if any argument is not a function', () => {
-    // @ts-ignore
+    // @ts-expect-error - null is not a function
     expect(() => flow(null)).toThrow(TypeError);
-    // @ts-ignore
+    // @ts-expect-error - null is not a function
     expect(() => flow(() => {}, null)).toThrow(TypeError);
   });
 
@@ -29,10 +30,10 @@ describe('flow', () => {
 
   it.todo('binds the functions to the correct context', () => {
     const context = { value: 42 };
-    const fn1 = function (this: any) {
+    const fn1 = function (this: { value: number }) {
       return this.value;
     };
-    const fn2 = function (this: any, n: number) {
+    const fn2 = function (this: { value: number }, n: number) {
       return this.value + n;
     };
     const fn = flow(fn1, fn2).bind(context);
@@ -47,7 +48,7 @@ describe('flow', () => {
 
   it('should throw an error if any argument is not a function', () => {
     expect(() => {
-      flow(1 as any, () => {});
+      flow(1 as unknown as Function, () => {});
     }).toThrow(TypeError);
   });
 
