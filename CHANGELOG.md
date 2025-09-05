@@ -1,3 +1,10 @@
+## [3.5.1](https://github.com/eduardoborges/use-mask-input/compare/3.5.0...3.5.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* update ESLint configuration and dependencies, migrate from Rollup to TSUP for builds ([#130](https://github.com/eduardoborges/use-mask-input/issues/130)) ([396ef79](https://github.com/eduardoborges/use-mask-input/commit/396ef798055cac34df45649a16ee010af6229d5c))
+
 # [3.5.0](https://github.com/eduardoborges/use-mask-input/compare/3.4.2...3.5.0) (2025-07-14)
 
 
