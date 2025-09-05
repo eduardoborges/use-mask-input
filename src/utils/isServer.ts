@@ -1,5 +1,6 @@
-export const isServer = !(
+const isServer = !(
   typeof window !== 'undefined'
-  && window.document
-  && window.document.createElement
+  && window.document?.createElement
 );
+
+export default isServer;

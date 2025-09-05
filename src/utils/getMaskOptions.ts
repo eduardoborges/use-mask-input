@@ -1,6 +1,6 @@
-import { Mask, Options } from '../types';
+import type { Mask, Options } from '../types';
 
-export const getMaskOptions = (mask?: Mask, _options?: Options): Options => {
+export default function getMaskOptions(mask?: Mask, _options?: Options): Options {
   const options: Options = {
     jitMasking: false,
     ..._options,
@@ -91,4 +91,4 @@ export const getMaskOptions = (mask?: Mask, _options?: Options): Options => {
     mask,
     ...options,
   };
-};
+}

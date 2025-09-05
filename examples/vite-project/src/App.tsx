@@ -25,10 +25,13 @@ function App() {
   return (
     <>
       <h3>Using simple ref</h3>
-      <input type="text" ref={withMask(["AAA"], {
+      <input type="text" ref={withMask(["99/99/9999"], {
         inputFormat: "yyyy-mm-dd",
         alias: "datetime",
-      })} />
+        placeholder: "__/__/____",
+      })}
+      placeholder="99/99/9999"
+      />
 
       <hr />
 

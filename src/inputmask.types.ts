@@ -1,10 +1,18 @@
-/* eslint-disable max-len */
-
+/* eslint-disable @stylistic/max-len */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type Range = { start: string; end: string } | [string, string];
 
 type PositionCaretOnClick = 'none' | 'lvp' | 'radixFocus' | 'select' | 'ignore';
 
-type InputMode = 'verbatim' | 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+type InputMode = 'verbatim'
+  | 'none'
+  | 'text'
+  | 'decimal'
+  | 'numeric'
+  | 'tel'
+  | 'search'
+  | 'email'
+  | 'url';
 
 type Casing = 'upper' | 'lower' | 'title';
 
@@ -19,8 +27,9 @@ type DefinitionValidator = (
 
 export interface Options {
   /**
-       * Change the mask placeholder. Instead of "_", you can change the unfilled characters mask as you like, simply
-       * by adding the placeholder option. For example, placeholder: " " will change the default autofill with empty
+       * Change the mask placeholder. Instead of "_", you can change the unfilled
+       * characters mask as you like, simply by adding the placeholder option.
+       * For example, placeholder: " " will change the default autofill with empty
        * values.
        *
        * @default "_"
@@ -479,7 +488,7 @@ export interface Options {
        *
        * @default {k: "000", m: "000000"}
        */
-  shortcuts?: { [shortcut: string]: string } | null | undefined;
+  shortcuts?: Record<string, string> | null | undefined;
   /**
        * Format used to input a date. This option is only effective for the datetime alias.
        *
@@ -533,9 +542,7 @@ export interface Options {
        * Add new definitions to this inputmask.
        */
   definitions?:
-  | {
-    [key: string]: Definition;
-  }
+  | Record<string, Definition>
   | undefined;
   /**
        * Enable/disable prefilling of the year.

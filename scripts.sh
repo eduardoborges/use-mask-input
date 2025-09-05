@@ -8,13 +8,13 @@ args=${@:2}
 
 function dev() {
   echo "🚀 Starting dev server...";
-  npx rollup -c --watch;
+  npx tsup --watch;
 };
 
 function build() {
   clean;
   echo "📦 Building package...";
-  npx rollup -c;
+  npx tsup;
 };
 
 function prepare() {
