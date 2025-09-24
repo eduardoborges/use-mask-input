@@ -8,17 +8,11 @@ import interopDefaultSync from './utils/moduleInterop';
 import type { Input, Mask, Options } from './types';
 
 export default function withMask(mask: Mask, options?: Options) {
-  return (input: Input): Input => {
-  //
-    if (isServer) return input;
-    if (mask === null) return input;
+  return (input: Input | null): void => {
+    if (isServer || mask === null || !input) return;
 
     const maskInput = interopDefaultSync(inputmask)(getMaskOptions(mask, options));
 
-    if (input) {
-      maskInput.mask(input);
-    }
-
-    return input;
+    maskInput.mask(input);
   };
 }
