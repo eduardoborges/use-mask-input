@@ -1,3 +1,10 @@
+## [3.5.2](https://github.com/eduardoborges/use-mask-input/compare/3.5.1...3.5.2) (2025-09-24)
+
+
+### Bug Fixes
+
+* add .node-version file and refactor types and withMask function for improved type handling ([9f34a7b](https://github.com/eduardoborges/use-mask-input/commit/9f34a7bb6a1ed721efb04ffe53ea12bbd8102227))
+
 ## [3.5.1](https://github.com/eduardoborges/use-mask-input/compare/3.5.0...3.5.1) (2025-09-05)
 
 
