@@ -79,7 +79,7 @@ export default function getMaskOptions(mask?: Mask, _options?: Options): Options
       ...options,
     },
     cnpj: {
-      mask: '99.999.999/9999-99',
+      mask: ['99.999.999/9999-99', 'AA.AAA.AAA/AAAA-99'],
       placeholder: '__.___.___/____-__',
       ...options,
     },

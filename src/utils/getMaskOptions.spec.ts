@@ -27,6 +27,15 @@ describe('getMaskOptions', () => {
     });
   });
 
+  it('returns options for cnpj mask', () => {
+    const options = getMaskOptions('cnpj');
+    expect(options).toEqual({
+      mask: ['99.999.999/9999-99', 'AA.AAA.AAA/AAAA-99'],
+      placeholder: '__.___.___/____-__',
+      jitMasking: false,
+    });
+  });
+
   it('returns options for email mask', () => {
     const options = getMaskOptions('email');
     expect(options).toEqual({

@@ -176,10 +176,6 @@ The avaliable ones is:
 
  - `datetime`
  - `email`
- - `ip`
- - `datetime`
- - `cpf`
- - `email`
  - `numeric`
  - `currency`
  - `decimal`
@@ -189,6 +185,9 @@ The avaliable ones is:
  - `ip`
  - `mac`
  - `ssn`
+ - `cpf`
+ - `cnpj`
+ - `brl-currency`
 
 ### Alternator Masking Type
 
