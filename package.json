@@ -1,6 +1,6 @@
 {
   "name": "use-mask-input",
-  "version": "3.5.2",
+  "version": "3.6.0",
   "description": "A react Hook for build elegant input masks. Compatible with React Hook Form",
   "author": "Eduardo Borges<euduardoborges@gmail.com>",
   "type": "module",

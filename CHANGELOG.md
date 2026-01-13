@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
+
+
+### Features
+
+* add support to alphanumerial brazilian & update inputmask cnpj ([#145](https://github.com/eduardoborges/use-mask-input/issues/145)) ([64dbc92](https://github.com/eduardoborges/use-mask-input/commit/64dbc9256af8b16461acbacf1c574e43f6cf195a))
+
 ## [3.5.2](https://github.com/eduardoborges/use-mask-input/compare/3.5.1...3.5.2) (2025-09-24)
 
 
