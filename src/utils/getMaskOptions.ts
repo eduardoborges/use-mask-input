@@ -79,7 +79,7 @@ export default function getMaskOptions(mask?: Mask, _options?: Options): Options
       ...options,
     },
     cnpj: {
-      mask: ['A|9{2}.A|9{3}.A|9{3}/A|9{4}-A|9{2}'],
+      mask: ['A|9{2}.A|9{3}.A|9{3}/A|9{4}-9{2}'],
       placeholder: '__.___.___/____-__',
       ...options,
     },
