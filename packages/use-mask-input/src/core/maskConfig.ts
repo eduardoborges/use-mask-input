@@ -1,3 +1,4 @@
+/* eslint-disable import-x/prefer-default-export */
 import type { Mask, Options } from '../types';
 import type { Options as InputmaskOptions } from '../types/inputmask.types';
 

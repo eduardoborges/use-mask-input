@@ -1,4 +1,14 @@
-export { useMaskInput, useHookFormMask, withMask, withHookFormMask } from './api';
+export {
+  useHookFormMask,
+  useMaskInput,
+  withHookFormMask,
+  withMask,
+} from './api';
+
 export type {
-  Mask, Options, UseFormRegister, UseFormRegisterReturn, Input,
+  Input,
+  Mask,
+  Options,
+  UseFormRegister,
+  UseFormRegisterReturn,
 } from './types';

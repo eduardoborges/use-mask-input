@@ -11,7 +11,7 @@ import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
 import { configs, plugins, rules } from 'eslint-config-airbnb-extended';
 
-const gitignorePath = path.resolve('.', '.gitignore');
+const gitignorePath = path.resolve('../../.gitignore');
 
 const jsConfig = [
   // ESLint Recommended Rules

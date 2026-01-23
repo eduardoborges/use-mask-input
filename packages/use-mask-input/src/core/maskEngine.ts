@@ -2,7 +2,7 @@
 import inputmask from 'inputmask';
 
 import { getMaskOptions } from './maskConfig';
-import interopDefaultSync from '../utils/moduleInterop';
+import { moduleInterop } from '../utils';
 
 import type { Mask, Options } from '../types';
 
@@ -14,8 +14,8 @@ import type { Mask, Options } from '../types';
  * @param options - Optional configuration options
  * @returns A mask instance
  */
-export function createMaskInstance(mask: Mask, options?: Options) {
-  const maskfn = interopDefaultSync(inputmask);
+export function createMaskInstance(mask: Mask, options?: Options): Inputmask.Instance {
+  const maskfn = moduleInterop(inputmask);
   return maskfn(getMaskOptions(mask, options));
 }
 

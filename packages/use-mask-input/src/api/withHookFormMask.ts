@@ -1,5 +1,5 @@
-import { flow } from '../utils';
 import { applyMaskToElement } from '../core';
+import { flow } from '../utils';
 
 import type { RefCallback } from 'react';
 
@@ -7,7 +7,8 @@ import type { Mask, Options, UseFormRegisterReturn } from '../types';
 
 /**
  * Enhances a React Hook Form register return object with mask support.
- * Takes an already registered field and adds mask to it. Useful when you registered the field before.
+ * Takes an already registered field and adds mask to it.
+ * Useful when you registered the field before.
  *
  * @param register - The register return object from React Hook Form
  * @param mask - The mask pattern to apply

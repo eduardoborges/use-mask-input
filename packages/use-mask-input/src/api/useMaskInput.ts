@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react';
 
-import { createMaskInstance, findInputElement, isHTMLElement, resolveInputRef } from '../core';
+import {
+  createMaskInstance, findInputElement, isHTMLElement, resolveInputRef,
+} from '../core';
 import isServer from '../utils/isServer';
 
 import type { Input, Mask, Options } from '../types';

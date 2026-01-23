@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { flow } from '../utils';
 import { applyMaskToElement } from '../core';
+import { flow } from '../utils';
 
 import type { RefCallback } from 'react';
 import type {
