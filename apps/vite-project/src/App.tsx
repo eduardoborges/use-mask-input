@@ -1,133 +1,34 @@
-import React from 'react';
 
-import { Input } from 'antd';
-import { Field, Form } from 'react-final-form';
-import { useForm } from 'react-hook-form';
-import { useHookFormMask, useMaskInput, withMask } from 'use-mask-input';
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { useMaskInput } from 'use-mask-input'
 
-import './App.css';
+function App() {
 
-const App = () => {
-  const [lib, setLib] = React.useState<'hook-form' | 'final-form'>('hook-form');
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      cardNumber: '',
-      cardHolder: '',
-      cardExpiration: '',
-      cardCvv: '',
-      cpf: '',
-    },
-  });
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
-
-  const registerWithMask = useHookFormMask(register);
-
-  const decimalMask = useMaskInput({
-    mask: 'brl-currency',
-  });
+  const phoneMask = useMaskInput({
+    mask: '9999-9999',
+  })
 
   return (
-    <React.Fragment>
-      <h3>Using simple ref</h3>
-      <input
-        ref={withMask(['99/99/9999'], {
-          inputFormat: 'yyyy-mm-dd',
-          alias: 'datetime',
-          placeholder: '__/__/____',
-        })}
-        placeholder="99/99/9999"
-        type="text"
-      />
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <input type="text" ref={phoneMask} />
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
+}
 
-      <input
-        ref={decimalMask}
-        type="text"
-      />
-
-      <hr />
-
-      <select onChange={(e) => setLib(e.target.value as any)}>
-        <option value="hook-form">Hook Form</option>
-        <option value="final-form">Final Form</option>
-      </select>
-      <hr />
-
-      {lib === 'hook-form' && (
-        <React.Fragment>
-          <h3>Using react-hook-form</h3>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input
-              placeholder="Card Number"
-              type="text"
-              {...registerWithMask('cardNumber', ['9999 9999 9999 9999', '99999 9999 9999 9999'], {
-                required: true,
-              })}
-            />
-            <br />
-            <input
-              placeholder="Card Holder"
-              type="text"
-              {...registerWithMask('cardHolder', '[A| ]{1,20}[ ]', {
-                required: true,
-              })}
-            />
-            <br />
-            <input
-              placeholder="Card Expiration"
-              type="text"
-              {...registerWithMask('cardExpiration', '99/99', {
-                required: true,
-              })}
-            />
-            <br />
-            <input
-              placeholder="Card CVV"
-              type="text"
-              {...registerWithMask('cardCvv', '(999)|(9999)', {
-                required: true,
-              })}
-            />
-            <br />
-            <input
-              placeholder="CPF"
-              type="text"
-              {...registerWithMask('cpf', 'cpf', {
-                required: true,
-              })}
-            />
-            <br />
-            <button type="submit">Submit</button>
-          </form>
-        </React.Fragment>
-      )}
-
-      <hr />
-      {lib === 'final-form' && (
-        <Form
-          onSubmit={onSubmit}
-          render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <h3>working with example react-final-form </h3>
-              <Field
-                name="phone"
-                render={({ input, meta }) => (
-                  <label htmlFor="phone">
-                    Phone
-                    <input ref={withMask('9999-9999')} {...input} placeholder="Phone" />
-                    {meta.touched && meta.error ? <span>{meta.error}</span> : null}
-                  </label>
-                )}
-              />
-              <button type="submit">Submit</button>
-            </form>
-          )}
-        />
-      )}
-    </React.Fragment>
-  );
-};
-
-export default App;
+export default App
