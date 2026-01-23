@@ -1,9 +1,3 @@
-## 3.7.0
-
-### Minor Changes
-
-- feat: new structure
-
 ## [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
 
 ### Features
