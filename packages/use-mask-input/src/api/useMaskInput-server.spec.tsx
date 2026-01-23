@@ -15,8 +15,8 @@ describe('useMaskInput server-side', () => {
   });
 
   it('returns no-op function on server', async () => {
-    const { default: useInputMask } = await import('./useInputMask');
-    const { result } = renderHook(() => useInputMask({ mask: '999-999' }));
+    const { default: useMaskInput } = await import('./useMaskInput');
+    const { result } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
     expect(typeof result.current).toBe('function');
 

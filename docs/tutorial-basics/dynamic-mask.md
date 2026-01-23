@@ -30,7 +30,7 @@ function FixedLengthInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="AA-0000"
@@ -50,7 +50,7 @@ function VariableLengthInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="0"
@@ -70,7 +70,7 @@ function EmailInput() {
   });
 
   return (
-    <input 
+    <input
       type="email"
       ref={emailMask}
       placeholder="user@example.com"
@@ -94,7 +94,7 @@ function OneOrMoreInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="ABC"
@@ -114,7 +114,7 @@ function ZeroOrMoreInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="123"
@@ -134,7 +134,7 @@ function ProductCodeInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="AB-0000"
@@ -154,7 +154,7 @@ function FlexibleIdInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="ID-000-ABC"
@@ -182,7 +182,7 @@ function JitMaskInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="0"

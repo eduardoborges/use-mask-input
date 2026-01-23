@@ -19,7 +19,7 @@ function PhoneInput() {
   });
 
   return (
-    <input 
+    <input
       type="tel"
       ref={phoneMask}
       placeholder="0000-0000"
@@ -43,7 +43,7 @@ function PhoneInput() {
   });
 
   return (
-    <input 
+    <input
       type="tel"
       ref={phoneMask}
       placeholder="0000-0000"
@@ -63,7 +63,7 @@ function PhoneInput() {
   });
 
   return (
-    <input 
+    <input
       type="tel"
       ref={phoneMask}
       placeholder="(00) 00000-0000"
@@ -86,7 +86,7 @@ function CreditCardInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={cardMask}
       placeholder="0000 0000 0000 0000"
@@ -104,7 +104,7 @@ function DateInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={dateMask}
       placeholder="DD/MM/YYYY"
@@ -127,7 +127,7 @@ function LicensePlateInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={plateMask}
       placeholder="ABC-1234"
@@ -145,7 +145,7 @@ function MixedInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mixedMask}
       placeholder="ABC or 123 or 1AB"
@@ -168,7 +168,7 @@ function ComplexInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={complexMask}
       placeholder="AAAA or 0000 or 0AA0"

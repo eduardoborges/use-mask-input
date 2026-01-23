@@ -7,7 +7,7 @@ import isServer from '../utils/isServer';
 
 import type { Input, Mask, Options } from '../types';
 
-interface UseInputMaskOptions {
+interface UseMaskInputOptions {
   mask: Mask;
   register?: (element: HTMLElement) => void;
   options?: Options;
@@ -23,7 +23,7 @@ interface UseInputMaskOptions {
  * @param props.options - Optional mask configuration options
  * @returns A ref callback function to attach to the input element
  */
-export default function useInputMask(props: UseInputMaskOptions): ((input: Input | null) => void) {
+export default function useMaskInput(props: UseMaskInputOptions): ((input: Input | null) => void) {
   const { mask, register, options } = props;
   const ref = useRef<HTMLInputElement | null>(null);
   const maskInput = useMemo(() => createMaskInstance(mask, options), [mask, options]);

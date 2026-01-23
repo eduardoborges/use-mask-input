@@ -39,7 +39,7 @@ function DateInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={dateMask}
       placeholder="DD/MM/YYYY"
@@ -63,7 +63,7 @@ function DateTimeInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={dateTimeMask}
       placeholder="DD/MM/YYYY HH:MM"
@@ -81,7 +81,7 @@ function EmailInput() {
   });
 
   return (
-    <input 
+    <input
       type="email"
       ref={emailMask}
       placeholder="user@example.com"
@@ -105,7 +105,7 @@ function CurrencyInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={currencyMask}
       placeholder="R$ 0,00"
@@ -123,7 +123,7 @@ function IpAddressInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={ipMask}
       placeholder="192.168.0.1"
@@ -141,7 +141,7 @@ function CpfInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={cpfMask}
       placeholder="000.000.000-00"
@@ -163,7 +163,7 @@ function NumericInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={numericMask}
       placeholder="0"
@@ -186,7 +186,7 @@ function DecimalInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={decimalMask}
       placeholder="0,00"
@@ -208,7 +208,7 @@ function PercentageInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={percentageMask}
       placeholder="0,00 %"
@@ -226,7 +226,7 @@ function UrlInput() {
   });
 
   return (
-    <input 
+    <input
       type="url"
       ref={urlMask}
       placeholder="https://example.com"
@@ -244,7 +244,7 @@ function MacAddressInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={macMask}
       placeholder="00:00:00:00:00:00"

@@ -22,7 +22,7 @@ npm i use-mask-input
 
 ```jsx
 import React from 'react'
-import { withMask } from 'use-mask-input';
+import { useMaskInput } from 'use-mask-input';
 
 const App = () => {
   return (

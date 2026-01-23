@@ -19,7 +19,7 @@ function PhoneInput() {
   });
 
   return (
-    <input 
+    <input
       type="tel"
       ref={phoneMask}
       placeholder="(00) 99999-9999"
@@ -43,7 +43,7 @@ function PhoneInput() {
   });
 
   return (
-    <input 
+    <input
       type="tel"
       ref={phoneMask}
       placeholder="00 0000-0000"
@@ -65,7 +65,7 @@ function EmailInput() {
   });
 
   return (
-    <input 
+    <input
       type="email"
       ref={emailMask}
       placeholder="user@example.com"
@@ -83,7 +83,7 @@ function CreditCardInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={cardMask}
       placeholder="0000 0000 0000 0000"
@@ -101,7 +101,7 @@ function InternationalPhoneInput() {
   });
 
   return (
-    <input 
+    <input
       type="tel"
       ref={phoneMask}
       placeholder="+00 00000-0000"
@@ -126,7 +126,7 @@ function FlexibleInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={flexibleMask}
       placeholder="Prefix-000-Suffix"

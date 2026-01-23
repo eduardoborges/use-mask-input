@@ -22,7 +22,7 @@ function DynamicInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="AAA-000"
@@ -41,7 +41,7 @@ function ConditionalInput() {
     mask: function() {
       // Return different masks based on some condition
       const isLongFormat = true; // Your condition logic
-      
+
       if (isLongFormat) {
         return '9999-9999-9999-9999';
       }
@@ -50,7 +50,7 @@ function ConditionalInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="0000-0000"
@@ -75,7 +75,7 @@ function SortedMasksInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="0000-0000"
@@ -104,7 +104,7 @@ function ApiBasedInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="0000-0000"
@@ -131,7 +131,7 @@ function CountryPhoneInput({ country }: { country: string }) {
   });
 
   return (
-    <input 
+    <input
       type="tel"
       ref={mask}
       placeholder="0000-0000"
@@ -162,7 +162,7 @@ function UserPreferenceInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="0000-0000-0000-0000"
@@ -193,7 +193,7 @@ function ComplexConditionalInput() {
   });
 
   return (
-    <input 
+    <input
       type="text"
       ref={mask}
       placeholder="Enter value"
