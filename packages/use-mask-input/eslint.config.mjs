@@ -53,6 +53,19 @@ const typescriptConfig = [
   ...configs.react.typescript,
 ];
 
+const ignoreTestFilesRules = {
+  files: [
+    '**/*.spec.ts',
+    '**/*.spec.tsx',
+    '**/*.test.ts',
+    '**/*.test.tsx',
+  ],
+  rules: {
+    'import-x/no-extraneous-dependencies': 'off',
+    'import-x/no-namespace': 'off',
+  },
+};
+
 export default [
   // Ignore .gitignore files/folder in eslint
   includeIgnoreFile(gitignorePath),
@@ -62,4 +75,6 @@ export default [
   ...reactConfig,
   // TypeScript Config
   ...typescriptConfig,
+  // Ignore test files
+  ignoreTestFilesRules,
 ];

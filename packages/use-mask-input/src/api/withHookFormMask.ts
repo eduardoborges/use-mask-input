@@ -22,7 +22,7 @@ export default function withHookFormMask(
 ): UseFormRegisterReturn {
   let newRef;
 
-  if (register) {
+  if (register && register.ref as unknown as RefCallback<HTMLElement | null>) { // this can be null
     const { ref } = register;
 
     newRef = flow((_ref: HTMLElement) => {

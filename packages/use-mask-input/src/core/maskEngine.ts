@@ -28,7 +28,7 @@ export function createMaskInstance(mask: Mask, options?: Options): Inputmask.Ins
  * @param options - Optional configuration options
  */
 export function applyMaskToElement(
-  element: HTMLElement,
+  element: HTMLElement | null,
   mask: Mask,
   options?: Options,
 ): void {

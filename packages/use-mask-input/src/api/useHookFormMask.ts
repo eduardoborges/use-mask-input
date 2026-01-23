@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { applyMaskToElement } from '../core';
 import { flow } from '../utils';
 
@@ -28,14 +27,22 @@ export default function useHookFormMask<
     D & Options) | Options | D): UseFormRegisterReturn<Path<T>> => {
     if (!registerFn) throw new Error('registerFn is required');
 
-    const { ref, ...restRegister } = registerFn(fieldName, options as any);
+    const { ref, ...restRegister } = registerFn(fieldName, options as Options);
 
-    const newRef = flow((_ref: HTMLElement) => {
+    const applyMaskToRef = (_ref: HTMLElement): HTMLElement => {
       if (_ref) {
-        applyMaskToElement(_ref, mask, options as any);
+        applyMaskToElement(_ref, mask, options as Options);
       }
       return _ref;
-    }, ref) as RefCallback<HTMLElement>;
+    };
+
+    const newRef: RefCallback<HTMLElement | null> = ref
+      ? (flow(applyMaskToRef, ref) as RefCallback<HTMLElement | null>)
+      : ((_ref: HTMLElement | null) => {
+        if (_ref) {
+          applyMaskToElement(_ref, mask, options as Options);
+        }
+      });
 
     return {
       ...restRegister,
