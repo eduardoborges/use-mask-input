@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "target": "ES2020",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "@types",
+      "node_modules/@types"
+    ],
+  },
+  "include": [
+    "src",
+    "*.config.*",
+    "src/@types"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

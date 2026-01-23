@@ -50,3 +50,6 @@ jobs:
 
       - name: Run Build
         run: npm run build
+
+      - name: Check Changesets
+        run: npm run changeset status

@@ -9,6 +9,8 @@ build
 dist
 .rpt2_cache
 coverage
+.turbo
+.changeset
 
 # misc
 .DS_Store

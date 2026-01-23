@@ -229,20 +229,20 @@ You can define the mask as a function that can allow you to preprocess the resul
 
 ## API
 
-### `withMask(mask, options?)`  
-Attach a mask to an input via a `ref`:  
+### `withMask(mask, options?)`
+Attach a mask to an input via a `ref`:
 ```ts
 const attach = withMask('999-9999', { clearIncomplete: true });
 <input ref={attach} />;
 ```
 
-- **mask**: `string` \| `string[]` \| `(opts: Options) => string \| string[]`  
+- **mask**: `string` \| `string[]` \| `(opts: Options) => string \| string[]`
 - **options**: `Options` (see below)
 
 ---
 
-### `useHookFormMask(registerFn)`  
-Integrate masking with React-Hook-Form’s `register`:  
+### `useHookFormMask(registerFn)`
+Integrate masking with React-Hook-Form’s `register`:
 ```ts
 const maskedRegister = useHookFormMask(register);
 <input {...maskedRegister('phone', '999-9999', { showMaskOnFocus: true })} />;
@@ -250,7 +250,7 @@ const maskedRegister = useHookFormMask(register);
 
 ---
 
-### `Options`  
+### `Options`
 
 | Option                     | Description                                                                                          | Type                         | Default                                            |
 |----------------------------|------------------------------------------------------------------------------------------------------|------------------------------|----------------------------------------------------|
