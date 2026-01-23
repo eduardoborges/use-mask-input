@@ -3,11 +3,9 @@
   <h4>A React Hook for building elegant and simple input masks.</h4>
 
   ![npm](https://img.shields.io/npm/v/use-mask-input) ![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/use-mask-input?color=green-light) ![npm](https://img.shields.io/npm/dw/use-mask-input)
-
-
-  <a href="http://use-mask-input.eduardoborges.dev"><h2>Full Documentation</h2></a> | <h2>Be an sponsor</h2>
-
 </div>
+
+## [Full Documentation](http://use-mask-input.eduardoborges.dev) | [Sponsor this project](https://github.com/eduardoborges?tab=sponsors)
 
 ## Features
 - 🎯  Simple API
