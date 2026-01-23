@@ -1,6 +1,8 @@
 {
   "name": "use-mask-input",
-  "version": "3.6.0",
+  "version": "3.7.0",
+  "private": false,
+  "license": "MIT",
   "description": "A react Hook for build elegant input masks. Compatible with React Hook Form",
   "author": "Eduardo Borges<euduardoborges@gmail.com>",
   "type": "module",
@@ -25,7 +27,8 @@
     "lint": "eslint ./src --ext ts,tsx",
     "test": "vitest --dir ./src --run --coverage",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "postbuild": "cp ../../README.md README.md"
   },
   "files": [
     "dist",

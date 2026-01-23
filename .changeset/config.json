@@ -4,10 +4,13 @@
   "commit": false,
   "fixed": [],
   "linked": [],
-  "access": "restricted",
+  "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [],
+  "ignore": [
+    "vite-project",
+    "next-project"
+  ],
   "preReleaseBranches": [
     "beta",
     "alpha"

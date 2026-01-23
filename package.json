@@ -11,6 +11,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev --filter=vite-project",
     "dev:next": "turbo run dev --filter=next-project",
+    "dev:docs": "turbo run start --filter=docs",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "type-check": "turbo run type-check",
