@@ -2,8 +2,8 @@ name: CI
 
 on:
   pull_request:
-    branches: [main,beta]
-    types: [synchronize,edited,opened]
+    branches: [main, beta]
+    types: [synchronize, edited, opened]
 
 permissions:
   pull-requests: write
@@ -13,10 +13,10 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Semantic Pull Request
-        uses: amannn/action-semantic-pull-request@v5
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
@@ -31,16 +31,24 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           cache: "npm"
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
         run: npm ci
+
+      - name: Cache Turbo
+        uses: actions/cache@v5
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
 
       - name: Run Tests
         run: npm run test
