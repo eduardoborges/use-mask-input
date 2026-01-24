@@ -19,7 +19,8 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
     "turbo": "^2.7.5",
-    "typescript": "5.9"
+    "typescript": "5.9",
+    "wrangler": "^4.60.0"
   },
   "engines": {
     "node": ">=16",
