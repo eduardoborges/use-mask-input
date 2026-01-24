@@ -14,6 +14,9 @@ permissions:
 
 jobs:
   deploy:
+    environment:
+      name: "docs"
+      url: "https://use-mask-input.eduardoborges.dev"
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}

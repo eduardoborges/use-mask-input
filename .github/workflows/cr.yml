@@ -18,6 +18,9 @@ permissions:
 
 jobs:
   release:
+    environment:
+      name: "npm"
+      url: "https://npmjs.com/package/use-mask-input"
     runs-on: "ubuntu-latest"
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
