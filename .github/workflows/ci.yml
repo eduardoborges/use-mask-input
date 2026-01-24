@@ -33,14 +33,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          cache: "npm"
+          cache: "pnpm"
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Cache Turbo
         uses: actions/cache@v5
@@ -51,13 +56,13 @@ jobs:
             ${{ runner.os }}-turbo-
 
       - name: Run Tests
-        run: npm run test
+        run: pnpm run test
 
       - name: Run Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Run Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Check Changesets
-        run: npm run changeset status
+        run: pnpm run changeset status

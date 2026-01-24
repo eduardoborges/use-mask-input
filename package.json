@@ -3,10 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "description": "Monorepo for use-mask-input",
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=vite-project",
@@ -27,7 +23,7 @@
   },
   "engines": {
     "node": ">=16",
-    "npm": ">=7"
+    "pnpm": ">=8"
   },
-  "packageManager": "npm@11.8.0"
+  "packageManager": "pnpm@9.15.0"
 }

@@ -31,8 +31,7 @@ yarn-error.log*
 .idea
 
 # other package managers
-pnpm-lock.yaml
-pnpm-workspace.yaml
+package-lock.json
 yarn.lock
 bun.lockb
 bun-workspace.yaml
