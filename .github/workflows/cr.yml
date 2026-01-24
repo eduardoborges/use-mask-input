@@ -52,6 +52,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
+          createGithubReleases: true
           publish: npm run release
           version: npm run version-packages
           commit: "chore: version packages"
