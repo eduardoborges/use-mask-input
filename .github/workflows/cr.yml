@@ -46,11 +46,11 @@ jobs:
             ${{ runner.os }}-turbo-
 
       - name: Build packages
-        run: npm run build
+        run: npm run build --filter=use-mask-input
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@v1.6.0
         with:
           createGithubReleases: true
           publish: npm run release

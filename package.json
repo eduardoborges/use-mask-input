@@ -17,7 +17,7 @@
     "type-check": "turbo run type-check",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=use-mask-input && changeset publish",
+    "release": "changeset publish",
     "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
