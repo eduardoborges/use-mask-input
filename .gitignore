@@ -4,7 +4,12 @@
 # dependencies
 node_modules
 
-# builds
+# builds and caches
+.next
+.turbo
+coverage
+.build
+.dist
 build
 dist
 .rpt2_cache
@@ -24,4 +29,10 @@ yarn-error.log*
 
 # IDEs
 .idea
-.vscode
+
+# other package managers
+pnpm-lock.yaml
+pnpm-workspace.yaml
+yarn.lock
+bun.lockb
+bun-workspace.yaml
