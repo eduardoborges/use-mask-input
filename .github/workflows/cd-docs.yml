@@ -52,7 +52,7 @@ jobs:
         run: pnpm run build --filter=docs
 
       - name: Deploy to Cloudflare Pages
-        run: pnpm exec wrangler pages deploy apps/docussaurus/build --project-name=use-mask-input
+        run: wrangler pages deploy apps/docussaurus/build --project-name=use-mask-input
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
