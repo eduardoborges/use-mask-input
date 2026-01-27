@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "description": "Monorepo for use-mask-input",
+  "repository": {
+    "url": "https://github.com/eduardoborges/use-mask-input"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=vite-project",
