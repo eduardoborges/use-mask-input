@@ -15,8 +15,8 @@ import type { Mask, Options } from '../types';
  * @returns A mask instance
  */
 export function createMaskInstance(mask: Mask, options?: Options): Inputmask.Instance {
-  const maskfn = moduleInterop(inputmask);
-  return maskfn(getMaskOptions(mask, options));
+  const inputmaskInstance = moduleInterop(inputmask);
+  return inputmaskInstance(getMaskOptions(mask, options));
 }
 
 /**

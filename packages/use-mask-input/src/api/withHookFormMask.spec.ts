@@ -7,7 +7,9 @@ import {
 import withHookFormMask from './withHookFormMask';
 
 import type { RefCallback } from 'react';
-import type { UseFormRegisterReturn } from 'react-hook-form';
+import type { FieldValues, UseFormRegisterReturn } from 'react-hook-form';
+
+import type { UseHookFormMaskReturn } from '../types';
 
 vi.mock('inputmask', () => ({
   default: vi.fn((options) => ({
@@ -23,7 +25,8 @@ describe('withHookFormMask', () => {
 
   it('returns register object with masked ref', () => {
     const originalRef = vi.fn();
-    const register: UseFormRegisterReturn = {
+    const register: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(),
       ref: originalRef,
       onChange: vi.fn(),
       onBlur: vi.fn(),
@@ -44,7 +47,8 @@ describe('withHookFormMask', () => {
   it('applies mask when ref is called', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseFormRegisterReturn = {
+    const register: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(),
       ref: originalRef,
       onChange: vi.fn(),
       onBlur: vi.fn(),
@@ -62,8 +66,9 @@ describe('withHookFormMask', () => {
   it('calls original ref after applying mask', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseFormRegisterReturn = {
+    const register: UseHookFormMaskReturn<FieldValues> = {
       ref: originalRef,
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'phone',
@@ -80,8 +85,9 @@ describe('withHookFormMask', () => {
   it('works with alias masks', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseFormRegisterReturn = {
+    const register: UseHookFormMaskReturn<FieldValues> = {
       ref: originalRef,
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'cpf',
@@ -98,7 +104,8 @@ describe('withHookFormMask', () => {
   it('works with custom options', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseFormRegisterReturn = {
+    const register: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(),
       ref: originalRef,
       onChange: vi.fn(),
       onBlur: vi.fn(),
@@ -114,7 +121,8 @@ describe('withHookFormMask', () => {
   });
 
   it('handles null ref gracefully', () => {
-    const register: UseFormRegisterReturn = {
+    const register: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: null as unknown as RefCallback<HTMLElement | null>,
       ref: null as unknown as RefCallback<HTMLElement | null>,
       onChange: vi.fn(),
       onBlur: vi.fn(),
@@ -122,15 +130,15 @@ describe('withHookFormMask', () => {
     };
 
     const result = withHookFormMask(register, '999-999');
-
-    expect(result.ref).toBeUndefined();
+    expect(result.ref).toBeNull();
     expect(result.onChange).toBe(register.onChange);
     expect(result.onBlur).toBe(register.onBlur);
   });
 
   it('handles null input in ref callback', () => {
     const originalRef = vi.fn();
-    const register: UseFormRegisterReturn = {
+    const register: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(),
       ref: originalRef,
       onChange: vi.fn(),
       onBlur: vi.fn(),

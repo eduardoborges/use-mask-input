@@ -1,32 +1,45 @@
 
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import './App.css'
-import { useMaskInput } from 'use-mask-input'
+import { useHookFormMask, useMaskInput } from 'use-mask-input'
 
 function App() {
+
+  const { register, handleSubmit } = useForm({
+    resolver: zodResolver(z.object({
+      phone: z.string().min(1),
+    })),
+  });
 
   const phoneMask = useMaskInput({
     mask: '9999-9999',
   })
 
+  const registerWithMask = useHookFormMask(register);
+
+  const onSubmit = handleSubmit(data => {
+    console.log(data);
+  })
+
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
       <h1>Vite + React</h1>
       <div className="card">
         <input type="text" ref={phoneMask} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <hr />
+
+      <div className="card">
+        <h3>React Hook Form</h3>
+        <form onSubmit={onSubmit}>
+          <input type="text" {...registerWithMask('phone', '9999-9999')} />
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </>
   )
 }

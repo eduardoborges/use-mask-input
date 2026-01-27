@@ -23,6 +23,7 @@ describe('useHookFormMask', () => {
   it('returns a function', () => {
     const registerFn = vi.fn(() => ({
       ref: vi.fn(),
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'test',
@@ -37,6 +38,7 @@ describe('useHookFormMask', () => {
     const refCallback = vi.fn();
     const registerFn = vi.fn(() => ({
       ref: refCallback,
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'phone',
@@ -60,6 +62,7 @@ describe('useHookFormMask', () => {
   it('merges register options with mask options', () => {
     const registerFn = vi.fn(() => ({
       ref: vi.fn(),
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'phone',
@@ -76,6 +79,7 @@ describe('useHookFormMask', () => {
   it('works with alias masks', () => {
     const registerFn = vi.fn(() => ({
       ref: vi.fn(),
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'cpf',
@@ -92,6 +96,7 @@ describe('useHookFormMask', () => {
   it('works with array masks', () => {
     const registerFn = vi.fn(() => ({
       ref: vi.fn(),
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'phone',
@@ -110,6 +115,7 @@ describe('useHookFormMask', () => {
     const onBlur = vi.fn();
     const registerFn = vi.fn(() => ({
       ref: vi.fn(),
+      prevRef: vi.fn(),
       onChange,
       onBlur,
       name: 'phone',
@@ -126,6 +132,7 @@ describe('useHookFormMask', () => {
   it('handles null ref from register', () => {
     const registerFn = vi.fn(() => ({
       ref: undefined,
+      prevRef: vi.fn(),
       onChange: vi.fn(),
       onBlur: vi.fn(),
       name: 'phone',

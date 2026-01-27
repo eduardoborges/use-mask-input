@@ -6,10 +6,9 @@ import type {
   FieldValues, Path,
   RegisterOptions,
   UseFormRegister,
-  UseFormRegisterReturn,
 } from 'react-hook-form';
 
-import type { Mask, Options } from '../types';
+import type { Mask, Options, UseHookFormMaskReturn } from '../types';
 
 /**
  * Creates a masked version of React Hook Form's register function.
@@ -24,29 +23,24 @@ export default function useHookFormMask<
   T extends FieldValues, D extends RegisterOptions,
 >(registerFn: UseFormRegister<T>) {
   return (fieldName: Path<T>, mask: Mask, options?: (
-    D & Options) | Options | D): UseFormRegisterReturn<Path<T>> => {
+    D & Options) | Options | D): UseHookFormMaskReturn<T> => {
     if (!registerFn) throw new Error('registerFn is required');
 
-    const { ref, ...restRegister } = registerFn(fieldName, options as Options);
+    const registerReturn = registerFn(fieldName, options as Options);
+    const { ref } = registerReturn as UseHookFormMaskReturn<T>;
 
-    const applyMaskToRef = (_ref: HTMLElement): HTMLElement => {
-      if (_ref) {
-        applyMaskToElement(_ref, mask, options as Options);
-      }
+    const applyMaskToRef = (_ref: HTMLElement | null) => {
+      if (_ref) applyMaskToElement(_ref, mask, options as Options);
       return _ref;
     };
 
-    const newRef: RefCallback<HTMLElement | null> = ref
-      ? (flow(applyMaskToRef, ref) as RefCallback<HTMLElement | null>)
-      : ((_ref: HTMLElement | null) => {
-        if (_ref) {
-          applyMaskToElement(_ref, mask, options as Options);
-        }
-      });
+    const refWithMask = ref
+      ? flow(applyMaskToRef, ref)
+      : applyMaskToRef;
 
     return {
-      ...restRegister,
-      ref: newRef,
+      ...registerReturn,
+      ref: refWithMask as RefCallback<HTMLElement | null>,
     };
   };
 }

@@ -1,9 +1,13 @@
+/* eslint-disable no-nested-ternary */
 import { applyMaskToElement } from '../core';
 import { flow } from '../utils';
 
 import type { RefCallback } from 'react';
+import type { FieldValues } from 'react-hook-form';
 
-import type { Mask, Options, UseFormRegisterReturn } from '../types';
+import type {
+  Mask, Options, UseFormRegisterReturn, UseHookFormMaskReturn,
+} from '../types';
 
 /**
  * Enhances a React Hook Form register return object with mask support.
@@ -19,22 +23,22 @@ export default function withHookFormMask(
   register: UseFormRegisterReturn,
   mask: Mask,
   options?: Options,
-): UseFormRegisterReturn {
-  let newRef;
+): UseHookFormMaskReturn<FieldValues> {
+  const { ref } = register as UseHookFormMaskReturn<FieldValues>;
 
-  if (register && register.ref as unknown as RefCallback<HTMLElement | null>) { // this can be null
-    const { ref } = register;
+  const applyMaskToRef = (_ref: HTMLElement | null) => {
+    if (_ref) applyMaskToElement(_ref, mask, options);
+    return _ref;
+  };
 
-    newRef = flow((_ref: HTMLElement) => {
-      if (_ref) {
-        applyMaskToElement(_ref, mask, options);
-      }
-      return _ref;
-    }, ref) as RefCallback<HTMLElement>;
-  }
+  const refWithMask = ref === null
+    ? null
+    : ref
+      ? flow(applyMaskToRef, ref)
+      : null;
 
   return {
     ...register,
-    ref: newRef as RefCallback<HTMLElement>,
+    ref: refWithMask as RefCallback<HTMLElement | null>,
   };
 }
