@@ -70,3 +70,6 @@ jobs:
           version: pnpm run version-packages
           commit: "chore: version packages"
           title: "chore: version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
