@@ -34,6 +34,9 @@ jobs:
           cache: "pnpm"
           node-version-file: .node-version
 
+      - name: Clear auth token for OIDC
+        run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
