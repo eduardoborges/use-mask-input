@@ -22,9 +22,6 @@ jobs:
       name: "npm"
       url: "https://npmjs.com/package/use-mask-input"
     runs-on: "ubuntu-latest"
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v6
 
@@ -72,4 +69,3 @@ jobs:
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
