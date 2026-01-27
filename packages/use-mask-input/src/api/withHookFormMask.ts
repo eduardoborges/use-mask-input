@@ -37,8 +37,18 @@ export default function withHookFormMask(
       ? flow(applyMaskToRef, ref)
       : null;
 
-  return {
+  const result = {
     ...register,
     ref: refWithMask as RefCallback<HTMLElement | null>,
-  };
+  } as UseHookFormMaskReturn<FieldValues>;
+
+  // change prevRef to non-enumerable
+  Object.defineProperty(result, 'prevRef', {
+    value: ref,
+    enumerable: false,
+    writable: true,
+    configurable: true,
+  });
+
+  return result;
 }
