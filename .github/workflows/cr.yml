@@ -36,8 +36,6 @@ jobs:
         with:
           cache: "pnpm"
           node-version-file: .node-version
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -72,6 +70,3 @@ jobs:
           version: pnpm run version-packages
           commit: "chore: version packages"
           title: "chore: version packages"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
