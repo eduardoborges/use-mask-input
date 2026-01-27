@@ -22,6 +22,8 @@ jobs:
       name: "npm"
       url: "https://npmjs.com/package/use-mask-input"
     runs-on: "ubuntu-latest"
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v6
 
@@ -33,9 +35,8 @@ jobs:
         with:
           cache: "pnpm"
           node-version-file: .node-version
-
-      - name: Clear auth token for OIDC
-        run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
