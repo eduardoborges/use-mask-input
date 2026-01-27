@@ -13,12 +13,11 @@
     "type-check": "turbo run type-check",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish",
-    "clean": "turbo run clean && rm -rf node_modules"
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
-    "turbo": "^2.7.5",
+    "turbo": "^2.7.6",
     "typescript": "5.9",
     "wrangler": "^4.60.0"
   },
@@ -26,5 +25,5 @@
     "node": ">=16",
     "pnpm": ">=8"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@10.28.2"
 }

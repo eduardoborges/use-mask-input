@@ -9,7 +9,8 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "vite-project",
-    "next-project"
+    "next-project",
+    "docs"
   ],
   "preReleaseBranches": [
     "beta",

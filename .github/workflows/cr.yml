@@ -54,6 +54,16 @@ jobs:
       - name: Build packages
         run: pnpm run build --filter=use-mask-input
 
+      - name: Run Tests
+        run: pnpm run test
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        continue-on-error: true
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          working-directory: packages/use-mask-input
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1.6.0
