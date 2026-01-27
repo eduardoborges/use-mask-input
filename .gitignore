@@ -40,3 +40,8 @@ package-lock.json
 yarn.lock
 bun.lockb
 bun-workspace.yaml
+
+# codecov
+codecov.SHA256SUM
+codecov.SHA256SUM.sig
+codecov
