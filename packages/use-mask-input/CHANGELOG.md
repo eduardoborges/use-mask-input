@@ -1,5 +1,11 @@
 ## [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
 
+## 3.6.1
+
+### Patch Changes
+
+- 98e52be: enhance form handling with react-hook-form integration, add new dependencies, and update TypeScript configuration
+
 ### Features
 
 - add support to alphanumerial brazilian & update inputmask cnpj ([#145](https://github.com/eduardoborges/use-mask-input/issues/145)) ([64dbc92](https://github.com/eduardoborges/use-mask-input/commit/64dbc9256af8b16461acbacf1c574e43f6cf195a))
