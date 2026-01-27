@@ -36,6 +36,8 @@ jobs:
         with:
           cache: "pnpm"
           node-version-file: .node-version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
