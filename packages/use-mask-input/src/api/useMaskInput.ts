@@ -1,4 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
 import {
   createMaskInstance, findInputElement, isHTMLElement, resolveInputRef,
@@ -26,15 +31,20 @@ interface UseMaskInputOptions {
 export default function useMaskInput(props: UseMaskInputOptions): ((input: Input | null) => void) {
   const { mask, register, options } = props;
   const ref = useRef<HTMLInputElement | null>(null);
-  const maskInput = useMemo(() => createMaskInstance(mask, options), [mask, options]);
+  const maskInput = useMemo(
+    () => (isServer ? null : createMaskInstance(mask, options)),
+    [mask, options],
+  );
 
-  if (isServer) {
-    return (): void => {
-      // server doesn't have dom, so just do nothing
-    };
-  }
+  const refCallback = useCallback((input: Input | null): void => {
+    if (!input) {
+      ref.current = null;
+      return;
+    }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+    ref.current = resolveInputRef(input);
+  }, []);
+
   useEffect(() => {
     if (isServer || !ref.current) return;
 
@@ -44,21 +54,20 @@ export default function useMaskInput(props: UseMaskInputOptions): ((input: Input
 
     const inputElement = findInputElement(ref.current);
 
-    if (inputElement && isHTMLElement(inputElement)) {
+    if (maskInput && inputElement && isHTMLElement(inputElement)) {
       maskInput.mask(inputElement);
     }
 
     if (register && isHTMLElement(ref.current)) {
       register(ref.current);
     }
-  }, [mask, register, options, maskInput, ref]);
+  }, [mask, register, options, maskInput]);
 
-  return (input: Input | null): void => {
-    if (!input) {
-      ref.current = null;
-      return;
-    }
+  if (isServer) {
+    return (): void => {
+      // server doesn't have dom, so just do nothing
+    };
+  }
 
-    ref.current = resolveInputRef(input);
-  };
+  return refCallback;
 }

@@ -41,7 +41,7 @@ export function findInputElement(element: unknown): HTMLElement | null {
   }
 
   try {
-    const inputElement = element.querySelector('input') ?? element.querySelector('textarea');
+    const inputElement = element.querySelector('input, textarea');
 
     if (inputElement && isHTMLElement(inputElement)) {
       return inputElement;
