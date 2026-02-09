@@ -17,6 +17,9 @@
     "paths": {
       "use-mask-input": [
         "../../packages/use-mask-input/src"
+      ],
+      "use-mask-input/antd": [
+        "../../packages/use-mask-input/src/antd"
       ]
     },
     /* Bundler mode */
