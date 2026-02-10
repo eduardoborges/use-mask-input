@@ -55,6 +55,7 @@ function App() {
 Works seamlessly with your favorite React form libraries:
 
 - ✅ **React Hook Form** - Full compatibility with validation and error handling
+- ✅ **Ant Design** - Dedicated hooks for seamless integration (`useMaskInputAntd`, `useHookFormMaskAntd`)
 - ✅ **React Final Form** - Perfect integration for complex forms
 - ✅ **Next.js** - Server-side rendering support
 - ✅ **Vanilla React** - Works great on its own too!
@@ -103,6 +104,7 @@ That's it! Your input now has a phone number mask applied automatically.
 
 ## What's Next?
 
+- **[Ant Design Integration](./antd)** - Learn how to use masks with Ant Design components
 - **[Static Mask](./tutorial-basics/static-mask)** - Learn about fixed pattern masks
 - **[Optional Mask](./tutorial-basics/optional-mask)** - Discover masks with optional parts
 - **[Dynamic Mask](./tutorial-basics/dynamic-mask)** - Explore variable-length masks

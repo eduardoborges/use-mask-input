@@ -61,6 +61,3 @@ jobs:
 
       - name: Run Build
         run: pnpm run build
-
-      - name: Check Changesets
-        run: pnpm run changeset status

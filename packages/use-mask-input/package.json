@@ -17,6 +17,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./antd": {
+      "types": "./dist/antd.d.ts",
+      "import": "./dist/antd.js",
+      "require": "./dist/antd.cjs"
     }
   },
   "engines": {
@@ -53,6 +58,7 @@
     "@types/react": ">=17",
     "@types/react-dom": ">=17",
     "@vitest/coverage-v8": "3.2.4",
+    "antd": "^6.2.3",
     "eslint": "^9.35.0",
     "eslint-config-airbnb-extended": "^2.2.0",
     "eslint-import-resolver-typescript": "^4.4.4",
