@@ -3,7 +3,6 @@ name: CI
 on:
   pull_request:
     branches: [main, beta]
-    types: [synchronize, edited, opened]
 
 permissions:
   pull-requests: write
