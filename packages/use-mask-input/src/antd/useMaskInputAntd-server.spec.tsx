@@ -7,6 +7,8 @@ import {
   vi,
 } from 'vitest';
 
+import type { InputRef } from 'antd';
+
 vi.mock('../utils/isServer', () => ({
   default: true,
 }));
@@ -26,11 +28,10 @@ describe('useMaskInputAntd server-side', () => {
     expect(typeof result.current).toBe('function');
 
     act(() => {
-      result.current({ input: document.createElement('input') } as unknown as { input: HTMLElement });
+      result.current({ input: document.createElement('input') } as InputRef);
     });
 
     // should do nothing on server
     expect(result.current).toBeDefined();
   });
 });
-

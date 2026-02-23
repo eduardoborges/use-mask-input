@@ -6,18 +6,19 @@ import {
   vi,
 } from 'vitest';
 
-vi.mock('../core', () => ({
-  applyMaskToElement: vi.fn(),
-  resolveInputRef: vi.fn(),
-}));
-
 import { applyMaskToElement, resolveInputRef } from '../core';
 import useHookFormMaskAntd from './useHookFormMaskAntd';
 
+import type { InputRef } from 'antd';
 import type {
   FieldValues,
   UseFormRegister,
 } from 'react-hook-form';
+
+vi.mock('../core', () => ({
+  applyMaskToElement: vi.fn(),
+  resolveInputRef: vi.fn(),
+}));
 
 describe('useHookFormMaskAntd', () => {
   beforeEach(() => {
@@ -75,7 +76,7 @@ describe('useHookFormMaskAntd', () => {
       ReturnType<typeof useHookFormMaskAntd<FieldValues, never>>
     >[1];
 
-    result.ref(inputRef);
+    result.ref(inputRef as unknown as InputRef);
 
     expect(resolveInputRef).toHaveBeenCalledWith(inputElement);
     expect(applyMaskToElement).toHaveBeenCalledWith(
@@ -108,7 +109,7 @@ describe('useHookFormMaskAntd', () => {
       ReturnType<typeof useHookFormMaskAntd<FieldValues, never>>
     >[1];
 
-    result.ref(inputRef);
+    result.ref(inputRef as unknown as InputRef);
 
     expect(applyMaskToElement).toHaveBeenCalled();
   });
@@ -139,4 +140,3 @@ describe('useHookFormMaskAntd', () => {
       .toBe(prevRef);
   });
 });
-

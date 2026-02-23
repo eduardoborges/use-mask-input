@@ -8,6 +8,10 @@ import {
   vi,
 } from 'vitest';
 
+import useMaskInputAntd from './useMaskInputAntd';
+
+import type { InputRef } from 'antd';
+
 vi.mock('inputmask', () => ({
   default: vi.fn((options) => ({
     mask: vi.fn(),
@@ -18,8 +22,6 @@ vi.mock('inputmask', () => ({
 vi.mock('../utils/isServer', () => ({
   default: false,
 }));
-
-import useMaskInputAntd from './useMaskInputAntd';
 
 describe('useMaskInputAntd', () => {
   beforeEach(() => {
@@ -52,7 +54,7 @@ describe('useMaskInputAntd', () => {
     );
 
     act(() => {
-      result.current({ input: inputElement } as unknown as { input: HTMLElement });
+      result.current({ input: inputElement } as unknown as InputRef);
     });
 
     rerender();
@@ -74,7 +76,7 @@ describe('useMaskInputAntd', () => {
     );
 
     act(() => {
-      result.current({ input: inputElement } as unknown as { input: HTMLElement });
+      result.current({ input: inputElement } as unknown as InputRef);
     });
 
     rerender();
@@ -97,7 +99,7 @@ describe('useMaskInputAntd', () => {
     );
 
     act(() => {
-      result.current({ input: inputElement } as unknown as { input: HTMLElement });
+      result.current({ input: inputElement } as unknown as InputRef);
     });
 
     rerender();
@@ -105,4 +107,3 @@ describe('useMaskInputAntd', () => {
     expect(inputmask).toHaveBeenCalled();
   });
 });
-
