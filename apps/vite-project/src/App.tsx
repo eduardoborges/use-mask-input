@@ -17,7 +17,7 @@ function App() {
   });
 
   const phoneMask = useMaskInput({
-    mask: '9999-9999',
+    mask: 'brl-currency',
   })
 
   const registerWithMask = useHookFormMask(register);
@@ -45,10 +45,8 @@ function App() {
         <h3>React Hook Form</h3>
         <form onSubmit={onSubmit}>
 
-          <input type="text" {...registerWithMask('phone', '9999-9999')} />
-          <Input type="number" {...registerWithMaskAntd('amount', 'brl-currency', {
-            prefix: "R$ ",
-          })} />
+          <input {...registerWithMask('phone', 'brl-currency')} />
+          <Input {...registerWithMaskAntd('amount', 'brl-currency')} />
           <button type="submit">Submit</button>
         </form>
       </div>
