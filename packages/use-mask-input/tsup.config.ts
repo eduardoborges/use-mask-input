@@ -4,7 +4,10 @@ import { defineConfig } from 'tsup';
 const args = process.argv.slice(2);
 
 export default defineConfig({
-  entry: ['src/index.tsx', 'src/antd/index.ts'],
+  entry: {
+    index: 'src/index.tsx',
+    antd: 'src/antd/index.ts',
+  },
   outDir: 'dist',
   format: ['esm', 'cjs'],
   target: 'es2022',
