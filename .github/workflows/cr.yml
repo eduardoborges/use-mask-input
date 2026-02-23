@@ -10,8 +10,9 @@ concurrency:
   group: "release"
   cancel-in-progress: true
 
+# Required for npm Trusted Publishing (OIDC): https://docs.npmjs.com/trusted-publishers
 permissions:
-  id-token: write # to enable use of OIDC for npm provenance
+  id-token: write # required for OIDC; npm uses it for publish when Trusted Publisher is configured
   contents: write # to be able to publish a GitHub release
   issues: write # to be able to comment on released issues
   pull-requests: write # to be able to comment on released pull requests
@@ -36,8 +37,9 @@ jobs:
         with:
           cache: "pnpm"
           node-version-file: .node-version
+          registry-url: "https://registry.npmjs.org" # required for npm Trusted Publishing (OIDC)
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # for install; publish uses OIDC when Trusted Publisher is set on npm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
