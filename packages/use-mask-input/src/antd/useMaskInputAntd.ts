@@ -30,15 +30,23 @@ export default function useMaskInputAntd(props: UseMaskInputOptions): (
   const ref = useRef<HTMLInputElement | null>(null);
   const maskRef = useRef(mask);
   const optionsRef = useRef(options);
+  const maskedElementRef = useRef<HTMLInputElement | null>(null);
 
-  const refCallback = useCallback((input: InputRef | null) => {
+  maskRef.current = mask;
+  optionsRef.current = options;
+
+  const refCallback = useCallback((input: InputRef | null): void => {
     if (!input) {
       ref.current = null;
       return;
     }
 
     ref.current = resolveInputRef(input.input);
-    withMask(maskRef.current, optionsRef.current)(ref.current);
+
+    if (ref.current && ref.current !== maskedElementRef.current) {
+      withMask(maskRef.current, optionsRef.current)(ref.current);
+      maskedElementRef.current = ref.current;
+    }
   }, []);
 
   useEffect(() => {
