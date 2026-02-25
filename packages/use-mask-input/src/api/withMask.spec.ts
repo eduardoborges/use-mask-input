@@ -90,4 +90,32 @@ describe('withMask', () => {
 
     expect(maskFn).toHaveBeenCalledWith(input);
   });
+
+  it('returns the same callback reference for the same mask (stable identity)', () => {
+    const first = withMask('999-999');
+    const second = withMask('999-999');
+
+    expect(first).toBe(second);
+  });
+
+  it('returns the same callback reference for the same array mask', () => {
+    const first = withMask(['999-999', '9999-9999']);
+    const second = withMask(['999-999', '9999-9999']);
+
+    expect(first).toBe(second);
+  });
+
+  it('returns different callbacks for different masks', () => {
+    const phone = withMask('999-999');
+    const cpf = withMask('cpf');
+
+    expect(phone).not.toBe(cpf);
+  });
+
+  it('always returns a new callback when options are provided', () => {
+    const first = withMask('999-999', { placeholder: '_' });
+    const second = withMask('999-999', { placeholder: '_' });
+
+    expect(first).not.toBe(second);
+  });
 });
