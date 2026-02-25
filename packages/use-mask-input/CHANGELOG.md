@@ -1,5 +1,12 @@
 ## [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
 
+## 3.7.2
+
+### Patch Changes
+
+- e1618a5: optimize masking logic in useHookFormMask and related components with memoization
+- ea0f089: enhance withMask function to support caching of callbacks based on masks and options
+
 ## 3.7.1
 
 ### Patch Changes
