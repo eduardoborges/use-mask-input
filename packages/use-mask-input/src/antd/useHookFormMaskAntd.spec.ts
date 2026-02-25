@@ -37,15 +37,15 @@ describe('useHookFormMaskAntd', () => {
 
   it('returns a function', () => {
     const registerFn = makeRegisterFn();
-    const { result } = renderHook(() =>
-      useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
+    const { result } = renderHook(
+      () => useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
     );
     expect(typeof result.current).toBe('function');
   });
 
   it('throws when registerFn is missing', () => {
-    const { result } = renderHook(() =>
-      useHookFormMaskAntd(undefined as unknown as UseFormRegister<FieldValues>),
+    const { result } = renderHook(
+      () => useHookFormMaskAntd(undefined as unknown as UseFormRegister<FieldValues>),
     );
     expect(() => result.current('field' as never, '999-999'))
       .toThrowError('registerFn is required');
@@ -63,8 +63,8 @@ describe('useHookFormMaskAntd', () => {
 
     vi.mocked(resolveInputRef).mockReturnValue(inputElement);
 
-    const { result } = renderHook(() =>
-      useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
+    const { result } = renderHook(
+      () => useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
     );
     const options = { placeholder: '_' } as never;
     const registration = result.current('phone' as never, '999-999', options);
@@ -88,8 +88,8 @@ describe('useHookFormMaskAntd', () => {
       name: 'phone',
     }));
 
-    const { result } = renderHook(() =>
-      useHookFormMaskAntd(registerFn as unknown as UseFormRegister<FieldValues>),
+    const { result } = renderHook(
+      () => useHookFormMaskAntd(registerFn as unknown as UseFormRegister<FieldValues>),
     );
     const registration = result.current('phone' as never, '999-999');
 
@@ -114,8 +114,8 @@ describe('useHookFormMaskAntd', () => {
       name: 'phone',
     }));
 
-    const { result } = renderHook(() =>
-      useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
+    const { result } = renderHook(
+      () => useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
     );
     const registration = result.current('phone' as never, '999-999');
 
@@ -131,8 +131,8 @@ describe('useHookFormMaskAntd', () => {
   it('returns the same ref callback reference across multiple calls (stable identity)', () => {
     const registerFn = makeRegisterFn('phone');
 
-    const { result } = renderHook(() =>
-      useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
+    const { result } = renderHook(
+      () => useHookFormMaskAntd(registerFn as UseFormRegister<FieldValues>),
     );
 
     const first = result.current('phone' as never, '999-999');
@@ -149,8 +149,8 @@ describe('useHookFormMaskAntd', () => {
       name,
     }));
 
-    const { result } = renderHook(() =>
-      useHookFormMaskAntd(registerFn as unknown as UseFormRegister<FieldValues>),
+    const { result } = renderHook(
+      () => useHookFormMaskAntd(registerFn as unknown as UseFormRegister<FieldValues>),
     );
 
     const phone = result.current('phone' as never, '999-999');
