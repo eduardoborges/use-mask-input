@@ -63,17 +63,15 @@ jobs:
         continue-on-error: true
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          working-directory: packages/use-mask-input
+          working-directory: packages/use-mask-input/coverage
 
       - name: Upload test results to Codecov
-        uses: codecov/test-results-action@v1
+        uses: codecov/codecov-action@v5
         continue-on-error: true
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          working-directory: packages/use-mask-input
-          files: |
-            coverage/junit-report.xml
-            coverage/json-report.json
+          report_type: test_results
+          working-directory: packages/use-mask-input/coverage
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
