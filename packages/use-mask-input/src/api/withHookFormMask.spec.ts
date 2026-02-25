@@ -152,4 +152,59 @@ describe('withHookFormMask', () => {
 
     expect(maskFn).not.toHaveBeenCalled();
   });
+
+  it('returns the same ref callback reference across multiple calls (stable identity)', () => {
+    const originalRef = vi.fn();
+    const register: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(),
+      ref: originalRef,
+      onChange: vi.fn(),
+      onBlur: vi.fn(),
+      name: 'phone',
+    };
+
+    const first = withHookFormMask(register, '999-999');
+    const second = withHookFormMask(register, '999-999');
+
+    expect(first.ref).toBe(second.ref);
+  });
+
+  it('returns different ref callbacks for different field/mask combinations', () => {
+    const originalRef = vi.fn();
+    const registerPhone: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(),
+      ref: originalRef,
+      onChange: vi.fn(),
+      onBlur: vi.fn(),
+      name: 'phone',
+    };
+    const registerCpf: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(),
+      ref: originalRef,
+      onChange: vi.fn(),
+      onBlur: vi.fn(),
+      name: 'cpf',
+    };
+
+    const phone = withHookFormMask(registerPhone, '999-999');
+    const cpf = withHookFormMask(registerCpf, 'cpf');
+
+    expect(phone.ref).not.toBe(cpf.ref);
+  });
+
+  it('returns a new ref callback when the original ref changes', () => {
+    const ref1 = vi.fn();
+    const ref2 = vi.fn();
+    const register1: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(), ref: ref1, onChange: vi.fn(), onBlur: vi.fn(), name: 'phone',
+    };
+    const register2: UseHookFormMaskReturn<FieldValues> = {
+      prevRef: vi.fn(), ref: ref2, onChange: vi.fn(), onBlur: vi.fn(), name: 'phone',
+    };
+
+    const result1 = withHookFormMask(register1, '999-999');
+    const result2 = withHookFormMask(register2, '999-999');
+
+    expect(result1.ref).not.toBe(result2.ref);
+  });
 });

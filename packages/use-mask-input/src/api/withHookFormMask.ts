@@ -1,6 +1,5 @@
-/* eslint-disable no-nested-ternary */
 import { applyMaskToElement } from '../core';
-import { flow } from '../utils';
+import { flow, makeMaskCacheKey, setPrevRef } from '../utils';
 
 import type { RefCallback } from 'react';
 import type { FieldValues } from 'react-hook-form';
@@ -8,6 +7,11 @@ import type { FieldValues } from 'react-hook-form';
 import type {
   Mask, Options, UseFormRegisterReturn, UseHookFormMaskReturn,
 } from '../types';
+
+const refCache = new WeakMap<
+  RefCallback<HTMLElement | null>,
+  Map<string, RefCallback<HTMLElement | null>>
+>();
 
 /**
  * Enhances a React Hook Form register return object with mask support.
@@ -26,29 +30,39 @@ export default function withHookFormMask(
 ): UseHookFormMaskReturn<FieldValues> {
   const { ref } = register as UseHookFormMaskReturn<FieldValues>;
 
-  const applyMaskToRef = (_ref: HTMLElement | null) => {
-    if (_ref) applyMaskToElement(_ref, mask, options);
-    return _ref;
-  };
+  // null ref — nothing to cache, return as-is.
+  if (!ref) {
+    const result = {
+      ...register,
+      ref: null as unknown as RefCallback<HTMLElement | null>,
+    } as UseHookFormMaskReturn<FieldValues>;
+    setPrevRef(result, ref);
+    return result;
+  }
 
-  const refWithMask = ref === null
-    ? null
-    : ref
-      ? flow(applyMaskToRef, ref)
-      : null;
+  if (!refCache.has(ref)) {
+    refCache.set(ref, new Map());
+  }
+  const maskCache = refCache.get(ref);
+  const cacheKey = makeMaskCacheKey(register.name, mask);
+
+  if (!maskCache?.has(cacheKey)) {
+    const applyMaskToRef = (_ref: HTMLElement | null) => {
+      if (_ref) applyMaskToElement(_ref, mask, options);
+      return _ref;
+    };
+    maskCache?.set(
+      cacheKey,
+      flow(applyMaskToRef, ref) as RefCallback<HTMLElement | null>,
+    );
+  }
 
   const result = {
     ...register,
-    ref: refWithMask as RefCallback<HTMLElement | null>,
+    ref: maskCache?.get(cacheKey),
   } as UseHookFormMaskReturn<FieldValues>;
 
-  // change prevRef to non-enumerable
-  Object.defineProperty(result, 'prevRef', {
-    value: ref,
-    enumerable: false,
-    writable: true,
-    configurable: true,
-  });
+  setPrevRef(result, ref);
 
   return result;
 }

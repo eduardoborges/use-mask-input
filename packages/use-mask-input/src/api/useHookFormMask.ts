@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
+
 import { applyMaskToElement } from '../core';
-import { flow } from '../utils';
+import { flow, makeMaskCacheKey, setPrevRef } from '../utils';
 
 import type { RefCallback } from 'react';
 import type {
@@ -21,36 +23,40 @@ import type { Mask, Options, UseHookFormMaskReturn } from '../types';
  */
 export default function useHookFormMask<
   T extends FieldValues, D extends RegisterOptions,
->(registerFn: UseFormRegister<T>) {
-  return (fieldName: Path<T>, mask: Mask, options?: (
-    D & Options) | Options | D): UseHookFormMaskReturn<T> => {
-    if (!registerFn) throw new Error('registerFn is required');
+>(registerFn: UseFormRegister<T>): ((fieldName: Path<T>, mask: Mask, options?: (
+  D & Options) | Options | D) => UseHookFormMaskReturn<T>) {
+  //
+  return useMemo(() => {
+    const refCache = new Map<string, RefCallback<HTMLElement | null>>();
 
-    const registerReturn = registerFn(fieldName, options as Options);
-    const { ref } = registerReturn as UseHookFormMaskReturn<T>;
+    return (fieldName: Path<T>, mask: Mask, options?: (
+      D & Options) | Options | D): UseHookFormMaskReturn<T> => {
+      if (!registerFn) throw new Error('registerFn is required');
 
-    const applyMaskToRef = (_ref: HTMLElement | null) => {
-      if (_ref) applyMaskToElement(_ref, mask, options as Options);
-      return _ref;
+      const registerReturn = registerFn(fieldName, options as Options);
+      const { ref } = registerReturn as UseHookFormMaskReturn<T>;
+
+      const cacheKey = makeMaskCacheKey(fieldName, mask);
+
+      if (!refCache.has(cacheKey)) {
+        const applyMaskToRef = (_ref: HTMLElement | null) => {
+          if (_ref) applyMaskToElement(_ref, mask, options as Options);
+          return _ref;
+        };
+        refCache.set(
+          cacheKey,
+          (ref ? flow(applyMaskToRef, ref) : applyMaskToRef) as RefCallback<HTMLElement | null>,
+        );
+      }
+
+      const result = {
+        ...registerReturn,
+        ref: refCache.get(cacheKey),
+      } as UseHookFormMaskReturn<T>;
+
+      setPrevRef(result, ref);
+
+      return result;
     };
-
-    const refWithMask = ref
-      ? flow(applyMaskToRef, ref)
-      : applyMaskToRef;
-
-    const result = {
-      ...registerReturn,
-      ref: refWithMask as RefCallback<HTMLElement | null>,
-    } as UseHookFormMaskReturn<T>;
-
-    // change prevRef to non-enumerable
-    Object.defineProperty(result, 'prevRef', {
-      value: ref,
-      enumerable: false,
-      writable: true,
-      configurable: true,
-    });
-
-    return result;
-  };
+  }, [registerFn]);
 }

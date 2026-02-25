@@ -21,6 +21,7 @@ const ALIAS_MASKS: Record<string, InputmaskOptions> = {
     placeholder: '0,00',
     displayFormat: 'currency',
     radixPoint: ',',
+    groupSeparator: '.',
     autoUnmask: true,
   },
   cpf: { mask: '999.999.999-99', placeholder: '___.___.___-__' },

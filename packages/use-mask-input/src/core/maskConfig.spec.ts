@@ -124,6 +124,7 @@ describe('maskConfig', () => {
         placeholder: '0,00',
         displayFormat: 'currency',
         radixPoint: ',',
+        groupSeparator: '.',
         autoUnmask: true,
         jitMasking: false,
       });
