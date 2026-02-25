@@ -2,114 +2,86 @@
 sidebar_position: 1
 ---
 
-# Quick Start
+# use-mask-input
 
 <div style={{
   display: 'flex',
   alignItems: 'center',
-  gap: '1rem',
-  marginBottom: '2rem'
+  gap: '0.5rem',
+  marginBottom: '1.5rem'
 }}>
-  <img
-    src="https://img.shields.io/npm/v/use-mask-input"
-    alt="npm version"
-  />
-  <img
-    src="https://img.shields.io/bundlejs/size/use-mask-input?color=green-light"
-    alt="bundle size"
-  />
-  <img
-    src="https://img.shields.io/npm/dw/use-mask-input"
-    alt="npm downloads"
-  />
+  <img src="https://img.shields.io/npm/v/use-mask-input" alt="npm version" />
+  <img src="https://img.shields.io/bundlejs/size/use-mask-input?color=green-light" alt="bundle size" />
+  <img src="https://img.shields.io/npm/dw/use-mask-input" alt="npm downloads" />
 </div>
 
-**use-mask-input** is a powerful and elegant React Hook for building input masks with a simple and intuitive API. Whether you need to format phone numbers, credit cards, dates, or any custom pattern, this library makes it effortless.
-
-## Why use-mask-input?
-
-### ✨ Simple & Intuitive API
-
-Get started in seconds with a clean, straightforward API that feels natural to use.
-
-```tsx
-import { useMaskInput } from 'use-mask-input';
-
-function App() {
-  const phoneMask = useMaskInput({
-    mask: '9999-9999',
-  });
-
-  return (
-    <input
-      type="text"
-      ref={phoneMask}
-      placeholder="0000-0000"
-    />
-  );
-}
-```
-
-### 🎯 Framework Compatible
-
-Works seamlessly with your favorite React form libraries:
-
-- ✅ **React Hook Form** - Full compatibility with validation and error handling
-- ✅ **Ant Design** - Dedicated hooks for seamless integration (`useMaskInputAntd`, `useHookFormMaskAntd`)
-- ✅ **React Final Form** - Perfect integration for complex forms
-- ✅ **Next.js** - Server-side rendering support
-- ✅ **Vanilla React** - Works great on its own too!
-
-### 🚀 Powerful Features
-
-- **Multiple Mask Types**: Static, optional, dynamic, alias, alternator, and preprocessing
-- **TypeScript Support**: Full type definitions included
-- **Lightweight**: Minimal bundle size impact
-- **Flexible**: Works with refs, hooks, or HOCs
-- **Well Tested**: Comprehensive test coverage
-
-### 💎 Production Ready
-
-Trusted by developers worldwide, with regular updates and active maintenance.
-
-## Quick Start
-
-Install the package:
+Input masks for React. Works with plain inputs, React Hook Form, and Ant Design.
 
 ```bash
 npm install use-mask-input
 ```
 
-Use it in your component:
-
 ```tsx
 import { useMaskInput } from 'use-mask-input';
 
 function PhoneInput() {
-  const phoneMask = useMaskInput({
-    mask: '(99) 99999-9999',
-  });
+  const ref = useMaskInput({ mask: '(99) 99999-9999' });
+  return <input ref={ref} />;
+}
+```
+
+## With React Hook Form
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { useHookFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const { register, handleSubmit } = useForm();
+  const registerWithMask = useHookFormMask(register);
 
   return (
-    <input
-      type="tel"
-      ref={phoneMask}
-      placeholder="(00) 00000-0000"
-    />
+    <form onSubmit={handleSubmit(console.log)}>
+      <input {...registerWithMask('phone', '(99) 99999-9999')} />
+      <input {...registerWithMask('cpf', 'cpf')} />
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 ```
 
-That's it! Your input now has a phone number mask applied automatically.
+## With Ant Design
 
-## What's Next?
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
 
-- **[Ant Design Integration](./antd)** - Learn how to use masks with Ant Design components
-- **[Static Mask](./tutorial-basics/static-mask)** - Learn about fixed pattern masks
-- **[Optional Mask](./tutorial-basics/optional-mask)** - Discover masks with optional parts
-- **[Dynamic Mask](./tutorial-basics/dynamic-mask)** - Explore variable-length masks
-- **[Alias Mask](./tutorial-basics/alias-mask)** - Use pre-configured masks for common formats
-- **[Alternator Mask](./tutorial-basics/alternator-mask)** - Learn about multiple mask patterns
-- **[Preprocessing Mask](./tutorial-basics/preprocessing-mask)** - Create dynamic masks with functions
+function CPFInput() {
+  const ref = useMaskInputAntd({ mask: 'cpf' });
+  return <Input ref={ref} />;
+}
+```
 
-Ready to build beautiful, masked inputs? Let's get started! 🚀
+See the full [Ant Design Integration](./antd) guide.
+
+## APIs
+
+| API | When to use |
+|-----|-------------|
+| [`useMaskInput`](./api-reference#usemaskinput) | Default choice. Returns a ref callback. |
+| [`useHookFormMask`](./api-reference#usehookformmask) | Wraps React Hook Form's `register`. |
+| [`withMask`](./api-reference#withmask) | Non-hook ref callback. **Requires `React.memo`.** |
+| [`withHookFormMask`](./api-reference#withhookformmask) | Non-hook mask for registered fields. **Requires `React.memo`.** |
+| [`useMaskInputAntd`](./api-reference#usemaskinputantd) | `useMaskInput` for Ant Design. |
+| [`useHookFormMaskAntd`](./api-reference#usehookformmaskantd) | `useHookFormMask` for Ant Design. |
+
+Full signatures and parameters in the [API Reference](./api-reference).
+
+## Mask Types
+
+- [Static Mask](./tutorial-basics/static-mask) — fixed patterns like `999-999`
+- [Dynamic Mask](./tutorial-basics/dynamic-mask) — variable-length patterns
+- [Optional Mask](./tutorial-basics/optional-mask) — masks with optional parts
+- [Alias Mask](./tutorial-basics/alias-mask) — built-in presets (`cpf`, `currency`, `email`, ...)
+- [Alternator Mask](./tutorial-basics/alternator-mask) — multiple patterns
+- [Preprocessing Mask](./tutorial-basics/preprocessing-mask) — dynamic masks with functions

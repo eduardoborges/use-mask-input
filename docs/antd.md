@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Ant Design Integration
@@ -86,6 +86,103 @@ function FormInput() {
   );
 }
 ```
+
+### With Ant Design Form (Form.Item + name)
+
+`useMaskInputAntd` works with Ant Design's native `Form` component. Use `Form.Item` with `name` to let the form manage value and validation automatically:
+
+```tsx
+import { Button, Form, Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function AntdFormExample() {
+  const [form] = Form.useForm();
+
+  const phoneMaskRef = useMaskInputAntd({
+    mask: '(999) 999-9999',
+  });
+
+  const cpfMaskRef = useMaskInputAntd({
+    mask: 'cpf',
+  });
+
+  const currencyMaskRef = useMaskInputAntd({
+    mask: 'currency',
+    options: {
+      prefix: '$ ',
+      radixPoint: '.',
+      digits: 2,
+      groupSeparator: ',',
+      rightAlign: false,
+    },
+  });
+
+  const onFinish = (values: Record<string, string>) => {
+    console.log('Form values:', values);
+  };
+
+  return (
+    <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Form.Item
+        name="phone"
+        label="Phone"
+        rules={[{ required: true, message: 'Phone is required' }]}
+      >
+        <Input ref={phoneMaskRef} placeholder="(555) 123-4567" />
+      </Form.Item>
+
+      <Form.Item
+        name="cpf"
+        label="CPF"
+        rules={[{ required: true, message: 'CPF is required' }]}
+      >
+        <Input ref={cpfMaskRef} placeholder="000.000.000-00" />
+      </Form.Item>
+
+      <Form.Item name="amount" label="Amount">
+        <Input ref={currencyMaskRef} placeholder="$ 0.00" />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+}
+```
+
+#### Watching form values
+
+Use `Form.useWatch` to observe masked values in real time:
+
+```tsx
+import { Form, Input, Typography } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function WatchExample() {
+  const [form] = Form.useForm();
+  const values = Form.useWatch([], form);
+
+  const maskRef = useMaskInputAntd({ mask: 'cpf' });
+
+  return (
+    <Form form={form} layout="vertical">
+      <Form.Item name="cpf" label="CPF">
+        <Input ref={maskRef} />
+      </Form.Item>
+      <Typography.Text code>
+        Current value: {values?.cpf}
+      </Typography.Text>
+    </Form>
+  );
+}
+```
+
+#### Submitting and accessing values
+
+Call `form.getFieldsValue()` or use the `onFinish` callback to get the form values. The values reflect what Inputmask writes to the DOM (masked by default, or unmasked if `autoUnmask: true` is set in options).
 
 ## useHookFormMaskAntd
 
@@ -218,6 +315,10 @@ function AntdForm() {
 
 ## API Reference
 
+For full API documentation of all exports (including standard hooks, higher-order functions, and types), see the **[API Reference](./api-reference)** page.
+
+Below is a quick reference for the Ant Design-specific hooks.
+
 ### useMaskInputAntd
 
 ```tsx
@@ -228,15 +329,13 @@ function useMaskInputAntd(props: {
 }): (input: InputRef | null) => void
 ```
 
-**Parameters:**
+| Parameter | Type | Required | Description |
+|-----------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element. |
+| `options` | `Options` | No | Inputmask configuration options (placeholder, autoUnmask, etc.). |
 
-- `mask` - The mask pattern to apply (string, array, or alias)
-- `register` - Optional callback that receives the resolved HTML element
-- `options` - Optional mask configuration options
-
-**Returns:**
-
-A ref callback function that accepts Ant Design's `InputRef` and applies the mask to the underlying input element.
+**Returns** a stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element. Uses `useCallback` internally — no need for `React.memo`.
 
 ### useHookFormMaskAntd
 
@@ -250,21 +349,19 @@ function useHookFormMaskAntd<T extends FieldValues>(
 ) => UseHookFormMaskAntdReturn<T>
 ```
 
-**Parameters:**
+| Parameter | Type | Required | Description |
+|-----------|------|:--------:|-------------|
+| `registerFn` | `UseFormRegister<T>` | Yes | The `register` function returned by `useForm()`. |
 
-- `registerFn` - The register function from React Hook Form's `useForm` hook
-
-**Returns:**
-
-A function that registers a field with mask support, compatible with Ant Design's `Input` component.
+**Returns** a function with the signature `(fieldName, mask, options?)` that returns an object you spread onto Ant Design's `Input`. Uses `useMemo` internally — no need for `React.memo`.
 
 ## Differences from Standard Hooks
 
 The Ant Design hooks differ from the standard hooks in the following ways:
 
-1. **InputRef Handling**: Automatically handles Ant Design's `InputRef` structure, which wraps the actual input element
-2. **Type Safety**: Provides TypeScript types specifically for Ant Design components
-3. **Seamless Integration**: Works directly with Ant Design's `Input` component without additional configuration
+1. **InputRef Handling**: Automatically unwraps Ant Design's `InputRef` structure (which wraps the actual `<input>` element) before applying the mask
+2. **Type Safety**: Ref callbacks accept `InputRef | null` instead of `HTMLElement | null`, so TypeScript works out of the box with `<Input ref={...} />`
+3. **Same Stability Guarantees**: Both Ant Design hooks use `useCallback` / `useMemo` internally, just like their standard counterparts — no `React.memo` needed
 
 ## Examples
 
