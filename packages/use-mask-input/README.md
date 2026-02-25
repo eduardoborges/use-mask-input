@@ -2,7 +2,7 @@
   <h1>🥸 use-mask-input</h1>
   <h4>A React Hook for building elegant and simple input masks.</h4>
 
-  ![npm](https://img.shields.io/npm/v/use-mask-input) ![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/use-mask-input?color=green-light) ![npm](https://img.shields.io/npm/dw/use-mask-input)
+  ![npm](https://img.shields.io/npm/v/use-mask-input) ![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/use-mask-input?color=green-light) ![npm](https://img.shields.io/npm/dw/use-mask-input) [![codecov](https://codecov.io/gh/eduardoborges/use-mask-input/branch/main/graph/badge.svg?token=8ORAOAUZTP)](https://codecov.io/gh/eduardoborges/use-mask-input)
 </div>
 
 ## [Full Documentation](http://use-mask-input.eduardoborges.dev) | [Sponsor this project](https://github.com/eduardoborges?tab=sponsors)
@@ -52,6 +52,35 @@ function App() {
         })}
         type="text"
       />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+### Usage with `withHookFormMask`
+
+If you have already registered your field, you can use `withHookFormMask` to add the mask.
+Wrap the call in `useMemo` to avoid reapplying the mask on every render:
+
+```jsx
+import React, { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import { withHookFormMask } from 'use-mask-input';
+
+function App() {
+  const { register, handleSubmit } = useForm();
+
+  const maskedProps = useMemo(
+    () => withHookFormMask(register("amount"), 'brl-currency', {
+      unmaskAsNumber: true,
+    }),
+    [register]
+  );
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <input {...maskedProps} type="text" />
       <button type="submit">Submit</button>
     </form>
   );
