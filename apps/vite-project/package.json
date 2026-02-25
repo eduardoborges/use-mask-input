@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "antd": "^6.2.3",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-hook-form": "7.62.0",
+    "antd": "^6.3.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-hook-form": "7.71.2",
     "use-mask-input": "workspace:*",
     "zod": "^4.3.6"
   },
@@ -29,7 +29,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "typescript-eslint": "^8.56.1",
+    "vite": "^7.3.1"
   }
 }
