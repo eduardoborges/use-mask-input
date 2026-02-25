@@ -43,7 +43,7 @@ function useMaskInput(props: {
 
 **Returns**
 
-A stable ref callback — attach it to any `<input>` (or compatible element) via the `ref` prop.
+A stable ref callback. Attach it to any `<input>` (or compatible element) via the `ref` prop.
 
 **Example**
 
@@ -115,12 +115,12 @@ function MyForm() {
 
 ## Higher-Order Functions
 
-`withMask` and `withHookFormMask` are **not** hooks — they are plain functions that create new ref callbacks on every call. Because React treats a new ref callback as a different ref, calling these directly inside a component body causes the mask to be re-applied on every render.
+`withMask` and `withHookFormMask` are **not** hooks. They are plain functions that create new ref callbacks on every call. Because React treats a new ref callback as a different ref, calling these directly inside a component body causes the mask to be re-applied on every render.
 
 :::warning Wrap the component with `React.memo`
 Since `withMask` and `withHookFormMask` are not hooks, they don't have internal memoization via React's lifecycle. You **must** wrap the component that uses them with `React.memo` to ensure the ref callback identity stays stable across parent re-renders.
 
-Without `memo`, every parent re-render creates a new ref callback, which detaches and re-attaches the mask — causing flickering, losing cursor position, and degraded performance.
+Without `memo`, every parent re-render creates a new ref callback, which detaches and re-attaches the mask. This causes flickering, cursor position loss, and degraded performance.
 :::
 
 ### withMask
@@ -145,7 +145,7 @@ function withMask(
 
 A ref callback function to pass to an element's `ref` prop.
 
-**Caching behavior**: when called without `options`, the callback is cached by mask key so the same function identity is returned for the same mask. When `options` is provided, a new callback is created each call — hence the `memo` requirement.
+**Caching behavior**: when called without `options`, the callback is cached by mask key so the same function identity is returned for the same mask. When `options` is provided, a new callback is created each call, so `memo` is needed.
 
 **Example**
 
@@ -185,7 +185,7 @@ const CurrencyInput = memo(() => {
 ```
 
 :::tip Prefer `useMaskInput` if you don't need the function-based API
-If you're already inside a component and don't need to pass the mask as a prop, `useMaskInput` is the safer choice — it handles memoization internally and doesn't require `memo`.
+If you're already inside a component and don't need to pass the mask as a prop, `useMaskInput` is the safer choice. It handles memoization internally and doesn't require `memo`.
 :::
 
 ---
@@ -290,7 +290,7 @@ See the full [Ant Design Integration](./antd) guide for Form.Item, useWatch, and
 
 ### useHookFormMaskAntd
 
-Combines React Hook Form with Ant Design — a masked `register` that works with `InputRef`.
+Combines React Hook Form with Ant Design. A masked `register` that works with `InputRef`.
 
 ```ts
 import { useHookFormMaskAntd } from 'use-mask-input/antd';

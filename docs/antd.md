@@ -335,7 +335,7 @@ function useMaskInputAntd(props: {
 | `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element. |
 | `options` | `Options` | No | Inputmask configuration options (placeholder, autoUnmask, etc.). |
 
-**Returns** a stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element. Uses `useCallback` internally — no need for `React.memo`.
+**Returns** a stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element. Uses `useCallback` internally, so no need for `React.memo`.
 
 ### useHookFormMaskAntd
 
@@ -353,7 +353,7 @@ function useHookFormMaskAntd<T extends FieldValues>(
 |-----------|------|:--------:|-------------|
 | `registerFn` | `UseFormRegister<T>` | Yes | The `register` function returned by `useForm()`. |
 
-**Returns** a function with the signature `(fieldName, mask, options?)` that returns an object you spread onto Ant Design's `Input`. Uses `useMemo` internally — no need for `React.memo`.
+**Returns** a function with the signature `(fieldName, mask, options?)` that returns an object you spread onto Ant Design's `Input`. Uses `useMemo` internally, so no need for `React.memo`.
 
 ## Differences from Standard Hooks
 
@@ -361,7 +361,7 @@ The Ant Design hooks differ from the standard hooks in the following ways:
 
 1. **InputRef Handling**: Automatically unwraps Ant Design's `InputRef` structure (which wraps the actual `<input>` element) before applying the mask
 2. **Type Safety**: Ref callbacks accept `InputRef | null` instead of `HTMLElement | null`, so TypeScript works out of the box with `<Input ref={...} />`
-3. **Same Stability Guarantees**: Both Ant Design hooks use `useCallback` / `useMemo` internally, just like their standard counterparts — no `React.memo` needed
+3. **Same Stability Guarantees**: Both Ant Design hooks use `useCallback` / `useMemo` internally, just like their standard counterparts. No `React.memo` needed
 
 ## Examples
 

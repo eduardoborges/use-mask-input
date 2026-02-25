@@ -79,9 +79,9 @@ Full signatures and parameters in the [API Reference](./api-reference).
 
 ## Mask Types
 
-- [Static Mask](./tutorial-basics/static-mask) — fixed patterns like `999-999`
-- [Dynamic Mask](./tutorial-basics/dynamic-mask) — variable-length patterns
-- [Optional Mask](./tutorial-basics/optional-mask) — masks with optional parts
-- [Alias Mask](./tutorial-basics/alias-mask) — built-in presets (`cpf`, `currency`, `email`, ...)
-- [Alternator Mask](./tutorial-basics/alternator-mask) — multiple patterns
-- [Preprocessing Mask](./tutorial-basics/preprocessing-mask) — dynamic masks with functions
+- [Static Mask](./tutorial-basics/static-mask): fixed patterns like `999-999`
+- [Dynamic Mask](./tutorial-basics/dynamic-mask): variable-length patterns
+- [Optional Mask](./tutorial-basics/optional-mask): masks with optional parts
+- [Alias Mask](./tutorial-basics/alias-mask): built-in presets (`cpf`, `currency`, `email`, ...)
+- [Alternator Mask](./tutorial-basics/alternator-mask): multiple patterns
+- [Preprocessing Mask](./tutorial-basics/preprocessing-mask): dynamic masks with functions

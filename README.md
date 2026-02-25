@@ -1,62 +1,88 @@
 <div align="center">
-  <h1>🥸 use-mask-input</h1>
-  <h4>A React Hook for building elegant and simple input masks.</h4>
+  <h1>use-mask-input</h1>
+  <p>Input masks for React. Simple, lightweight, and framework-friendly.</p>
 
   [![npm](https://img.shields.io/npm/v/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
   [![npm downloads](https://img.shields.io/npm/dw/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
-  [![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/use-mask-input?color=green-light)](https://bundlejs.com/?q=use-mask-input)
+  [![bundle size](https://img.shields.io/bundlejs/size/use-mask-input?color=green-light)](https://bundlejs.com/?q=use-mask-input)
   [![codecov](https://codecov.io/gh/eduardoborges/use-mask-input/branch/main/graph/badge.svg?token=8ORAOAUZTP)](https://codecov.io/gh/eduardoborges/use-mask-input)
 </div>
 
-## [Full Documentation](http://use-mask-input.eduardoborges.dev) | [Sponsor this project](https://github.com/eduardoborges?tab=sponsors)
+---
 
-## Features
-- 🎯  Simple API
-- 💎  Works like a charm with *Next.js*
-- ✨  Compatible with [React Hook Form](https://github.com/react-hook-form/react-hook-form)
-- 🏁  Compatible with [React Final Form](https://github.com/final-form/react-final-form)
+**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[Sponsor](https://github.com/eduardoborges?tab=sponsors)**
+
 ## Install
 
 ```sh
-npm i use-mask-input
+npm install use-mask-input
 ```
 
-## Quickstart
+## Usage
 
-```jsx
-import React from 'react'
+```tsx
 import { useMaskInput } from 'use-mask-input';
 
-const App = () => {
-  return (
-    <input type="text" ref={withMask('9999-9999')} />
-  )
+function PhoneInput() {
+  const ref = useMaskInput({ mask: '(99) 99999-9999' });
+  return <input ref={ref} />;
 }
 ```
 
-### Usage with React Hook Forms
+### With React Hook Form
 
-```jsx
-import React from 'react';
+```tsx
 import { useForm } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 
-function App() {
+function MyForm() {
   const { register, handleSubmit } = useForm();
   const registerWithMask = useHookFormMask(register);
 
-  ...
-
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        {...registerWithMask("phone", ['99 9999-9999', '99999-9999'], {
-          required: true
-        })}
-        type="text"
-      />
+    <form onSubmit={handleSubmit(console.log)}>
+      <input {...registerWithMask('phone', '(99) 99999-9999')} />
+      <input {...registerWithMask('cpf', 'cpf')} />
       <button type="submit">Submit</button>
     </form>
   );
 }
 ```
+
+### With Ant Design
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function CPFInput() {
+  const ref = useMaskInputAntd({ mask: 'cpf' });
+  return <Input ref={ref} />;
+}
+```
+
+## APIs
+
+| API | Description |
+|-----|-------------|
+| `useMaskInput` | Hook. Returns a ref callback. Default choice. |
+| `useHookFormMask` | Hook. Wraps React Hook Form's `register`. |
+| `withMask` | Function. Ref callback. Requires `React.memo`. |
+| `withHookFormMask` | Function. Mask for registered fields. Requires `React.memo`. |
+| `useMaskInputAntd` | Hook. `useMaskInput` for Ant Design. |
+| `useHookFormMaskAntd` | Hook. `useHookFormMask` for Ant Design. |
+
+## Built-in Aliases
+
+`cpf` · `cnpj` · `currency` · `brl-currency` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
+
+## Works With
+
+- React Hook Form
+- Ant Design
+- React Final Form
+- Next.js / SSR
+
+## License
+
+MIT
