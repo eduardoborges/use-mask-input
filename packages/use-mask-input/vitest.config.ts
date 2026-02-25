@@ -4,9 +4,13 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     environment: 'jsdom',
+    reporters: ['junit', 'json', 'verbose'],
+    outputFile: {
+      junit: './coverage/junit-report.xml',
+      json: './coverage/json-report.json',
+    },
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
       include: ['src/**/*.{ts,tsx}'],
       exclude: [
         '/**/index.{ts,tsx}',
@@ -18,7 +22,6 @@ export default defineConfig({
         '**/*.test.tsx',
         '**/types/**',
       ],
-      all: true,
     },
   },
 });
