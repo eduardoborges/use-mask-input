@@ -1,5 +1,11 @@
 ## [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
 
+## 3.7.4
+
+### Patch Changes
+
+- 7f85587: (antd) prevent unnecessary masking function calls by tracking the current masked element reference
+
 ## 3.7.3
 
 ### Patch Changes
