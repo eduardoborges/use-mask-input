@@ -15,8 +15,8 @@ The library includes the following built-in aliases:
 - `ip` - IP address (IPv4)
 - `cpf` - Brazilian CPF (tax ID)
 - `cnpj` - Brazilian CNPJ (company tax ID)
-- `bank-account` - Brazilian bank account numbers (multiple formats)
-- `bank-agency` - Brazilian bank agency numbers
+- `br-bank-account` - Brazilian bank account numbers (multiple formats)
+- `br-bank-agency` - Brazilian bank agency numbers
 - `numeric` - Numeric input
 - `currency` - Currency formatting
 - `brl-currency` - Brazilian Real (R$) currency
