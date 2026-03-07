@@ -7,7 +7,7 @@ import {
 import withHookFormMask from './withHookFormMask';
 
 import type { RefCallback } from 'react';
-import type { FieldValues, UseFormRegisterReturn } from 'react-hook-form';
+import type { FieldValues } from 'react-hook-form';
 
 import type { UseHookFormMaskReturn } from '../types';
 
