@@ -74,7 +74,7 @@ function CPFInput() {
 
 ## Built-in Aliases
 
-`cpf` · `cnpj` · `currency` · `brl-currency` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
+`cpf` · `cnpj` · `br-bank-account` · `br-bank-agency` · `currency` · `brl-currency` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
 
 ## Works With
 

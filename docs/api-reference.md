@@ -348,7 +348,7 @@ type Mask =
   | 'datetime' | 'email' | 'numeric' | 'currency'
   | 'decimal' | 'integer' | 'percentage' | 'url'
   | 'ip' | 'mac' | 'ssn' | 'brl-currency'
-  | 'cpf' | 'cnpj'
+  | 'cpf' | 'cnpj' | 'br-bank-account' | 'br-bank-agency'
   | (string & {})       // custom pattern like '999-999'
   | (string[] & {})     // dynamic mask array
   | null;               // no mask

@@ -14,8 +14,12 @@ The library includes the following built-in aliases:
 - `email` - Email address validation
 - `ip` - IP address (IPv4)
 - `cpf` - Brazilian CPF (tax ID)
+- `cnpj` - Brazilian CNPJ (company tax ID)
+- `bank-account` - Brazilian bank account numbers (multiple formats)
+- `bank-agency` - Brazilian bank agency numbers
 - `numeric` - Numeric input
 - `currency` - Currency formatting
+- `brl-currency` - Brazilian Real (R$) currency
 - `decimal` - Decimal numbers
 - `integer` - Integer numbers
 - `percentage` - Percentage values
@@ -145,6 +149,70 @@ function CpfInput() {
       type="text"
       ref={cpfMask}
       placeholder="000.000.000-00"
+    />
+  );
+}
+```
+
+### Brazilian CNPJ
+
+```tsx
+function CnpjInput() {
+  const cnpjMask = useMaskInput({
+    mask: 'cnpj',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={cnpjMask}
+      placeholder="00.000.000/0000-00"
+    />
+  );
+}
+```
+
+### Brazilian Bank Account
+
+Automatically handles multiple bank account formats (Bradesco, Itaú, Banco do Brasil, Caixa, Nubank, and more):
+
+```tsx
+function BankAccountInput() {
+  const bankAccountMask = useMaskInput({
+    mask: 'br-bank-account',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAccountMask}
+      placeholder="Account number"
+    />
+  );
+}
+```
+
+Supported formats:
+- `1234567-9` (Bradesco, Stone, Next)
+- `12345678-9` (BB, Santander, Safra)
+- `123456789-9` (Itaú, Inter, Sicoob)
+- `1234567890-1` (Nubank, Neon, Mercado Pago)
+- `(001)12345678-9` (Caixa Econômica)
+- `123456` or `1234567` (optional separator for Agibank, BV)
+
+### Brazilian Bank Agency
+
+```tsx
+function BankAgencyInput() {
+  const bankAgencyMask = useMaskInput({
+    mask: 'br-bank-agency',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAgencyMask}
+      placeholder="Agency number"
     />
   );
 }
