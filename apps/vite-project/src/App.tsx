@@ -69,7 +69,7 @@ function App() {
 
       <Form form={form} layout="vertical" onFinish={onFinish}>
         {/* Brazilian Documents Section */}
-        <Divider orientation="left">Brazilian Documents</Divider>
+        <Divider>Brazilian Documents</Divider>
 
         <Space direction="horizontal" size="large" style={{ width: '100%' }}>
           <Form.Item 
@@ -92,7 +92,7 @@ function App() {
         </Space>
 
         {/* Banking Section */}
-        <Divider orientation="left">Banking Information</Divider>
+        <Divider>Banking Information</Divider>
 
         <Space direction="horizontal" size="large" style={{ width: '100%' }}>
           <Form.Item 
@@ -115,7 +115,7 @@ function App() {
         </Space>
 
         {/* Currency Section */}
-        <Divider orientation="left">Currency</Divider>
+        <Divider>Currency</Divider>
 
         <Space direction="horizontal" size="large" style={{ width: '100%' }}>
           <Form.Item 
@@ -138,10 +138,10 @@ function App() {
         </Space>
 
         {/* Numeric Section */}
-        <Divider orientation="left">Numeric Values</Divider>
+        <Divider>Numeric Values</Divider>
 
         {/* Numeric Section */}
-        <Divider orientation="left">Numeric Values</Divider>
+        <Divider>Numeric Values</Divider>
 
         <Space direction="horizontal" size="large" style={{ width: '100%', flexWrap: 'wrap' }}>
           <Form.Item 
@@ -182,7 +182,7 @@ function App() {
         </Space>
 
         {/* Date and Time Section */}
-        <Divider orientation="left">Date & Time</Divider>
+        <Divider>Date & Time</Divider>
 
         <Form.Item 
           name="datetime" 
@@ -193,7 +193,7 @@ function App() {
         </Form.Item>
 
         {/* Communication Section */}
-        <Divider orientation="left">Communication</Divider>
+        <Divider>Communication</Divider>
 
         <Form.Item 
           name="email" 
@@ -232,7 +232,7 @@ function App() {
         </Space>
 
         {/* Network Section */}
-        <Divider orientation="left">Network</Divider>
+        <Divider>Network</Divider>
 
         <Space direction="horizontal" size="large" style={{ width: '100%' }}>
           <Form.Item 
@@ -255,7 +255,7 @@ function App() {
         </Space>
 
         {/* Other Section */}
-        <Divider orientation="left">Other</Divider>
+        <Divider>Other</Divider>
 
         <Form.Item 
           name="ssn" 
