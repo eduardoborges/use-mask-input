@@ -174,7 +174,9 @@ function CnpjInput() {
 
 ### Brazilian Bank Account
 
-Automatically handles multiple bank account formats (Bradesco, Itaú, Banco do Brasil, Caixa, Nubank, and more):
+Automatically handles multiple bank account formats supporting Bradesco, Itaú, Banco do Brasil, Caixa Econômica, Nubank, and other Brazilian banks.
+
+#### Basic Usage
 
 ```tsx
 function BankAccountInput() {
@@ -186,13 +188,33 @@ function BankAccountInput() {
     <input
       type="text"
       ref={bankAccountMask}
-      placeholder="Account number"
+      placeholder="1234567-9"
     />
   );
 }
 ```
 
-Supported formats:
+#### Supported Formats
+
+The mask automatically adapts to different bank account number formats:
+
+```tsx
+function BankAccountInput() {
+  const bankAccountMask = useMaskInput({
+    mask: 'br-bank-account',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAccountMask}
+      placeholder="00.000.000/0000-00"
+    />
+  );
+}
+```
+
+**Supported formats:**
 - `1234567-9` (Bradesco, Stone, Next)
 - `12345678-9` (BB, Santander, Safra)
 - `123456789-9` (Itaú, Inter, Sicoob)
@@ -200,7 +222,29 @@ Supported formats:
 - `(001)12345678-9` (Caixa Econômica)
 - `123456` or `1234567` (optional separator for Agibank, BV)
 
+**Example with placeholder customization:**
+
+```tsx
+function BankAccountInput() {
+  const bankAccountMask = useMaskInput({
+    mask: 'br-bank-account',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAccountMask}
+      placeholder="(000) 12345678-9"
+    />
+  );
+}
+```
+
 ### Brazilian Bank Agency
+
+Automatically handles bank agency numbers for major Brazilian banks.
+
+#### Basic Usage
 
 ```tsx
 function BankAgencyInput() {
@@ -212,7 +256,33 @@ function BankAgencyInput() {
     <input
       type="text"
       ref={bankAgencyMask}
-      placeholder="Agency number"
+      placeholder="0000"
+    />
+  );
+}
+```
+
+#### Supported Formats
+
+Bank agency numbers typically range from 3 to 5 digits, commonly formatted as:
+
+- `0000` (4 digits - most common)
+- `000` (3 digits)
+- `00000` (5 digits)
+
+**Example with placeholder customization:**
+
+```tsx
+function BankAgencyInput() {
+  const bankAgencyMask = useMaskInput({
+    mask: 'br-bank-agency',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAgencyMask}
+      placeholder="(0000)"
     />
   );
 }
