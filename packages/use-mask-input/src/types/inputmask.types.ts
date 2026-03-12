@@ -281,7 +281,7 @@ export interface Options {
     char: string,
     currentResult: boolean,
     opts: Options,
-    maskset: any,
+    maskset: unknown,
     strict: boolean,
     fromCheckval: boolean,
   ) => boolean | CommandObject)
@@ -301,7 +301,7 @@ export interface Options {
     char: string,
     isSelection: boolean,
     opts: Options,
-    maskset: any,
+    maskset: unknown,
     caretPos: { begin: number; end: number },
     strict: boolean,
   ) => boolean | CommandObject)
