@@ -43,7 +43,7 @@ describe('useMaskInput', () => {
 
   it('handles direct input element', () => {
     const input = document.createElement('input');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
@@ -59,7 +59,7 @@ describe('useMaskInput', () => {
   it('handles ref object', () => {
     const input = document.createElement('input');
     const ref = { current: input };
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
@@ -76,7 +76,7 @@ describe('useMaskInput', () => {
     const wrapper = document.createElement('div');
     const input = document.createElement('input');
     wrapper.appendChild(input);
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
@@ -91,7 +91,7 @@ describe('useMaskInput', () => {
 
   it('handles invalid element in ref', () => {
     const invalidRef = { current: 'not an element' };
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
@@ -106,7 +106,7 @@ describe('useMaskInput', () => {
     vi.spyOn(core, 'isHTMLElement').mockReturnValueOnce(false);
 
     const invalidElement = { nodeType: 1 } as unknown as Input;
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
@@ -121,7 +121,7 @@ describe('useMaskInput', () => {
 
   it('handles wrapper without input inside', () => {
     const wrapper = document.createElement('div');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
@@ -136,7 +136,7 @@ describe('useMaskInput', () => {
 
   it('works with custom options', () => {
     const input = document.createElement('input');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({
       mask: '999-999',
@@ -154,7 +154,7 @@ describe('useMaskInput', () => {
 
   it('works with alias masks', () => {
     const input = document.createElement('input');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: 'cpf' }));
 
@@ -170,7 +170,7 @@ describe('useMaskInput', () => {
   it('calls register callback when provided', () => {
     const input = document.createElement('input');
     const register = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({
       mask: '999-999',
@@ -188,7 +188,7 @@ describe('useMaskInput', () => {
 
   it('handles textarea element', () => {
     const textarea = document.createElement('textarea');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: '999-999' }));
 
@@ -205,7 +205,7 @@ describe('useMaskInput', () => {
     const wrapper = document.createElement('div');
     const input = document.createElement('input');
     wrapper.appendChild(input);
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result, rerender } = renderHook(() => useMaskInput({ mask: '999-999' }));
 

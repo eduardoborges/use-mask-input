@@ -47,7 +47,7 @@ describe('useMaskInputAntd', () => {
     const inputElement = document.createElement('input');
     vi.mocked(inputmask).mockReturnValue({
       mask: vi.fn(),
-    } as unknown as Inputmask.Instance);
+    } as any);
 
     const { result, rerender } = renderHook(
       () => useMaskInputAntd({ mask: '999-999' }),
@@ -66,7 +66,7 @@ describe('useMaskInputAntd', () => {
     const inputElement = document.createElement('input');
     vi.mocked(inputmask).mockReturnValue({
       mask: vi.fn(),
-    } as unknown as Inputmask.Instance);
+    } as any);
 
     const { result, rerender } = renderHook(
       () => useMaskInputAntd({
@@ -89,7 +89,7 @@ describe('useMaskInputAntd', () => {
     const register = vi.fn();
     vi.mocked(inputmask).mockReturnValue({
       mask: vi.fn(),
-    } as unknown as Inputmask.Instance);
+    } as any);
 
     const { result, rerender } = renderHook(
       () => useMaskInputAntd({

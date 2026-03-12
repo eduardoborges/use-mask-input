@@ -29,7 +29,7 @@ describe('withMask', () => {
   it('applies mask to input element', () => {
     const input = document.createElement('input');
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const refCallback = withMask('999-999');
     refCallback(input);
@@ -39,7 +39,7 @@ describe('withMask', () => {
 
   it('does nothing if input is null', () => {
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const refCallback = withMask('999-999');
     refCallback(null);
@@ -50,7 +50,7 @@ describe('withMask', () => {
   it('does nothing if mask is null', () => {
     const input = document.createElement('input');
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const refCallback = withMask(null);
     refCallback(input);
@@ -61,7 +61,7 @@ describe('withMask', () => {
   it('applies mask with custom options', () => {
     const input = document.createElement('input');
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const refCallback = withMask('999-999', { placeholder: '_' });
     refCallback(input);
@@ -72,7 +72,7 @@ describe('withMask', () => {
   it('works with alias masks', () => {
     const input = document.createElement('input');
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const refCallback = withMask('cpf');
     refCallback(input);
@@ -83,7 +83,7 @@ describe('withMask', () => {
   it('works with array masks', () => {
     const input = document.createElement('input');
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const refCallback = withMask(['999-999', '9999-9999']);
     refCallback(input);

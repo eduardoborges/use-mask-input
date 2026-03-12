@@ -50,7 +50,7 @@ describe('useHookFormMask', () => {
       name: 'phone',
     }));
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const { result } = renderHook(
       () => useHookFormMask(registerFn as UseFormRegister<FieldValues>),
@@ -68,7 +68,7 @@ describe('useHookFormMask', () => {
 
   it('merges register options with mask options', () => {
     const registerFn = makeRegisterFn('phone');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result } = renderHook(
       () => useHookFormMask(registerFn as UseFormRegister<FieldValues>),
@@ -80,7 +80,7 @@ describe('useHookFormMask', () => {
 
   it('works with alias masks', () => {
     const registerFn = makeRegisterFn('cpf');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result } = renderHook(
       () => useHookFormMask(registerFn as UseFormRegister<FieldValues>),
@@ -92,7 +92,7 @@ describe('useHookFormMask', () => {
 
   it('works with array masks', () => {
     const registerFn = makeRegisterFn('phone');
-    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
 
     const { result } = renderHook(
       () => useHookFormMask(registerFn as UseFormRegister<FieldValues>),

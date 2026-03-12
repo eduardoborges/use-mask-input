@@ -33,7 +33,7 @@ describe('withHookFormMask', () => {
       name: 'phone',
     };
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const result = withHookFormMask(register, '999-999');
 
@@ -55,7 +55,7 @@ describe('withHookFormMask', () => {
       name: 'phone',
     };
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const result = withHookFormMask(register, '999-999');
     result.ref?.(input);
@@ -74,7 +74,7 @@ describe('withHookFormMask', () => {
       name: 'phone',
     };
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const result = withHookFormMask(register, '999-999');
     result.ref?.(input);
@@ -93,7 +93,7 @@ describe('withHookFormMask', () => {
       name: 'cpf',
     };
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const result = withHookFormMask(register, 'cpf');
     result.ref?.(input);
@@ -112,7 +112,7 @@ describe('withHookFormMask', () => {
       name: 'phone',
     };
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const result = withHookFormMask(register, '999-999', { placeholder: '_' });
     result.ref?.(input);
@@ -145,7 +145,7 @@ describe('withHookFormMask', () => {
       name: 'phone',
     };
     const maskFn = vi.fn();
-    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
     const result = withHookFormMask(register, '999-999');
     result.ref?.(null as unknown as HTMLElement);
