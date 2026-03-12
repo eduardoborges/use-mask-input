@@ -6,11 +6,13 @@
   [![npm downloads](https://img.shields.io/npm/dw/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
   [![bundle size](https://img.shields.io/bundlejs/size/use-mask-input?color=green-light)](https://bundlejs.com/?q=use-mask-input)
   [![codecov](https://codecov.io/gh/eduardoborges/use-mask-input/branch/main/graph/badge.svg?token=8ORAOAUZTP)](https://codecov.io/gh/eduardoborges/use-mask-input)
+
+  [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E71VQENQ)
 </div>
 
 ---
 
-**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[Sponsor](https://github.com/eduardoborges?tab=sponsors)**
+**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
 
 ## Install
 
