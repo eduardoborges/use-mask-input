@@ -29,6 +29,20 @@ const ALIAS_MASKS: Record<string, InputmaskOptions> = {
     mask: ['A|9{2}.A|9{3}.A|9{3}/A|9{4}-9{2}'],
     placeholder: '__.___.___/____-__',
   },
+  'br-bank-account': {
+    mask: [
+      '9{4,10}[-]9', // Most common formats: 1234567-9, 12345678-9, 123456789-9, 1234567890-1
+      '999999[-][9]', // Optional separator: 123456-7 or 1234567
+      '[999]9{7,8}[-]9', // Caixa and Nu Pagamentos: (001)12345678-9 or (001)1234567-9
+      '[9999]9{8}[-]9', // Caixa longer: (0001)12345678-9
+    ],
+    placeholder: '',
+    greedy: false,
+  },
+  'br-bank-agency': {
+    mask: '9{1,5}[-][9]', // Agency numbers: 1234, 12345, 1234-5
+    placeholder: '',
+  },
 };
 
 /**

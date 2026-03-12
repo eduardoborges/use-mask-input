@@ -22,6 +22,8 @@ export type Mask = 'datetime'
   | 'brl-currency'
   | 'cpf'
   | 'cnpj'
+  | 'br-bank-account'
+  | 'br-bank-agency'
   | (string & {})
   | (string[] & {})
   | null;
