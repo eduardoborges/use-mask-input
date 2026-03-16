@@ -28,18 +28,21 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install mise
+        uses: jdx/mise-action@v3
+        with:
+          install: true
+          cache: true
 
-      - name: Setup Node
+      - name: Setup NPM Auth
         uses: actions/setup-node@v6
         with:
-          cache: "pnpm"
-          node-version-file: .node-version
-          registry-url: "https://registry.npmjs.org" # required for npm Trusted Publishing (OIDC)
+          registry-url: "https://registry.npmjs.org"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # for install; publish uses OIDC when Trusted Publisher is set on npm
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -47,8 +50,10 @@ jobs:
       - name: Cache Turbo
         uses: actions/cache@v5
         with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          path: |
+            node_modules/.cache/turbo
+            .turbo
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-turbo-
 
