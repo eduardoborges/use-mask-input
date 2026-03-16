@@ -23,7 +23,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
   health_check:
-    needs: semantic_pr
     runs-on: "ubuntu-latest"
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
