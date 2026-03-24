@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import inputmask from 'inputmask';
 import {
   beforeEach,
@@ -188,6 +188,53 @@ describe('useHookFormMask', () => {
     const refAfter = result.current('phone', '999-999').ref;
 
     expect(refBefore).not.toBe(refAfter);
+  });
+
+  it('calls the latest RHF ref with the element after re-render (reset() regression)', async () => {
+    // Simulate react-hook-form's reset() behaviour: it clears _fields and
+    // returns a brand-new ref callback from register() on the next render.
+    // The cached stable ref must still forward to the new RHF ref so that
+    // RHF's internal T()/Z() logic can sync the DOM value to the reset value.
+    const input = document.createElement('input');
+    const refFn1 = vi.fn();
+    const refFn2 = vi.fn(); // "new" ref returned after reset()
+
+    const makeRegisterReturn = (ref: ReturnType<typeof vi.fn>) => ({
+      ref,
+      prevRef: vi.fn(),
+      onChange: vi.fn(),
+      onBlur: vi.fn(),
+      name: 'phone',
+    });
+
+    let currentRef = refFn1;
+    const registerFn = vi.fn(() => makeRegisterReturn(currentRef));
+
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
+
+    // Mimic a real component: the registration function is called on every
+    // render (which is what triggers the queue-push logic for reset support).
+    const { result, rerender } = renderHook(
+      () => {
+        const registerWithMask = useHookFormMask(registerFn as UseFormRegister<FieldValues>);
+        return registerWithMask('phone', '999-999');
+      },
+    );
+
+    // Mount the element – stable cached ref is called once
+    result.current.ref?.(input);
+    expect(refFn1).toHaveBeenCalledWith(input);
+
+    // Simulate reset(): register() now returns a different ref (refFn2)
+    currentRef = refFn2;
+
+    await act(async () => {
+      rerender();
+    });
+
+    // After the re-render + useLayoutEffect, the new RHF ref must have been
+    // called with the stored element so RHF can re-register it and sync values.
+    expect(refFn2).toHaveBeenCalledWith(input);
   });
 
   it('defines prevRef as a non-enumerable property', () => {
