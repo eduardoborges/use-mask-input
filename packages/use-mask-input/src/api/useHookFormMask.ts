@@ -12,12 +12,12 @@ import type {
 
 import type { Mask, Options, UseHookFormMaskReturn } from '../types';
 
-type CacheEntry = {
+interface CacheEntry {
   stableRef: RefCallback<HTMLElement | null>;
   element: HTMLElement | null;
   latestRHFRef?: RefCallback<HTMLElement | null>;
   syncedRHFRef?: RefCallback<HTMLElement | null>;
-};
+}
 
 /**
  * Creates a masked version of React Hook Form's register function.
@@ -36,13 +36,14 @@ export default function useHookFormMask<
 
   useLayoutEffect(() => {
     entryCacheRef.current.forEach((entry) => {
-      if (!entry.element || !entry.latestRHFRef) return;
+      const currentEntry = entry;
+      if (!currentEntry.element || !currentEntry.latestRHFRef) return;
 
       // After reset(), RHF gives us a new ref callback. React won't call it
       // because our outward ref identity stays stable, so we replay it here.
-      if (entry.latestRHFRef !== entry.syncedRHFRef) {
-        entry.latestRHFRef(entry.element);
-        entry.syncedRHFRef = entry.latestRHFRef;
+      if (currentEntry.latestRHFRef !== currentEntry.syncedRHFRef) {
+        currentEntry.latestRHFRef(currentEntry.element);
+        currentEntry.syncedRHFRef = currentEntry.latestRHFRef;
       }
     });
   });
@@ -63,7 +64,7 @@ export default function useHookFormMask<
 
       let entry = entryCacheRef.current.get(cacheKey);
       if (!entry) {
-        entry = {
+        const nextEntry: CacheEntry = {
           element: null,
           latestRHFRef: ref,
           syncedRHFRef: undefined,
@@ -71,16 +72,19 @@ export default function useHookFormMask<
         };
 
         const applyMaskToRef = (_ref: HTMLElement | null) => {
-          entry!.element = _ref;
+          nextEntry.element = _ref;
           if (_ref) applyMaskToElement(_ref, mask, options as Options);
           return _ref;
         };
 
-        entry.stableRef = (
-          entry.latestRHFRef ? flow(applyMaskToRef, (_ref) => entry!.latestRHFRef?.(_ref)) : applyMaskToRef
+        nextEntry.stableRef = (
+          nextEntry.latestRHFRef
+            ? flow(applyMaskToRef, (_ref: HTMLElement | null) => nextEntry.latestRHFRef?.(_ref))
+            : applyMaskToRef
         ) as RefCallback<HTMLElement | null>;
 
-        entryCacheRef.current.set(cacheKey, entry);
+        entry = nextEntry;
+        entryCacheRef.current.set(cacheKey, nextEntry);
       } else {
         entry.latestRHFRef = ref;
       }
