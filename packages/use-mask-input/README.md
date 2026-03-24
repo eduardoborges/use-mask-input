@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>use-mask-input</h1>
+  <h1>🥸 use-mask-input</h1>
   <p>Input masks for React. Works with React Hook Form, <strong>TanStack Form</strong>, Ant Design, and plain inputs.</p>
 
   [![npm](https://img.shields.io/npm/v/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
