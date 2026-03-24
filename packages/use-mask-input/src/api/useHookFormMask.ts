@@ -33,7 +33,7 @@ export default function useHookFormMask<
   // never calls that new callback automatically, so we do it here.
   // RHF's own guard (if el === field._f.ref → return) makes this a no-op on
   // normal re-renders where the field is already registered.
-  const rhfRefQueue = useRef<Array<() => void>>([]);
+  const rhfRefQueue = useRef<(() => void)[]>([]);
 
   useLayoutEffect(() => {
     const queue = rhfRefQueue.current.splice(0);
