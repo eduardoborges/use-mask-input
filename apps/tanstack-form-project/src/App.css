@@ -1,0 +1,55 @@
+#root {
+  margin: 0 auto;
+  padding: 2rem;
+  max-width: 720px;
+}
+
+.container {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.field input {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 0.55rem 0.7rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.actions button {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  padding: 0.55rem 0.9rem;
+}
+
+pre {
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 8px;
+  margin-top: 1rem;
+  padding: 0.85rem;
+  overflow: auto;
+}
