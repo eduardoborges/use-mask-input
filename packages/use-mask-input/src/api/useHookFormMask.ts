@@ -12,6 +12,13 @@ import type {
 
 import type { Mask, Options, UseHookFormMaskReturn } from '../types';
 
+type CacheEntry = {
+  stableRef: RefCallback<HTMLElement | null>;
+  element: HTMLElement | null;
+  latestRHFRef?: RefCallback<HTMLElement | null>;
+  syncedRHFRef?: RefCallback<HTMLElement | null>;
+};
+
 /**
  * Creates a masked version of React Hook Form's register function.
  * Takes react-hook-form's register and adds automatic masking. Like an upgrade.
@@ -25,24 +32,25 @@ export default function useHookFormMask<
   T extends FieldValues, D extends RegisterOptions,
 >(registerFn: UseFormRegister<T>): ((fieldName: Path<T>, mask: Mask, options?: (
   D & Options) | Options | D) => UseHookFormMaskReturn<T>) {
-  // Queue of pending RHF ref calls to run after each render.
-  // react-hook-form's reset() clears its internal _fields registry. On the
-  // subsequent render, register() returns a brand-new ref callback that, when
-  // invoked, re-registers the element and syncs the DOM to the reset value via
-  // RHF's internal setValue logic. Because our ref is stable (cached), React
-  // never calls that new callback automatically, so we do it here.
-  // RHF's own guard (if el === field._f.ref → return) makes this a no-op on
-  // normal re-renders where the field is already registered.
-  const rhfRefQueue = useRef<(() => void)[]>([]);
+  const entryCacheRef = useRef(new Map<string, CacheEntry>());
 
   useLayoutEffect(() => {
-    const queue = rhfRefQueue.current.splice(0);
-    for (const fn of queue) fn();
+    entryCacheRef.current.forEach((entry) => {
+      if (!entry.element || !entry.latestRHFRef) return;
+
+      // After reset(), RHF gives us a new ref callback. React won't call it
+      // because our outward ref identity stays stable, so we replay it here.
+      if (entry.latestRHFRef !== entry.syncedRHFRef) {
+        entry.latestRHFRef(entry.element);
+        entry.syncedRHFRef = entry.latestRHFRef;
+      }
+    });
   });
 
   return useMemo(() => {
-    const refCache = new Map<string, RefCallback<HTMLElement | null>>();
-    const elementCache = new Map<string, HTMLElement | null>();
+    // registerFn identity changed, so drop cached refs bound to the previous
+    // register lifecycle.
+    entryCacheRef.current = new Map<string, CacheEntry>();
 
     return (fieldName: Path<T>, mask: Mask, options?: (
       D & Options) | Options | D): UseHookFormMaskReturn<T> => {
@@ -53,27 +61,33 @@ export default function useHookFormMask<
 
       const cacheKey = makeMaskCacheKey(fieldName, mask);
 
-      if (!refCache.has(cacheKey)) {
+      let entry = entryCacheRef.current.get(cacheKey);
+      if (!entry) {
+        entry = {
+          element: null,
+          latestRHFRef: ref,
+          syncedRHFRef: undefined,
+          stableRef: null as unknown as RefCallback<HTMLElement | null>,
+        };
+
         const applyMaskToRef = (_ref: HTMLElement | null) => {
-          elementCache.set(cacheKey, _ref);
+          entry!.element = _ref;
           if (_ref) applyMaskToElement(_ref, mask, options as Options);
           return _ref;
         };
-        refCache.set(
-          cacheKey,
-          (ref ? flow(applyMaskToRef, ref) : applyMaskToRef) as RefCallback<HTMLElement | null>,
-        );
-      } else if (ref) {
-        // On re-renders (e.g. after reset()), schedule the latest RHF ref to be
-        // called with the stored element. RHF's guard short-circuits when the
-        // element is already registered; it only does real work after a reset.
-        const el = elementCache.get(cacheKey);
-        if (el) rhfRefQueue.current.push(() => ref(el));
+
+        entry.stableRef = (
+          entry.latestRHFRef ? flow(applyMaskToRef, (_ref) => entry!.latestRHFRef?.(_ref)) : applyMaskToRef
+        ) as RefCallback<HTMLElement | null>;
+
+        entryCacheRef.current.set(cacheKey, entry);
+      } else {
+        entry.latestRHFRef = ref;
       }
 
       const result = {
         ...registerReturn,
-        ref: refCache.get(cacheKey),
+        ref: entry.stableRef,
       } as UseHookFormMaskReturn<T>;
 
       setPrevRef(result, ref);
