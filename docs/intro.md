@@ -15,7 +15,7 @@ sidebar_position: 1
   <img src="https://img.shields.io/npm/dw/use-mask-input" alt="npm downloads" />
 </div>
 
-Input masks for React. Works with plain inputs, React Hook Form, and Ant Design.
+Input masks for React. Works with plain inputs, React Hook Form, TanStack Form, and Ant Design.
 
 ```bash
 npm install use-mask-input
@@ -43,12 +43,55 @@ function MyForm() {
   return (
     <form onSubmit={handleSubmit(console.log)}>
       <input {...registerWithMask('phone', '(99) 99999-9999')} />
-      <input {...registerWithMask('cpf', 'cpf')} />
+      <input {...registerWithMask('email', 'email')} />
       <button type="submit">Submit</button>
     </form>
   );
 }
 ```
+
+## With TanStack Form
+
+```tsx
+import { useForm } from '@tanstack/react-form';
+import { useTanStackFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const maskField = useTanStackFormMask();
+  const form = useForm({
+    defaultValues: { phone: '' },
+    onSubmit: async ({ value }) => console.log(value),
+  });
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        void form.handleSubmit();
+      }}
+    >
+      <form.Field name="phone">
+        {(field) => {
+          const inputProps = maskField(
+            '(99) 99999-9999',
+            {
+              name: field.name,
+              value: field.state.value,
+              onBlur: field.handleBlur,
+              onChange: (event) => field.handleChange(event.target.value),
+            },
+          );
+
+          return <input {...inputProps} placeholder="(00) 00000-0000" />;
+        }}
+      </form.Field>
+    </form>
+  );
+}
+```
+
+See the full [TanStack Form Integration](./tanstack-form) guide.
 
 ## With Ant Design
 
@@ -56,8 +99,8 @@ function MyForm() {
 import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
-function CPFInput() {
-  const ref = useMaskInputAntd({ mask: 'cpf' });
+function EmailInput() {
+  const ref = useMaskInputAntd({ mask: 'email' });
   return <Input ref={ref} />;
 }
 ```
@@ -70,8 +113,10 @@ See the full [Ant Design Integration](./antd) guide.
 |-----|-------------|
 | [`useMaskInput`](./api-reference#usemaskinput) | Default choice. Returns a ref callback. |
 | [`useHookFormMask`](./api-reference#usehookformmask) | Wraps React Hook Form's `register`. |
+| [`useTanStackFormMask`](./api-reference#usetanstackformmask) | Wraps TanStack Form input props with mask support. |
 | [`withMask`](./api-reference#withmask) | Non-hook ref callback. **Requires `React.memo`.** |
 | [`withHookFormMask`](./api-reference#withhookformmask) | Non-hook mask for registered fields. **Requires `React.memo`.** |
+| [`withTanStackFormMask`](./api-reference#withtanstackformmask) | Non-hook mask for TanStack input props. **Requires `React.memo`.** |
 | [`useMaskInputAntd`](./api-reference#usemaskinputantd) | `useMaskInput` for Ant Design. |
 | [`useHookFormMaskAntd`](./api-reference#usehookformmaskantd) | `useHookFormMask` for Ant Design. |
 
@@ -82,6 +127,6 @@ Full signatures and parameters in the [API Reference](./api-reference).
 - [Static Mask](./tutorial-basics/static-mask): fixed patterns like `999-999`
 - [Dynamic Mask](./tutorial-basics/dynamic-mask): variable-length patterns
 - [Optional Mask](./tutorial-basics/optional-mask): masks with optional parts
-- [Alias Mask](./tutorial-basics/alias-mask): built-in presets (`cpf`, `currency`, `email`, ...)
+- [Alias Mask](./tutorial-basics/alias-mask): built-in presets (`email`, `currency`, `datetime`, ...)
 - [Alternator Mask](./tutorial-basics/alternator-mask): multiple patterns
 - [Preprocessing Mask](./tutorial-basics/preprocessing-mask): dynamic masks with functions

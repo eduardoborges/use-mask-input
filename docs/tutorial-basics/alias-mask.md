@@ -136,36 +136,38 @@ function IpAddressInput() {
 }
 ```
 
-### Brazilian CPF
+### Payment card number
 
 ```tsx
-function CpfInput() {
-  const cpfMask = useMaskInput({
-    mask: 'cpf',
+function CardNumberInput() {
+  const cardMask = useMaskInput({
+    mask: '9999 9999 9999 9999',
   });
 
   return (
     <input
       type="text"
-      ref={cpfMask}
-      placeholder="000.000.000-00"
+      ref={cardMask}
+      placeholder="0000 0000 0000 0000"
     />
   );
 }
 ```
 
-### Brazilian CNPJ
+### Company tax ID (example)
+
+Some regions ship dedicated aliases (for example `cnpj` in Brazil). Prefer a custom pattern when you need a format that is not built in.
 
 ```tsx
-function CnpjInput() {
-  const cnpjMask = useMaskInput({
-    mask: 'cnpj',
+function CompanyIdInput() {
+  const idMask = useMaskInput({
+    mask: '99.999.999/9999-99',
   });
 
   return (
     <input
       type="text"
-      ref={cnpjMask}
+      ref={idMask}
       placeholder="00.000.000/0000-00"
     />
   );

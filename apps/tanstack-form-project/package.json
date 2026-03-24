@@ -1,0 +1,26 @@
+{
+  "name": "tanstack-form-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-form": "^1.24.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "use-mask-input": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.4.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "oxlint": "1.53.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
+  }
+}

@@ -36,3 +36,15 @@ export interface UseHookFormMaskReturn<
   ref: RefCallback<HTMLElement | null>;
   prevRef: RefCallback<HTMLElement | null>;
 }
+
+export interface TanStackFormInputProps {
+  name?: string;
+  ref?: RefCallback<HTMLElement | null>;
+  [key: string]: unknown;
+}
+
+export type UseTanStackFormMaskReturn<T extends TanStackFormInputProps = TanStackFormInputProps> =
+  Omit<T, 'ref'> & {
+  ref: RefCallback<HTMLElement | null>;
+  prevRef: RefCallback<HTMLElement | null> | undefined;
+};

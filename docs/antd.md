@@ -44,18 +44,15 @@ function PhoneInput() {
 import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
-function CPFInput() {
+function EmailInput() {
   const maskRef = useMaskInputAntd({
-    mask: 'cpf',
-    options: {
-      placeholder: '___.___.___-__',
-    },
+    mask: 'email',
   });
 
   return (
     <Input
       ref={maskRef}
-      placeholder="000.000.000-00"
+      placeholder="name@example.com"
     />
   );
 }
@@ -102,8 +99,8 @@ function AntdFormExample() {
     mask: '(999) 999-9999',
   });
 
-  const cpfMaskRef = useMaskInputAntd({
-    mask: 'cpf',
+  const emailMaskRef = useMaskInputAntd({
+    mask: 'email',
   });
 
   const currencyMaskRef = useMaskInputAntd({
@@ -132,11 +129,11 @@ function AntdFormExample() {
       </Form.Item>
 
       <Form.Item
-        name="cpf"
-        label="CPF"
-        rules={[{ required: true, message: 'CPF is required' }]}
+        name="email"
+        label="Email"
+        rules={[{ required: true, message: 'Email is required' }]}
       >
-        <Input ref={cpfMaskRef} placeholder="000.000.000-00" />
+        <Input ref={emailMaskRef} placeholder="name@example.com" />
       </Form.Item>
 
       <Form.Item name="amount" label="Amount">
@@ -165,15 +162,15 @@ function WatchExample() {
   const [form] = Form.useForm();
   const values = Form.useWatch([], form);
 
-  const maskRef = useMaskInputAntd({ mask: 'cpf' });
+  const maskRef = useMaskInputAntd({ mask: 'email' });
 
   return (
     <Form form={form} layout="vertical">
-      <Form.Item name="cpf" label="CPF">
+      <Form.Item name="email" label="Email">
         <Input ref={maskRef} />
       </Form.Item>
       <Typography.Text code>
-        Current value: {values?.cpf}
+        Current value: {values?.email}
       </Typography.Text>
     </Form>
   );
@@ -235,7 +232,7 @@ import { useHookFormMaskAntd } from 'use-mask-input/antd';
 
 interface FormData {
   phone: string;
-  cpf: string;
+  email: string;
 }
 
 function ValidatedForm() {
@@ -264,12 +261,12 @@ function ValidatedForm() {
 
       <div>
         <Input
-          {...registerWithMask('cpf', 'cpf', {
-            required: 'CPF is required',
+          {...registerWithMask('email', 'email', {
+            required: 'Email is required',
           })}
-          placeholder="000.000.000-00"
+          placeholder="name@example.com"
         />
-        {errors.cpf && <span>{errors.cpf.message}</span>}
+        {errors.email && <span>{errors.email.message}</span>}
       </div>
 
       <button type="submit">Submit</button>
@@ -377,15 +374,15 @@ function PhoneInput() {
 }
 ```
 
-### CPF Input (Brazilian ID)
+### Email input
 
 ```tsx
 import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
-function CPFInput() {
-  const maskRef = useMaskInputAntd({ mask: 'cpf' });
-  return <Input ref={maskRef} placeholder="000.000.000-00" />;
+function EmailInput() {
+  const maskRef = useMaskInputAntd({ mask: 'email' });
+  return <Input ref={maskRef} placeholder="name@example.com" />;
 }
 ```
 

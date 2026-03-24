@@ -24,7 +24,7 @@ function MyForm() {
   return (
     <form onSubmit={handleSubmit(console.log)}>
       <input {...registerWithMask('phone', '(99) 99999-9999')} />
-      <input {...registerWithMask('cpf', 'cpf')} />
+      <input {...registerWithMask('email', 'email')} />
       <button type="submit">Submit</button>
     </form>
   );

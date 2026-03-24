@@ -5,6 +5,12 @@ import {
 
 import { applyMaskToElement, createMaskInstance } from './maskEngine';
 
+type MaskInstance = ReturnType<typeof createMaskInstance>;
+
+function stubMaskInstance(maskFn: ReturnType<typeof vi.fn>): MaskInstance {
+  return { mask: maskFn } as unknown as MaskInstance;
+}
+
 vi.mock('inputmask', () => ({
   default: vi.fn((options) => ({
     mask: vi.fn(),
@@ -47,7 +53,7 @@ describe('maskEngine', () => {
     it('applies mask to input element', () => {
       const input = document.createElement('input');
       const maskFn = vi.fn();
-      vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+      vi.mocked(inputmask).mockImplementation(() => stubMaskInstance(maskFn));
 
       applyMaskToElement(input, '999-999');
 
@@ -57,7 +63,7 @@ describe('maskEngine', () => {
     it('applies mask to textarea element', () => {
       const textarea = document.createElement('textarea');
       const maskFn = vi.fn();
-      vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+      vi.mocked(inputmask).mockImplementation(() => stubMaskInstance(maskFn));
 
       applyMaskToElement(textarea, '999-999');
 
@@ -69,7 +75,7 @@ describe('maskEngine', () => {
       const input = document.createElement('input');
       wrapper.appendChild(input);
       const maskFn = vi.fn();
-      vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+      vi.mocked(inputmask).mockImplementation(() => stubMaskInstance(maskFn));
 
       applyMaskToElement(wrapper, '999-999');
 
@@ -79,7 +85,7 @@ describe('maskEngine', () => {
     it('applies mask to wrapper if no input found inside', () => {
       const wrapper = document.createElement('div');
       const maskFn = vi.fn();
-      vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+      vi.mocked(inputmask).mockImplementation(() => stubMaskInstance(maskFn));
 
       applyMaskToElement(wrapper, '999-999');
 
@@ -88,7 +94,7 @@ describe('maskEngine', () => {
 
     it('does nothing if element is null', () => {
       const maskFn = vi.fn();
-      vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+      vi.mocked(inputmask).mockImplementation(() => stubMaskInstance(maskFn));
 
       applyMaskToElement(null as unknown as HTMLElement, '999-999');
 
@@ -98,7 +104,7 @@ describe('maskEngine', () => {
     it('applies mask with custom options', () => {
       const input = document.createElement('input');
       const maskFn = vi.fn();
-      vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as unknown as Inputmask.Instance);
+      vi.mocked(inputmask).mockImplementation(() => stubMaskInstance(maskFn));
 
       applyMaskToElement(input, '999-999', { placeholder: '_' });
 
