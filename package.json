@@ -9,6 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=vite-project",
+    "dev:tanstack": "turbo run dev --filter=tanstack-form-project",
     "dev:next": "turbo run dev --filter=next-project",
     "dev:docs": "turbo run start --filter=docs",
     "lint": "turbo run lint",

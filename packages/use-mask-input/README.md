@@ -44,7 +44,7 @@ function MyForm() {
   return (
     <form onSubmit={handleSubmit(console.log)}>
       <input {...registerWithMask('phone', '(99) 99999-9999')} />
-      <input {...registerWithMask('cpf', 'cpf')} />
+      <input {...registerWithMask('email', 'email')} />
       <button type="submit">Submit</button>
     </form>
   );
@@ -57,8 +57,8 @@ function MyForm() {
 import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
-function CPFInput() {
-  const ref = useMaskInputAntd({ mask: 'cpf' });
+function EmailInput() {
+  const ref = useMaskInputAntd({ mask: 'email' });
   return <Input ref={ref} />;
 }
 ```

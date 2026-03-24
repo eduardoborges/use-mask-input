@@ -44,8 +44,53 @@ function MyForm() {
   return (
     <form onSubmit={handleSubmit(console.log)}>
       <input {...registerWithMask('phone', '(99) 99999-9999')} />
-      <input {...registerWithMask('cpf', 'cpf')} />
+      <input {...registerWithMask('email', 'email')} />
       <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+### With TanStack Form
+
+```tsx
+import { useForm } from '@tanstack/react-form';
+import { useTanStackFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const maskField = useTanStackFormMask();
+  const form = useForm({
+    defaultValues: {
+      phone: '',
+    },
+    onSubmit: async ({ value }) => {
+      console.log(value);
+    },
+  });
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        void form.handleSubmit();
+      }}
+    >
+      <form.Field name="phone">
+        {(field) => {
+          const inputProps = maskField(
+            '(99) 99999-9999',
+            {
+              name: field.name,
+              value: field.state.value,
+              onBlur: field.handleBlur,
+              onChange: (event) => field.handleChange(event.target.value),
+            },
+          );
+
+          return <input {...inputProps} placeholder="(00) 00000-0000" />;
+        }}
+      </form.Field>
     </form>
   );
 }
@@ -57,8 +102,8 @@ function MyForm() {
 import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
-function CPFInput() {
-  const ref = useMaskInputAntd({ mask: 'cpf' });
+function EmailInput() {
+  const ref = useMaskInputAntd({ mask: 'email' });
   return <Input ref={ref} />;
 }
 ```
@@ -69,8 +114,10 @@ function CPFInput() {
 |-----|-------------|
 | `useMaskInput` | Hook. Returns a ref callback. Default choice. |
 | `useHookFormMask` | Hook. Wraps React Hook Form's `register`. |
+| `useTanStackFormMask` | Hook. Adds mask to TanStack Form field input props. |
 | `withMask` | Function. Ref callback. Requires `React.memo`. |
 | `withHookFormMask` | Function. Mask for registered fields. Requires `React.memo`. |
+| `withTanStackFormMask` | Function. Mask for TanStack input props. Requires `React.memo`. |
 | `useMaskInputAntd` | Hook. `useMaskInput` for Ant Design. |
 | `useHookFormMaskAntd` | Hook. `useHookFormMask` for Ant Design. |
 
@@ -81,6 +128,7 @@ function CPFInput() {
 ## Works With
 
 - React Hook Form
+- TanStack Form
 - Ant Design
 - React Final Form
 - Next.js / SSR
