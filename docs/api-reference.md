@@ -4,14 +4,16 @@ sidebar_position: 2
 
 # API Reference
 
-**use-mask-input** exports four main APIs and two Ant Design-specific hooks. Choose the one that fits your use case:
+**use-mask-input** exports six main APIs and two Ant Design-specific hooks. Choose the one that fits your use case:
 
 | API | Type | React Hook Form | Ant Design | Needs `memo`? |
 |-----|------|:---------------:|:----------:|:-------------:|
 | [`useMaskInput`](#usemaskinput) | Hook | - | - | No |
 | [`useHookFormMask`](#usehookformmask) | Hook | Yes | - | No |
+| [`useTanStackFormMask`](#usetanstackformmask) | Hook | - | - | No |
 | [`withMask`](#withmask) | Function | - | - | **Yes** |
 | [`withHookFormMask`](#withhookformmask) | Function | Yes | - | **Yes** |
+| [`withTanStackFormMask`](#withtanstackformmask) | Function | - | - | **Yes** |
 | [`useMaskInputAntd`](#usemaskinputantd) | Hook | - | Yes | No |
 | [`useHookFormMaskAntd`](#usehookformmaskantd) | Hook | Yes | Yes | No |
 
@@ -107,6 +109,67 @@ function MyForm() {
 
       <button type="submit">Submit</button>
     </form>
+  );
+}
+```
+
+---
+
+### useTanStackFormMask
+
+React hook that wraps TanStack Form-compatible input props and adds automatic masking.
+
+```ts
+function useTanStackFormMask(): <T extends TanStackFormInputProps>(
+  mask: Mask,
+  inputProps: T,
+  options?: Options
+) => UseTanStackFormMaskReturn<T>
+```
+
+**Parameters**
+
+The returned function accepts:
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `inputProps` | `TanStackFormInputProps` | Yes | Input props generated from TanStack `field` state and handlers. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+A new props object with a masked `ref` callback while preserving all original handlers and values.
+
+**Example**
+
+```tsx
+import { useForm } from '@tanstack/react-form';
+import { useTanStackFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const maskField = useTanStackFormMask();
+  const form = useForm({
+    defaultValues: { phone: '' },
+    onSubmit: async ({ value }) => console.log(value),
+  });
+
+  return (
+    <form.Field name="phone">
+      {(field) => {
+        const inputProps = maskField(
+          '(99) 99999-9999',
+          {
+            name: field.name,
+            value: field.state.value,
+            onBlur: field.handleBlur,
+            onChange: (event) => field.handleChange(event.target.value),
+          },
+        );
+
+        return <input {...inputProps} placeholder="(00) 00000-0000" />;
+      }}
+    </form.Field>
   );
 }
 ```
@@ -242,6 +305,53 @@ const MyForm = memo(() => {
 
 ---
 
+### withTanStackFormMask
+
+Takes TanStack Form-compatible input props and adds mask support to them.
+
+```ts
+function withTanStackFormMask<T extends TanStackFormInputProps>(
+  inputProps: T,
+  mask: Mask,
+  options?: Options
+): UseTanStackFormMaskReturn<T>
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `inputProps` | `TanStackFormInputProps` | Yes | Input props object from TanStack field state and handlers. |
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+A new input props object with `ref` replaced by a mask-applying callback.
+
+**Example**
+
+```tsx
+import { memo } from 'react';
+import { withTanStackFormMask } from 'use-mask-input';
+
+const InputField = memo(function InputField({
+  inputProps,
+}: {
+  inputProps: {
+    name: string;
+    value: string;
+    onBlur: () => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+}) {
+  const maskedProps = withTanStackFormMask(inputProps, '(99) 99999-9999');
+  return <input {...maskedProps} />;
+});
+```
+
+---
+
 ## Ant Design Hooks
 
 These hooks handle Ant Design's `InputRef` structure automatically. Import them from `use-mask-input/antd`.
@@ -278,9 +388,9 @@ A stable ref callback that accepts Ant Design's `InputRef` and applies the mask 
 import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
-function CPFInput() {
-  const maskRef = useMaskInputAntd({ mask: 'cpf' });
-  return <Input ref={maskRef} placeholder="000.000.000-00" />;
+function PhoneInput() {
+  const maskRef = useMaskInputAntd({ mask: '(99) 99999-9999' });
+  return <Input ref={maskRef} placeholder="(00) 00000-0000" />;
 }
 ```
 
@@ -379,4 +489,24 @@ For the complete list, see the [Inputmask documentation](https://robinherbots.gi
 
 ```ts
 type Input = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
+```
+
+### TanStackFormInputProps
+
+```ts
+interface TanStackFormInputProps {
+  name?: string;
+  ref?: RefCallback<HTMLElement | null>;
+  [key: string]: unknown;
+}
+```
+
+### UseTanStackFormMaskReturn
+
+```ts
+type UseTanStackFormMaskReturn<T extends TanStackFormInputProps> =
+  Omit<T, 'ref'> & {
+    ref: RefCallback<HTMLElement | null>;
+    prevRef: RefCallback<HTMLElement | null> | undefined;
+  };
 ```

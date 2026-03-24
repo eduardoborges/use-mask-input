@@ -175,7 +175,7 @@ function UserPreferenceInput() {
 
 ```tsx
 function ComplexConditionalInput() {
-  const inputType = 'phone'; // 'phone' | 'email' | 'cpf'
+  const inputType = 'phone'; // 'phone' | 'email' | 'postal'
 
   const mask = useMaskInput({
     mask: function() {
@@ -185,8 +185,8 @@ function ComplexConditionalInput() {
       if (inputType === 'email') {
         return '*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]';
       }
-      if (inputType === 'cpf') {
-        return '999.999.999-99';
+      if (inputType === 'postal') {
+        return '99999-9999';
       }
       return '9999-9999';
     },
