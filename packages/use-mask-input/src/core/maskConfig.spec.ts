@@ -148,6 +148,30 @@ describe('maskConfig', () => {
       });
     });
 
+    it('returns options for br-bank-account mask', () => {
+      const options = getMaskOptions('br-bank-account');
+      expect(options).toEqual({
+        mask: [
+          '9{4,10}[-]9',
+          '999999[-][9]',
+          '[999]9{7,8}[-]9',
+          '[9999]9{8}[-]9',
+        ],
+        placeholder: '',
+        greedy: false,
+        jitMasking: false,
+      });
+    });
+
+    it('returns options for br-bank-agency mask', () => {
+      const options = getMaskOptions('br-bank-agency');
+      expect(options).toEqual({
+        mask: '9{1,5}[-][9]',
+        placeholder: '',
+        jitMasking: false,
+      });
+    });
+
     it('returns custom mask string', () => {
       const options = getMaskOptions('999-999');
       expect(options).toEqual({
