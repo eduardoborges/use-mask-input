@@ -1,6 +1,6 @@
 <div align="center">
   <h1>use-mask-input</h1>
-  <p>Input masks for React. Simple, lightweight, and framework-friendly.</p>
+  <p>Input masks for React. Works with React Hook Form, <strong>TanStack Form</strong>, Ant Design, and plain inputs.</p>
 
   [![npm](https://img.shields.io/npm/v/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
   [![npm downloads](https://img.shields.io/npm/dw/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
@@ -12,7 +12,7 @@
 
 ---
 
-**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
+**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[TanStack Form](http://use-mask-input.eduardoborges.dev/tanstack-form)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
 
 ## Install
 
@@ -127,9 +127,9 @@ function EmailInput() {
 
 ## Works With
 
+- **TanStack Form** (`useTanStackFormMask`, `withTanStackFormMask`). See the [TanStack Form guide](http://use-mask-input.eduardoborges.dev/tanstack-form).
 - React Hook Form
-- TanStack Form
-- Ant Design
+- Ant Design (`use-mask-input/antd`)
 - React Final Form
 - Next.js / SSR
 

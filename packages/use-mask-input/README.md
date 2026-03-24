@@ -1,6 +1,6 @@
 <div align="center">
   <h1>use-mask-input</h1>
-  <p>Input masks for React. Simple, lightweight, and framework-friendly.</p>
+  <p>Input masks for React. Works with React Hook Form, <strong>TanStack Form</strong>, Ant Design, and plain inputs.</p>
 
   [![npm](https://img.shields.io/npm/v/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
   [![npm downloads](https://img.shields.io/npm/dw/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
@@ -12,7 +12,7 @@
 
 ---
 
-**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
+**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[TanStack Form](http://use-mask-input.eduardoborges.dev/tanstack-form)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
 
 ## Install
 
@@ -51,6 +51,47 @@ function MyForm() {
 }
 ```
 
+### With TanStack Form
+
+Install [`@tanstack/react-form`](https://tanstack.com/form) alongside this package, then use `useTanStackFormMask` (or `withTanStackFormMask`) to wrap field input props. Full guide: [TanStack Form integration](http://use-mask-input.eduardoborges.dev/tanstack-form).
+
+```tsx
+import { useForm } from '@tanstack/react-form';
+import { useTanStackFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const maskField = useTanStackFormMask();
+  const form = useForm({
+    defaultValues: { phone: '' },
+    onSubmit: async ({ value }) => console.log(value),
+  });
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        void form.handleSubmit();
+      }}
+    >
+      <form.Field name="phone">
+        {(field) => (
+          <input
+            {...maskField('(99) 99999-9999', {
+              name: field.name,
+              value: field.state.value,
+              onBlur: field.handleBlur,
+              onChange: (e) => field.handleChange(e.target.value),
+            })}
+            placeholder="(00) 00000-0000"
+          />
+        )}
+      </form.Field>
+    </form>
+  );
+}
+```
+
 ### With Ant Design
 
 ```tsx
@@ -69,8 +110,10 @@ function EmailInput() {
 |-----|-------------|
 | `useMaskInput` | Hook. Returns a ref callback. Default choice. |
 | `useHookFormMask` | Hook. Wraps React Hook Form's `register`. |
+| `useTanStackFormMask` | Hook. Masks TanStack Form field input props. |
 | `withMask` | Function. Ref callback. Requires `React.memo`. |
 | `withHookFormMask` | Function. Mask for registered fields. Requires `React.memo`. |
+| `withTanStackFormMask` | Function. Mask for TanStack input props. Requires `React.memo`. |
 | `useMaskInputAntd` | Hook. `useMaskInput` for Ant Design. |
 | `useHookFormMaskAntd` | Hook. `useHookFormMask` for Ant Design. |
 
@@ -80,8 +123,9 @@ function EmailInput() {
 
 ## Works With
 
+- **TanStack Form** (`useTanStackFormMask`, `withTanStackFormMask`). See [TanStack Form](http://use-mask-input.eduardoborges.dev/tanstack-form).
 - React Hook Form
-- Ant Design
+- Ant Design (`use-mask-input/antd`)
 - React Final Form
 - Next.js / SSR
 
