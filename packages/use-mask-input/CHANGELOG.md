@@ -1,5 +1,33 @@
 ## [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
 
+## 3.8.0
+
+### Minor Changes
+
+- eacce0f: feat: add Brazilian banking masks (br-bank-account and br-bank-agency)
+
+  Added two new mask aliases for Brazilian banking information:
+
+  - `br-bank-account`: Supports multiple Brazilian bank account formats including Bradesco, Itaú, Banco do Brasil, Caixa Econômica, Nubank, and more
+  - `br-bank-agency`: Handles Brazilian bank agency numbers with optional check digits
+
+  These masks automatically adapt to different account number formats used by major Brazilian banks, making it easier to handle banking data in forms.
+
+  Example usage:
+
+  ```tsx
+  const accountMask = useMaskInput({ mask: "br-bank-account" });
+  const agencyMask = useMaskInput({ mask: "br-bank-agency" });
+  ```
+
+### Patch Changes
+
+- a614d93: fix: sync DOM value after react-hook-form `reset()` in `useHookFormMask`
+
+  `reset()` in react-hook-form clears its internal field registry before re-rendering. On the subsequent render it returns a new ref callback that, when called, syncs the DOM to the reset value. Because `useHookFormMask` caches a stable ref, React never calls that new callback — leaving masked inputs stale after `reset()`.
+
+  Fixed by using a `useLayoutEffect` queue that replays the latest RHF ref callback against the stored element after each render. RHF's own guard makes this a no-op on normal re-renders; it only does real work after `reset()` clears the registry.
+
 ## 3.7.4
 
 ### Patch Changes
