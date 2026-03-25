@@ -1,5 +1,11 @@
 ## [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
 
+## 3.9.0
+
+### Minor Changes
+
+- 99e7a0a: Add TanStack Form integration: `useTanStackFormMask` and `withTanStackFormMask`, with types `TanStackFormInputProps` and `UseTanStackFormMaskReturn`. Documentation and a `tanstack-form-project` demo app were added; examples favor international-friendly masks (phone, email, postal).
+
 ## 3.8.0
 
 ### Minor Changes
