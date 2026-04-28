@@ -1,5 +1,11 @@
 ## [3.6.0](https://github.com/eduardoborges/use-mask-input/compare/3.5.2...3.6.0) (2026-01-13)
 
+## 3.10.0
+
+### Minor Changes
+
+- 2885f4b: Expose `unmaskedValue()` on mask hook and helper returns so consumers can read the current unmasked datetime value directly from the API.
+
 ## 3.9.0
 
 ### Minor Changes
