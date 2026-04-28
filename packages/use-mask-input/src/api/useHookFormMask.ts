@@ -1,7 +1,9 @@
 import { useLayoutEffect, useMemo, useRef } from 'react';
 
 import { applyMaskToElement } from '../core';
-import { flow, makeMaskCacheKey, setPrevRef } from '../utils';
+import {
+  flow, getUnmaskedValue, makeMaskCacheKey, setPrevRef, setUnmaskedValue,
+} from '../utils';
 
 import type { RefCallback } from 'react';
 import type {
@@ -93,6 +95,7 @@ export default function useHookFormMask<
         ...registerReturn,
         ref: entry.stableRef,
       } as UseHookFormMaskReturn<T>;
+      setUnmaskedValue(result, () => getUnmaskedValue(entry?.element ?? null));
 
       setPrevRef(result, ref);
 

@@ -18,6 +18,18 @@ vi.mock('inputmask', () => ({
   })),
 }));
 
+const createRegister = (
+  overrides: Partial<UseHookFormMaskReturn<FieldValues>> = {},
+): UseHookFormMaskReturn<FieldValues> => ({
+  prevRef: vi.fn(),
+  ref: vi.fn(),
+  onChange: vi.fn(),
+  onBlur: vi.fn(),
+  name: 'phone',
+  unmaskedValue: vi.fn(() => ''),
+  ...overrides,
+});
+
 describe('withHookFormMask', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -25,13 +37,7 @@ describe('withHookFormMask', () => {
 
   it('returns register object with masked ref', () => {
     const originalRef = vi.fn();
-    const register: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(),
-      ref: originalRef,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
+    const register = createRegister({ ref: originalRef });
     const maskFn = vi.fn();
     vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
@@ -42,18 +48,13 @@ describe('withHookFormMask', () => {
     expect(result.onChange).toBe(register.onChange);
     expect(result.onBlur).toBe(register.onBlur);
     expect(result.name).toBe(register.name);
+    expect(typeof result.unmaskedValue).toBe('function');
   });
 
   it('applies mask when ref is called', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(),
-      ref: originalRef,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
+    const register = createRegister({ ref: originalRef });
     const maskFn = vi.fn();
     vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
@@ -63,16 +64,27 @@ describe('withHookFormMask', () => {
     expect(maskFn).toHaveBeenCalled();
   });
 
+  it('exposes the unmasked value from the masked input', () => {
+    const input = document.createElement('input');
+    const originalRef = vi.fn();
+    const register = createRegister({ ref: originalRef });
+    const maskFn = vi.fn();
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
+
+    const result = withHookFormMask(register, '999-999');
+    result.ref?.(input);
+
+    input.inputmask = {
+      unmaskedvalue: vi.fn(() => '2026-04-01'),
+    } as any;
+
+    expect(result.unmaskedValue()).toBe('2026-04-01');
+  });
+
   it('calls original ref after applying mask', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseHookFormMaskReturn<FieldValues> = {
-      ref: originalRef,
-      prevRef: vi.fn(),
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
+    const register = createRegister({ ref: originalRef });
     const maskFn = vi.fn();
     vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
@@ -85,13 +97,7 @@ describe('withHookFormMask', () => {
   it('works with alias masks', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseHookFormMaskReturn<FieldValues> = {
-      ref: originalRef,
-      prevRef: vi.fn(),
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'cpf',
-    };
+    const register = createRegister({ ref: originalRef, name: 'cpf' });
     const maskFn = vi.fn();
     vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
@@ -104,13 +110,7 @@ describe('withHookFormMask', () => {
   it('works with custom options', () => {
     const input = document.createElement('input');
     const originalRef = vi.fn();
-    const register: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(),
-      ref: originalRef,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
+    const register = createRegister({ ref: originalRef });
     const maskFn = vi.fn();
     vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
@@ -121,13 +121,10 @@ describe('withHookFormMask', () => {
   });
 
   it('handles null ref gracefully', () => {
-    const register: UseHookFormMaskReturn<FieldValues> = {
+    const register = createRegister({
       prevRef: null as unknown as RefCallback<HTMLElement | null>,
       ref: null as unknown as RefCallback<HTMLElement | null>,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
+    });
 
     const result = withHookFormMask(register, '999-999');
     expect(result.ref).toBeNull();
@@ -137,13 +134,7 @@ describe('withHookFormMask', () => {
 
   it('handles null input in ref callback', () => {
     const originalRef = vi.fn();
-    const register: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(),
-      ref: originalRef,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
+    const register = createRegister({ ref: originalRef });
     const maskFn = vi.fn();
     vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
 
@@ -155,13 +146,7 @@ describe('withHookFormMask', () => {
 
   it('returns the same ref callback reference across multiple calls (stable identity)', () => {
     const originalRef = vi.fn();
-    const register: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(),
-      ref: originalRef,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
+    const register = createRegister({ ref: originalRef });
 
     const first = withHookFormMask(register, '999-999');
     const second = withHookFormMask(register, '999-999');
@@ -171,20 +156,8 @@ describe('withHookFormMask', () => {
 
   it('returns different ref callbacks for different field/mask combinations', () => {
     const originalRef = vi.fn();
-    const registerPhone: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(),
-      ref: originalRef,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'phone',
-    };
-    const registerCpf: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(),
-      ref: originalRef,
-      onChange: vi.fn(),
-      onBlur: vi.fn(),
-      name: 'cpf',
-    };
+    const registerPhone = createRegister({ ref: originalRef, name: 'phone' });
+    const registerCpf = createRegister({ ref: originalRef, name: 'cpf' });
 
     const phone = withHookFormMask(registerPhone, '999-999');
     const cpf = withHookFormMask(registerCpf, 'cpf');
@@ -195,12 +168,8 @@ describe('withHookFormMask', () => {
   it('returns a new ref callback when the original ref changes', () => {
     const ref1 = vi.fn();
     const ref2 = vi.fn();
-    const register1: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(), ref: ref1, onChange: vi.fn(), onBlur: vi.fn(), name: 'phone',
-    };
-    const register2: UseHookFormMaskReturn<FieldValues> = {
-      prevRef: vi.fn(), ref: ref2, onChange: vi.fn(), onBlur: vi.fn(), name: 'phone',
-    };
+    const register1 = createRegister({ prevRef: vi.fn(), ref: ref1 });
+    const register2 = createRegister({ prevRef: vi.fn(), ref: ref2 });
 
     const result1 = withHookFormMask(register1, '999-999');
     const result2 = withHookFormMask(register2, '999-999');

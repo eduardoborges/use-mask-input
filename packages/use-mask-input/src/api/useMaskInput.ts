@@ -5,8 +5,11 @@ import {
 import { resolveInputRef } from '../core';
 import withMask from './withMask';
 import isServer from '../utils/isServer';
+import { getUnmaskedValue, setUnmaskedValue } from '../utils';
 
-import type { Input, Mask, Options } from '../types';
+import type {
+  Input, Mask, Options, UseMaskInputReturn,
+} from '../types';
 
 interface UseMaskInputOptions {
   mask: Mask;
@@ -24,11 +27,12 @@ interface UseMaskInputOptions {
  * @param props.options - Optional mask configuration options
  * @returns A ref callback function to attach to the input element
  */
-export default function useMaskInput(props: UseMaskInputOptions): ((input: Input | null) => void) {
+export default function useMaskInput(props: UseMaskInputOptions): UseMaskInputReturn {
   const { mask, register, options } = props;
   const ref = useRef<HTMLInputElement | null>(null);
   const maskRef = useRef(mask);
   const optionsRef = useRef(options);
+  const unmaskedValue = useCallback(() => getUnmaskedValue(ref.current), []);
 
   const refCallback = useCallback((input: Input | null): void => {
     if (!input) {
@@ -46,10 +50,12 @@ export default function useMaskInput(props: UseMaskInputOptions): ((input: Input
   }, [register]);
 
   if (isServer) {
-    return (): void => {
+    const noop = (() => {
       // server doesn't have dom, so just do nothing
-    };
+    }) as unknown as UseMaskInputReturn;
+
+    return setUnmaskedValue(noop, () => '');
   }
 
-  return refCallback;
+  return setUnmaskedValue(refCallback, unmaskedValue);
 }

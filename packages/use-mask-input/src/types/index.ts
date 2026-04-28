@@ -30,9 +30,15 @@ export type Mask = 'datetime'
 export type Options = MaskOptions;
 export type Input = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
 
+export interface UnmaskedValueApi {
+  unmaskedValue: () => string;
+}
+
+export type UseMaskInputReturn = RefCallback<HTMLElement | null> & UnmaskedValueApi;
+
 export interface UseHookFormMaskReturn<
   T extends FieldValues,
-> extends UseFormRegisterReturn<Path<T>> {
+> extends UseFormRegisterReturn<Path<T>>, UnmaskedValueApi {
   ref: RefCallback<HTMLElement | null>;
   prevRef: RefCallback<HTMLElement | null>;
 }
@@ -47,4 +53,4 @@ export type UseTanStackFormMaskReturn<T extends TanStackFormInputProps = TanStac
   Omit<T, 'ref'> & {
   ref: RefCallback<HTMLElement | null>;
   prevRef: RefCallback<HTMLElement | null> | undefined;
-};
+} & UnmaskedValueApi;

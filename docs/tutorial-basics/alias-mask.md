@@ -76,6 +76,9 @@ function DateTimeInput() {
 }
 ```
 
+If you need the `outputFormat` value, read it from `dateTimeMask.unmaskedValue()`.
+The visible input value stays masked, so `e.target.value` is not the unmasked output.
+
 ### Email
 
 ```tsx

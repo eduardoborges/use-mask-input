@@ -3,10 +3,13 @@ import { useCallback, useEffect, useRef } from 'react';
 import withMask from '../api/withMask';
 import { resolveInputRef } from '../core';
 import isServer from '../utils/isServer';
+import { getUnmaskedValue, setUnmaskedValue } from '../utils';
 
 import type { InputRef } from 'antd';
 
-import type { Mask, Options } from '../types';
+import type { Mask, Options, UnmaskedValueApi } from '../types';
+
+type UseMaskInputAntdReturn = ((input: InputRef | null) => void) & UnmaskedValueApi;
 
 interface UseMaskInputOptions {
   mask: Mask;
@@ -23,14 +26,13 @@ interface UseMaskInputOptions {
  * @param props.options - Optional mask configuration options
  * @returns A ref callback function to attach to the Ant Design Input element
  */
-export default function useMaskInputAntd(props: UseMaskInputOptions): (
-  input: InputRef | null
-) => void {
+export default function useMaskInputAntd(props: UseMaskInputOptions): UseMaskInputAntdReturn {
   const { mask, register, options } = props;
   const ref = useRef<HTMLInputElement | null>(null);
   const maskRef = useRef(mask);
   const optionsRef = useRef(options);
   const maskedElementRef = useRef<HTMLInputElement | null>(null);
+  const unmaskedValue = useCallback(() => getUnmaskedValue(ref.current), []);
 
   maskRef.current = mask;
   optionsRef.current = options;
@@ -55,10 +57,12 @@ export default function useMaskInputAntd(props: UseMaskInputOptions): (
   }, [register]);
 
   if (isServer) {
-    return (): void => {
+    const noop = (() => {
       // server doesn't have dom, so just do nothing
-    };
+    }) as unknown as UseMaskInputAntdReturn;
+
+    return setUnmaskedValue(noop, () => '');
   }
 
-  return refCallback;
+  return setUnmaskedValue(refCallback as UseMaskInputAntdReturn, unmaskedValue);
 }

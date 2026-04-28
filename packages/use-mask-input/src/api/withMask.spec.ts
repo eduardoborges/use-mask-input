@@ -24,6 +24,7 @@ describe('withMask', () => {
   it('returns a function', () => {
     const result = withMask('999-999');
     expect(typeof result).toBe('function');
+    expect(typeof result.unmaskedValue).toBe('function');
   });
 
   it('applies mask to input element', () => {
@@ -35,6 +36,21 @@ describe('withMask', () => {
     refCallback(input);
 
     expect(maskFn).toHaveBeenCalledWith(input);
+  });
+
+  it('exposes the unmasked value from the masked input', () => {
+    const input = document.createElement('input');
+    const maskFn = vi.fn();
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
+
+    const refCallback = withMask('999-999');
+    refCallback(input);
+
+    input.inputmask = {
+      unmaskedvalue: vi.fn(() => '2026-04-01'),
+    } as any;
+
+    expect(refCallback.unmaskedValue()).toBe('2026-04-01');
   });
 
   it('does nothing if input is null', () => {

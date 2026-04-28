@@ -29,6 +29,7 @@ describe('useMaskInput', () => {
   it('returns a ref callback function', () => {
     const { result } = renderHook(() => useMaskInput({ mask: '999-999' }));
     expect(typeof result.current).toBe('function');
+    expect(typeof result.current.unmaskedValue).toBe('function');
   });
 
   it('handles null input', () => {
@@ -54,6 +55,23 @@ describe('useMaskInput', () => {
     rerender();
 
     expect(inputmask).toHaveBeenCalled();
+  });
+
+  it('exposes the unmasked value from the masked input', () => {
+    const input = document.createElement('input');
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
+
+    const { result } = renderHook(() => useMaskInput({ mask: '999-999' }));
+
+    act(() => {
+      result.current(input);
+    });
+
+    input.inputmask = {
+      unmaskedvalue: vi.fn(() => '2026-04-01'),
+    } as any;
+
+    expect(result.current.unmaskedValue()).toBe('2026-04-01');
   });
 
   it('handles ref object', () => {

@@ -46,6 +46,7 @@ function useMaskInput(props: {
 **Returns**
 
 A stable ref callback. Attach it to any `<input>` (or compatible element) via the `ref` prop.
+The returned callback also exposes `unmaskedValue()` so you can read the current unmasked value directly from the hook result.
 
 **Example**
 
@@ -86,6 +87,7 @@ function useHookFormMask<T extends FieldValues>(
 **Returns**
 
 A function with the signature `(fieldName, mask, options?) => { ref, name, onChange, onBlur, ... }`. Use it by spreading the result onto your input.
+The returned object also exposes `unmaskedValue()` for the resolved field.
 
 **Example**
 
@@ -207,6 +209,7 @@ function withMask(
 **Returns**
 
 A ref callback function to pass to an element's `ref` prop.
+The returned callback also exposes `unmaskedValue()`.
 
 **Caching behavior**: when called without `options`, the callback is cached by mask key so the same function identity is returned for the same mask. When `options` is provided, a new callback is created each call, so `memo` is needed.
 
@@ -276,6 +279,7 @@ function withHookFormMask(
 **Returns**
 
 A new register return object with the `ref` replaced by a mask-applying ref callback. Spread it onto your input.
+The returned object also exposes `unmaskedValue()`.
 
 **Example**
 
@@ -381,6 +385,7 @@ function useMaskInputAntd(props: {
 **Returns**
 
 A stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element.
+The returned callback also exposes `unmaskedValue()`.
 
 **Example**
 

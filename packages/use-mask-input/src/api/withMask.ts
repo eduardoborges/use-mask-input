@@ -2,13 +2,13 @@
 import inputmask from 'inputmask';
 
 import { getMaskOptions } from '../core/maskConfig';
-import { makeMaskCacheKey } from '../utils';
+import { getUnmaskedValue, makeMaskCacheKey, setUnmaskedValue } from '../utils';
 import isServer from '../utils/isServer';
 import interopDefaultSync from '../utils/moduleInterop';
 
-import type { Input, Mask, Options } from '../types';
+import type { Input, Mask, Options, UseMaskInputReturn } from '../types';
 
-const callbackCache = new Map<string, (input: Input | null) => void>();
+const callbackCache = new Map<string, UseMaskInputReturn>();
 
 /**
  * Higher-order function that creates a ref callback for applying input masks.
@@ -18,26 +18,29 @@ const callbackCache = new Map<string, (input: Input | null) => void>();
  * @param options - Optional mask configuration options
  * @returns A ref callback function that applies the mask
  */
-export default function withMask(mask: Mask, options?: Options): ((input: Input | null) => void) {
+export default function withMask(mask: Mask, options?: Options): UseMaskInputReturn {
   // without options, we cant cache, so we always return a fresh callback. :P
   if (!options) {
     const cacheKey = makeMaskCacheKey('', mask);
     if (callbackCache.has(cacheKey)) {
-      return callbackCache.get(cacheKey) as (input: Input | null) => void;
+      return callbackCache.get(cacheKey) as UseMaskInputReturn;
     }
   }
 
-  const callback = (input: Input | null): void => {
+  let currentInput: Input | null = null;
+
+  const callback = ((input: Input | null): void => {
     if (isServer || mask === null || !input) return;
 
+    currentInput = input;
     const maskInput = interopDefaultSync(inputmask)(getMaskOptions(mask, options));
     maskInput.mask(input as HTMLElement);
-  };
+  }) as UseMaskInputReturn;
 
   if (!options) {
     const cacheKey = makeMaskCacheKey('', mask);
     callbackCache.set(cacheKey, callback);
   }
 
-  return callback;
+  return setUnmaskedValue(callback, () => getUnmaskedValue(currentInput));
 }

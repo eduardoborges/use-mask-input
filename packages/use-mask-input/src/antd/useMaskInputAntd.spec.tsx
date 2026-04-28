@@ -31,6 +31,7 @@ describe('useMaskInputAntd', () => {
   it('returns a ref callback function', () => {
     const { result } = renderHook(() => useMaskInputAntd({ mask: '999-999' }));
     expect(typeof result.current).toBe('function');
+    expect(typeof result.current.unmaskedValue).toBe('function');
   });
 
   it('handles null input ref', () => {
@@ -60,6 +61,27 @@ describe('useMaskInputAntd', () => {
     rerender();
 
     expect(inputmask).toHaveBeenCalled();
+  });
+
+  it('exposes the unmasked value from the masked Ant Design input', () => {
+    const inputElement = document.createElement('input');
+    vi.mocked(inputmask).mockReturnValue({
+      mask: vi.fn(),
+    } as any);
+
+    const { result } = renderHook(
+      () => useMaskInputAntd({ mask: '999-999' }),
+    );
+
+    act(() => {
+      result.current({ input: inputElement } as unknown as InputRef);
+    });
+
+    inputElement.inputmask = {
+      unmaskedvalue: vi.fn(() => '2026-04-01'),
+    } as any;
+
+    expect(result.current.unmaskedValue()).toBe('2026-04-01');
   });
 
   it('works with custom options', () => {

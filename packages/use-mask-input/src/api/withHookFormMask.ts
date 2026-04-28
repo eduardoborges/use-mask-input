@@ -1,5 +1,7 @@
 import { applyMaskToElement } from '../core';
-import { flow, makeMaskCacheKey, setPrevRef } from '../utils';
+import {
+  getUnmaskedValue, makeMaskCacheKey, setPrevRef, setUnmaskedValue,
+} from '../utils';
 
 import type { RefCallback } from 'react';
 import type { FieldValues } from 'react-hook-form';
@@ -7,6 +9,10 @@ import type { FieldValues } from 'react-hook-form';
 import type {
   Mask, Options, UseFormRegisterReturn, UseHookFormMaskReturn,
 } from '../types';
+
+type MaskedRefCallback = RefCallback<HTMLElement | null> & {
+  currentElement?: HTMLElement | null;
+};
 
 const refCache = new WeakMap<
   RefCallback<HTMLElement | null>,
@@ -36,6 +42,7 @@ export default function withHookFormMask(
       ...register,
       ref: null as unknown as RefCallback<HTMLElement | null>,
     } as UseHookFormMaskReturn<FieldValues>;
+    setUnmaskedValue(result, () => '');
     setPrevRef(result, ref);
     return result;
   }
@@ -47,20 +54,21 @@ export default function withHookFormMask(
   const cacheKey = makeMaskCacheKey(register.name, mask);
 
   if (!maskCache?.has(cacheKey)) {
-    const applyMaskToRef = (_ref: HTMLElement | null) => {
-      if (_ref) applyMaskToElement(_ref, mask, options);
-      return _ref;
-    };
-    maskCache?.set(
-      cacheKey,
-      flow(applyMaskToRef, ref) as RefCallback<HTMLElement | null>,
-    );
+    const maskedRef = ((input: HTMLElement | null) => {
+      maskedRef.currentElement = input;
+      if (input) applyMaskToElement(input, mask, options);
+      return ref(input);
+    }) as MaskedRefCallback;
+
+    maskCache?.set(cacheKey, maskedRef);
   }
 
+  const maskedRef = maskCache?.get(cacheKey) as MaskedRefCallback | undefined;
   const result = {
     ...register,
-    ref: maskCache?.get(cacheKey),
+    ref: maskedRef,
   } as UseHookFormMaskReturn<FieldValues>;
+  setUnmaskedValue(result, () => getUnmaskedValue(maskedRef?.currentElement ?? null));
 
   setPrevRef(result, ref);
 

@@ -11,6 +11,8 @@ export type {
   Input,
   Mask,
   Options,
+  UnmaskedValueApi,
+  UseMaskInputReturn,
   TanStackFormInputProps,
   UseTanStackFormMaskReturn,
   UseFormRegister,
