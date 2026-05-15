@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import inputmask from 'inputmask';
+import inputmask from '../core/inputmask';
 import {
   beforeEach,
   describe, expect, it, vi,
@@ -10,7 +10,7 @@ import * as core from '../core';
 
 import type { Input } from '../types';
 
-vi.mock('inputmask', () => ({
+vi.mock('../core/inputmask', () => ({
   default: vi.fn((options) => ({
     mask: vi.fn(),
     options,

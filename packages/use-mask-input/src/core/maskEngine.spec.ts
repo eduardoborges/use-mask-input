@@ -1,4 +1,4 @@
-import inputmask from 'inputmask';
+import inputmask from './inputmask';
 import {
   beforeEach, describe, expect, it, vi,
 } from 'vitest';
@@ -11,7 +11,7 @@ function stubMaskInstance(maskFn: ReturnType<typeof vi.fn>): MaskInstance {
   return { mask: maskFn } as unknown as MaskInstance;
 }
 
-vi.mock('inputmask', () => ({
+vi.mock('./inputmask', () => ({
   default: vi.fn((options) => ({
     mask: vi.fn(),
     options,

@@ -2,6 +2,10 @@ import { findInputElement, resolveInputRef } from '../core/elementResolver';
 
 import type { Input, Mask, UnmaskedValueApi } from '../types';
 
+type MaskedElement = (HTMLInputElement | HTMLTextAreaElement) & {
+  inputmask?: { unmaskedvalue?: () => string };
+};
+
 /**
  * Builds a stable string key from a field name and mask, used to cache ref
  * callbacks so their identity stays stable across renders.
@@ -39,9 +43,7 @@ export function getUnmaskedValue(input: Input | null): string {
   const element = resolveUnmaskedInput(input);
   if (!element) return '';
 
-  const inputmask = (element as HTMLInputElement).inputmask as
-    | { unmaskedvalue?: () => string }
-    | undefined;
+  const { inputmask } = element as MaskedElement;
 
   if (inputmask && typeof inputmask.unmaskedvalue === 'function') {
     return inputmask.unmaskedvalue();

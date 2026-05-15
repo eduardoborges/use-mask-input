@@ -1,4 +1,4 @@
-import inputmask from 'inputmask';
+import inputmask from '../core/inputmask';
 import {
   beforeEach,
   describe, expect, it, vi,
@@ -11,7 +11,7 @@ import type { FieldValues } from 'react-hook-form';
 
 import type { UseHookFormMaskReturn } from '../types';
 
-vi.mock('inputmask', () => ({
+vi.mock('../core/inputmask', () => ({
   default: vi.fn((options) => ({
     mask: vi.fn(),
     options,
