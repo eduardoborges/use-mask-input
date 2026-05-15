@@ -1,5 +1,5 @@
 /* eslint-disable import-x/no-extraneous-dependencies */
-import inputmask from 'inputmask';
+import inputmask from './inputmask';
 
 import { getMaskOptions } from './maskConfig';
 import { moduleInterop } from '../utils';

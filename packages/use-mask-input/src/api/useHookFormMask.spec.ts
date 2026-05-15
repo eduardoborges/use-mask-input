@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import inputmask from 'inputmask';
+import inputmask from '../core/inputmask';
 import {
   beforeEach,
   describe, expect, it, vi,
@@ -9,7 +9,7 @@ import useHookFormMask from './useHookFormMask';
 
 import type { FieldValues, UseFormRegister } from 'react-hook-form';
 
-vi.mock('inputmask', () => ({
+vi.mock('../core/inputmask', () => ({
   default: vi.fn((options) => ({
     mask: vi.fn(),
     options,

@@ -1,11 +1,11 @@
-import inputmask from 'inputmask';
+import inputmask from '../core/inputmask';
 import {
   beforeEach, describe, expect, it, vi,
 } from 'vitest';
 
 import withMask from './withMask';
 
-vi.mock('inputmask', () => ({
+vi.mock('../core/inputmask', () => ({
   default: vi.fn((options) => ({
     mask: vi.fn(),
     options,
