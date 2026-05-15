@@ -3,7 +3,7 @@
  * Stark ink-on-canvas, Geist family, hairline dividers, stacked shadows.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
   /* Brand & ink */
@@ -75,9 +75,9 @@
   --ifm-link-color: var(--vc-link);
   --ifm-link-hover-color: var(--vc-link-deep);
 
-  /* Geist family */
-  --ifm-font-family-base: 'Geist', Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --ifm-font-family-monospace: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
+  /* Inter + JetBrains Mono */
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
   --ifm-heading-font-family: var(--ifm-font-family-base);
 
   --ifm-heading-font-weight: 600;
@@ -98,7 +98,7 @@
   --ifm-navbar-background-color: var(--vc-canvas);
   --ifm-navbar-shadow: inset 0 -1px 0 var(--vc-hairline);
 
-  --ifm-code-font-size: 0.875em;
+  --ifm-code-font-size: 0.95em;
   --ifm-code-border-radius: 6px;
   --ifm-global-border-radius: 8px;
 
@@ -302,13 +302,13 @@ div[class*='codeBlockContent_'] pre {
 .menu__link {
   color: var(--vc-body);
   font-weight: 400;
-  font-size: 0.8125rem;
-  padding: 0.4375rem 0.625rem;
+  font-size: 0.9375rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 6px;
   margin: 0;
   transition: color 0.12s ease, background-color 0.12s ease;
   letter-spacing: -0.01em;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .menu__link:hover {
@@ -350,7 +350,7 @@ div[class*='codeBlockContent_'] pre {
 .menu__list-item--collapsed .menu__link--sublist,
 .menu__list-item-collapsible > .menu__link {
   font-family: var(--ifm-font-family-monospace);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 500;
