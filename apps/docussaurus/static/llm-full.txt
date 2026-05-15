@@ -1,0 +1,2511 @@
+# use-mask-input — Full Documentation
+
+> Complete documentation for use-mask-input, a React hook library for input masks. Compatible with plain React, React Hook Form, TanStack Form, and Ant Design.
+
+This file aggregates all documentation pages into a single document optimized for LLM ingestion. For a shorter overview, see [llm.txt](./llm.txt).
+
+
+---
+
+<!-- Source: docs/intro.md -->
+
+
+# use-mask-input
+
+<div style={{
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  marginBottom: '1.5rem'
+}}>
+  <img src="https://img.shields.io/npm/v/use-mask-input" alt="npm version" />
+  <img src="https://img.shields.io/bundlejs/size/use-mask-input?color=green-light" alt="bundle size" />
+  <img src="https://img.shields.io/npm/dw/use-mask-input" alt="npm downloads" />
+</div>
+
+Input masks for React. Works with plain inputs, React Hook Form, TanStack Form, and Ant Design.
+
+```bash
+npm install use-mask-input
+```
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function PhoneInput() {
+  const ref = useMaskInput({ mask: '(99) 99999-9999' });
+  return <input ref={ref} />;
+}
+```
+
+## With React Hook Form
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { useHookFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const { register, handleSubmit } = useForm();
+  const registerWithMask = useHookFormMask(register);
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <input {...registerWithMask('phone', '(99) 99999-9999')} />
+      <input {...registerWithMask('email', 'email')} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## With TanStack Form
+
+```tsx
+import { useForm } from '@tanstack/react-form';
+import { useTanStackFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const maskField = useTanStackFormMask();
+  const form = useForm({
+    defaultValues: { phone: '' },
+    onSubmit: async ({ value }) => console.log(value),
+  });
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        void form.handleSubmit();
+      }}
+    >
+      <form.Field name="phone">
+        {(field) => {
+          const inputProps = maskField(
+            '(99) 99999-9999',
+            {
+              name: field.name,
+              value: field.state.value,
+              onBlur: field.handleBlur,
+              onChange: (event) => field.handleChange(event.target.value),
+            },
+          );
+
+          return <input {...inputProps} placeholder="(00) 00000-0000" />;
+        }}
+      </form.Field>
+    </form>
+  );
+}
+```
+
+See the full [TanStack Form Integration](./tanstack-form) guide.
+
+## With Ant Design
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function EmailInput() {
+  const ref = useMaskInputAntd({ mask: 'email' });
+  return <Input ref={ref} />;
+}
+```
+
+See the full [Ant Design Integration](./antd) guide.
+
+## APIs
+
+| API | When to use |
+|-----|-------------|
+| [`useMaskInput`](./api-reference#usemaskinput) | Default choice. Returns a ref callback. |
+| [`useHookFormMask`](./api-reference#usehookformmask) | Wraps React Hook Form's `register`. |
+| [`useTanStackFormMask`](./api-reference#usetanstackformmask) | Wraps TanStack Form input props with mask support. |
+| [`withMask`](./api-reference#withmask) | Non-hook ref callback. **Requires `React.memo`.** |
+| [`withHookFormMask`](./api-reference#withhookformmask) | Non-hook mask for registered fields. **Requires `React.memo`.** |
+| [`withTanStackFormMask`](./api-reference#withtanstackformmask) | Non-hook mask for TanStack input props. **Requires `React.memo`.** |
+| [`useMaskInputAntd`](./api-reference#usemaskinputantd) | `useMaskInput` for Ant Design. |
+| [`useHookFormMaskAntd`](./api-reference#usehookformmaskantd) | `useHookFormMask` for Ant Design. |
+
+Full signatures and parameters in the [API Reference](./api-reference).
+
+## Mask Types
+
+- [Static Mask](./tutorial-basics/static-mask): fixed patterns like `999-999`
+- [Dynamic Mask](./tutorial-basics/dynamic-mask): variable-length patterns
+- [Optional Mask](./tutorial-basics/optional-mask): masks with optional parts
+- [Alias Mask](./tutorial-basics/alias-mask): built-in presets (`email`, `currency`, `datetime`, ...)
+- [Alternator Mask](./tutorial-basics/alternator-mask): multiple patterns
+- [Preprocessing Mask](./tutorial-basics/preprocessing-mask): dynamic masks with functions
+
+---
+
+<!-- Source: docs/api-reference.md -->
+
+
+# API Reference
+
+**use-mask-input** exports six main APIs and two Ant Design-specific hooks. Choose the one that fits your use case:
+
+| API | Type | React Hook Form | Ant Design | Needs `memo`? |
+|-----|------|:---------------:|:----------:|:-------------:|
+| [`useMaskInput`](#usemaskinput) | Hook | - | - | No |
+| [`useHookFormMask`](#usehookformmask) | Hook | Yes | - | No |
+| [`useTanStackFormMask`](#usetanstackformmask) | Hook | - | - | No |
+| [`withMask`](#withmask) | Function | - | - | **Yes** |
+| [`withHookFormMask`](#withhookformmask) | Function | Yes | - | **Yes** |
+| [`withTanStackFormMask`](#withtanstackformmask) | Function | - | - | **Yes** |
+| [`useMaskInputAntd`](#usemaskinputantd) | Hook | - | Yes | No |
+| [`useHookFormMaskAntd`](#usehookformmaskantd) | Hook | Yes | Yes | No |
+
+
+## Hooks
+
+Hooks manage ref stability internally (`useCallback` / `useMemo`), so they are safe to use in components that re-render frequently without any extra precautions.
+
+### useMaskInput
+
+React hook that returns a ref callback for applying an input mask.
+
+```ts
+function useMaskInput(props: {
+  mask: Mask;
+  register?: (element: HTMLElement) => void;
+  options?: Options;
+}): (input: HTMLElement | null) => void
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element (useful for third-party form libraries). |
+| `options` | `Options` | No | Inputmask configuration options (placeholder, autoUnmask, etc.). |
+
+**Returns**
+
+A stable ref callback. Attach it to any `<input>` (or compatible element) via the `ref` prop.
+The returned callback also exposes `unmaskedValue()` so you can read the current unmasked value directly from the hook result.
+
+**Example**
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function PhoneInput() {
+  const maskRef = useMaskInput({
+    mask: '(99) 99999-9999',
+  });
+
+  return <input ref={maskRef} placeholder="(00) 00000-0000" />;
+}
+```
+
+
+### useHookFormMask
+
+React hook that wraps React Hook Form's `register` and adds automatic masking.
+
+```ts
+function useHookFormMask<T extends FieldValues>(
+  registerFn: UseFormRegister<T>
+): (
+  fieldName: Path<T>,
+  mask: Mask,
+  options?: RegisterOptions & Options
+) => UseHookFormMaskReturn<T>
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `registerFn` | `UseFormRegister<T>` | Yes | The `register` function returned by `useForm()`. |
+
+**Returns**
+
+A function with the signature `(fieldName, mask, options?) => { ref, name, onChange, onBlur, ... }`. Use it by spreading the result onto your input.
+The returned object also exposes `unmaskedValue()` for the resolved field.
+
+**Example**
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { useHookFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const { register, handleSubmit } = useForm();
+  const registerWithMask = useHookFormMask(register);
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <input
+        {...registerWithMask('phone', '(99) 99999-9999')}
+        placeholder="(00) 00000-0000"
+      />
+
+      {/* Fields without masks still use the regular register */}
+      <input {...register('email')} placeholder="email@example.com" />
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+
+### useTanStackFormMask
+
+React hook that wraps TanStack Form-compatible input props and adds automatic masking.
+
+```ts
+function useTanStackFormMask(): <T extends TanStackFormInputProps>(
+  mask: Mask,
+  inputProps: T,
+  options?: Options
+) => UseTanStackFormMaskReturn<T>
+```
+
+**Parameters**
+
+The returned function accepts:
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `inputProps` | `TanStackFormInputProps` | Yes | Input props generated from TanStack `field` state and handlers. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+A new props object with a masked `ref` callback while preserving all original handlers and values.
+
+**Example**
+
+```tsx
+import { useForm } from '@tanstack/react-form';
+import { useTanStackFormMask } from 'use-mask-input';
+
+function MyForm() {
+  const maskField = useTanStackFormMask();
+  const form = useForm({
+    defaultValues: { phone: '' },
+    onSubmit: async ({ value }) => console.log(value),
+  });
+
+  return (
+    <form.Field name="phone">
+      {(field) => {
+        const inputProps = maskField(
+          '(99) 99999-9999',
+          {
+            name: field.name,
+            value: field.state.value,
+            onBlur: field.handleBlur,
+            onChange: (event) => field.handleChange(event.target.value),
+          },
+        );
+
+        return <input {...inputProps} placeholder="(00) 00000-0000" />;
+      }}
+    </form.Field>
+  );
+}
+```
+
+
+## Higher-Order Functions
+
+`withMask` and `withHookFormMask` are **not** hooks. They are plain functions that create new ref callbacks on every call. Because React treats a new ref callback as a different ref, calling these directly inside a component body causes the mask to be re-applied on every render.
+
+:::warning Wrap the component with `React.memo`
+Since `withMask` and `withHookFormMask` are not hooks, they don't have internal memoization via React's lifecycle. You **must** wrap the component that uses them with `React.memo` to ensure the ref callback identity stays stable across parent re-renders.
+
+Without `memo`, every parent re-render creates a new ref callback, which detaches and re-attaches the mask. This causes flickering, cursor position loss, and degraded performance.
+:::
+
+### withMask
+
+Creates a ref callback that applies an input mask. This is the simplest API when you just need a masked ref and don't use React Hook Form.
+
+```ts
+function withMask(
+  mask: Mask,
+  options?: Options
+): (input: HTMLElement | null) => void
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+A ref callback function to pass to an element's `ref` prop.
+The returned callback also exposes `unmaskedValue()`.
+
+**Caching behavior**: when called without `options`, the callback is cached by mask key so the same function identity is returned for the same mask. When `options` is provided, a new callback is created each call, so `memo` is needed.
+
+**Example**
+
+```tsx
+import { memo } from 'react';
+import { withMask } from 'use-mask-input';
+
+const PhoneInput = memo(() => {
+  return (
+    <input
+      ref={withMask('(99) 99999-9999')}
+      placeholder="(00) 00000-0000"
+    />
+  );
+});
+```
+
+**With options**
+
+```tsx
+import { memo } from 'react';
+import { withMask } from 'use-mask-input';
+
+const CurrencyInput = memo(() => {
+  return (
+    <input
+      ref={withMask('currency', {
+        prefix: 'R$ ',
+        radixPoint: ',',
+        groupSeparator: '.',
+        digits: 2,
+        rightAlign: false,
+      })}
+    />
+  );
+});
+```
+
+:::tip Prefer `useMaskInput` if you don't need the function-based API
+If you're already inside a component and don't need to pass the mask as a prop, `useMaskInput` is the safer choice. It handles memoization internally and doesn't require `memo`.
+:::
+
+
+### withHookFormMask
+
+Takes an already-registered React Hook Form field and adds mask support to it.
+
+```ts
+function withHookFormMask(
+  register: UseFormRegisterReturn,
+  mask: Mask,
+  options?: Options
+): UseHookFormMaskReturn<FieldValues>
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `register` | `UseFormRegisterReturn` | Yes | The object returned by calling `register('fieldName')`. |
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `options` | `Options` | No | Inputmask and/or React Hook Form register options. |
+
+**Returns**
+
+A new register return object with the `ref` replaced by a mask-applying ref callback. Spread it onto your input.
+The returned object also exposes `unmaskedValue()`.
+
+**Example**
+
+```tsx
+import { memo } from 'react';
+import { useForm } from 'react-hook-form';
+import { withHookFormMask } from 'use-mask-input';
+
+const MyForm = memo(() => {
+  const { register, handleSubmit } = useForm();
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <input
+        {...withHookFormMask(register('phone'), '(99) 99999-9999')}
+        placeholder="(00) 00000-0000"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+});
+```
+
+:::tip Prefer `useHookFormMask` for most cases
+`useHookFormMask` is a hook that wraps `register` with built-in memoization. Use `withHookFormMask` only when you need to apply the mask to an already-registered field (e.g., the `register` call happens elsewhere and you receive the return object as a prop).
+:::
+
+
+### withTanStackFormMask
+
+Takes TanStack Form-compatible input props and adds mask support to them.
+
+```ts
+function withTanStackFormMask<T extends TanStackFormInputProps>(
+  inputProps: T,
+  mask: Mask,
+  options?: Options
+): UseTanStackFormMaskReturn<T>
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `inputProps` | `TanStackFormInputProps` | Yes | Input props object from TanStack field state and handlers. |
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+A new input props object with `ref` replaced by a mask-applying callback.
+
+**Example**
+
+```tsx
+import { memo } from 'react';
+import { withTanStackFormMask } from 'use-mask-input';
+
+const InputField = memo(function InputField({
+  inputProps,
+}: {
+  inputProps: {
+    name: string;
+    value: string;
+    onBlur: () => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+}) {
+  const maskedProps = withTanStackFormMask(inputProps, '(99) 99999-9999');
+  return <input {...maskedProps} />;
+});
+```
+
+
+## Ant Design Hooks
+
+These hooks handle Ant Design's `InputRef` structure automatically. Import them from `use-mask-input/antd`.
+
+### useMaskInputAntd
+
+React hook for applying masks to Ant Design `Input` components.
+
+```ts
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function useMaskInputAntd(props: {
+  mask: Mask;
+  register?: (element: HTMLElement) => void;
+  options?: Options;
+}): (input: InputRef | null) => void
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+A stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element.
+The returned callback also exposes `unmaskedValue()`.
+
+**Example**
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function PhoneInput() {
+  const maskRef = useMaskInputAntd({ mask: '(99) 99999-9999' });
+  return <Input ref={maskRef} placeholder="(00) 00000-0000" />;
+}
+```
+
+See the full [Ant Design Integration](./antd) guide for Form.Item, useWatch, and validation examples.
+
+
+### useHookFormMaskAntd
+
+Combines React Hook Form with Ant Design. A masked `register` that works with `InputRef`.
+
+```ts
+import { useHookFormMaskAntd } from 'use-mask-input/antd';
+
+function useHookFormMaskAntd<T extends FieldValues>(
+  registerFn: UseFormRegister<T>
+): (
+  fieldName: Path<T>,
+  mask: Mask,
+  options?: RegisterOptions & Options
+) => UseHookFormMaskAntdReturn<T>
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `registerFn` | `UseFormRegister<T>` | Yes | The `register` function returned by `useForm()`. |
+
+**Returns**
+
+A function with the signature `(fieldName, mask, options?)` that returns an object you spread onto Ant Design's `Input`.
+
+**Example**
+
+```tsx
+import { Input } from 'antd';
+import { useForm } from 'react-hook-form';
+import { useHookFormMaskAntd } from 'use-mask-input/antd';
+
+function MyForm() {
+  const { register, handleSubmit } = useForm();
+  const registerWithMask = useHookFormMaskAntd(register);
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <Input
+        {...registerWithMask('phone', '(99) 99999-9999')}
+        placeholder="(00) 00000-0000"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+
+## Types
+
+### Mask
+
+```ts
+type Mask =
+  | 'datetime' | 'email' | 'numeric' | 'currency'
+  | 'decimal' | 'integer' | 'percentage' | 'url'
+  | 'ip' | 'mac' | 'ssn' | 'brl-currency'
+  | 'cpf' | 'cnpj' | 'br-bank-account' | 'br-bank-agency'
+  | (string & {})       // custom pattern like '999-999'
+  | (string[] & {})     // dynamic mask array
+  | null;               // no mask
+```
+
+### Options
+
+Inputmask configuration options. Commonly used:
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `placeholder` | `string` | Placeholder character for unfilled positions (default `_`). |
+| `autoUnmask` | `boolean` | If `true`, `value` returns unmasked data. |
+| `prefix` | `string` | Text prepended to the input. |
+| `suffix` | `string` | Text appended to the input. |
+| `radixPoint` | `string` | Decimal separator character. |
+| `groupSeparator` | `string` | Thousands separator character. |
+| `digits` | `number` | Number of decimal digits. |
+| `rightAlign` | `boolean` | Align input text to the right. |
+| `inputFormat` | `string` | Date input format (for `datetime` alias). |
+| `outputFormat` | `string` | Date output format (for `datetime` alias). |
+| `min` | `number` | Minimum allowed value (numeric aliases). |
+| `max` | `number` | Maximum allowed value (numeric aliases). |
+
+For the complete list, see the [Inputmask documentation](https://robinherbots.github.io/Inputmask/).
+
+### Input
+
+```ts
+type Input = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
+```
+
+### TanStackFormInputProps
+
+```ts
+interface TanStackFormInputProps {
+  name?: string;
+  ref?: RefCallback<HTMLElement | null>;
+  [key: string]: unknown;
+}
+```
+
+### UseTanStackFormMaskReturn
+
+```ts
+type UseTanStackFormMaskReturn<T extends TanStackFormInputProps> =
+  Omit<T, 'ref'> & {
+    ref: RefCallback<HTMLElement | null>;
+    prevRef: RefCallback<HTMLElement | null> | undefined;
+  };
+```
+
+---
+
+<!-- Source: docs/tutorial-basics/static-mask.md -->
+
+
+# Static Mask
+
+Static masks are the foundation of input masking. They have a fixed pattern that doesn't change during user input. This is the simplest and most commonly used type of mask.
+
+## Basic Usage
+
+A static mask is defined as a string where each character represents a specific input pattern:
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function PhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: '9999-9999',
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+## Mask Definitions
+
+The library uses special characters to define input patterns:
+
+- `9` - Numeric digit (0-9)
+- `a` - Alphabetic character (a-z, A-Z)
+- `*` - Alphanumeric character (a-z, A-Z, 0-9)
+- `A` - Uppercase alphabetic character
+- `#` - Hexadecimal character (0-9, a-f, A-F)
+
+## Common Examples
+
+### Phone Number
+
+```tsx
+function PhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: '(99) 99999-9999',
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="(00) 00000-0000"
+    />
+  );
+}
+```
+
+### Date
+
+```tsx
+function DateInput() {
+  const dateMask = useMaskInput({
+    mask: '99/99/9999',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={dateMask}
+      placeholder="DD/MM/YYYY"
+    />
+  );
+}
+```
+
+### Credit Card
+
+```tsx
+function CreditCardInput() {
+  const cardMask = useMaskInput({
+    mask: '9999 9999 9999 9999',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={cardMask}
+      placeholder="0000 0000 0000 0000"
+    />
+  );
+}
+```
+
+### License Plate (Brazil)
+
+```tsx
+function LicensePlateInput() {
+  const plateMask = useMaskInput({
+    mask: 'AAA-9999',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={plateMask}
+      placeholder="ABC-1234"
+    />
+  );
+}
+```
+
+### ZIP Code
+
+```tsx
+function ZipCodeInput() {
+  const zipMask = useMaskInput({
+    mask: '99999-999',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={zipMask}
+      placeholder="00000-000"
+    />
+  );
+}
+```
+
+## Custom Characters
+
+You can also use literal characters in your mask. Any character that isn't a mask definition will be treated as a literal and displayed as-is:
+
+```tsx
+function CustomInput() {
+  const customMask = useMaskInput({
+    mask: 'ID: 999-AAA',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={customMask}
+      placeholder="ID: 000-ABC"
+    />
+  );
+}
+```
+
+## Tips
+
+- Static masks are perfect for fixed-format inputs like phone numbers, dates, and IDs
+- Literal characters (like `-`, `(`, `)`, `/`) are automatically included in the mask
+- The mask pattern is case-sensitive for alphabetic characters
+- Use `A` for uppercase-only and `a` for case-insensitive alphabetic input
+
+---
+
+<!-- Source: docs/tutorial-basics/dynamic-mask.md -->
+
+
+# Dynamic Mask
+
+Dynamic masks allow the mask pattern to change or repeat during input. This is useful for inputs where the length or pattern can vary, like email addresses or variable-length numbers.
+
+## Basic Syntax
+
+Use curly braces `{ }` to define dynamic parts:
+
+- `{n}` - Exactly n repetitions
+- `{n|j}` - n repetitions with jit masking
+- `{n,m}` - From n to m repetitions
+- `{n,m|j}` - From n to m repetitions with jit masking
+- `{+}` - One or more repetitions (starts from 1)
+- `{}` - Zero or more repetitions (starts from 0)
+
+## Common Examples
+
+### Fixed Repetition
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function FixedLengthInput() {
+  const mask = useMaskInput({
+    mask: 'aa-9{4}',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="AA-0000"
+    />
+  );
+}
+```
+
+This mask requires exactly 4 digits after the letters.
+
+### Variable Length
+
+```tsx
+function VariableLengthInput() {
+  const mask = useMaskInput({
+    mask: '9{1,10}',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="0"
+    />
+  );
+}
+```
+
+Accepts 1 to 10 digits.
+
+### Email Address
+
+```tsx
+function EmailInput() {
+  const emailMask = useMaskInput({
+    mask: '*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]',
+  });
+
+  return (
+    <input
+      type="email"
+      ref={emailMask}
+      placeholder="user@example.com"
+    />
+  );
+}
+```
+
+This creates a flexible email mask that accepts:
+- Local part: 1-20 alphanumeric characters
+- Optional subdomains: up to 3 levels
+- Domain: 1-20 alphanumeric characters
+- TLD: 2-6 characters with optional country code
+
+### One or More Characters
+
+```tsx
+function OneOrMoreInput() {
+  const mask = useMaskInput({
+    mask: 'A{+}',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="ABC"
+    />
+  );
+}
+```
+
+Accepts one or more uppercase letters.
+
+### Zero or More Characters
+
+```tsx
+function ZeroOrMoreInput() {
+  const mask = useMaskInput({
+    mask: '9{}',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="123"
+    />
+  );
+}
+```
+
+Accepts zero or more digits.
+
+### Product Code
+
+```tsx
+function ProductCodeInput() {
+  const mask = useMaskInput({
+    mask: 'A{2}-9{4,8}',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="AB-0000"
+    />
+  );
+}
+```
+
+Requires 2 letters followed by 4 to 8 digits.
+
+### Flexible ID
+
+```tsx
+function FlexibleIdInput() {
+  const mask = useMaskInput({
+    mask: 'ID-9{3,6}-A{1,3}',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="ID-000-ABC"
+    />
+  );
+}
+```
+
+Accepts:
+- `ID-123-A`
+- `ID-12345-ABC`
+- `ID-123456-AB`
+
+## JIT Masking
+
+JIT (Just-In-Time) masking shows the mask only as the user types:
+
+```tsx
+function JitMaskInput() {
+  const mask = useMaskInput({
+    mask: '9{4|1}',
+    options: {
+      jitMasking: true,
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="0"
+    />
+  );
+}
+```
+
+## Tips
+
+- Use dynamic masks for inputs with variable lengths
+- Combine with optional sections for maximum flexibility
+- JIT masking provides a better user experience for long inputs
+- Dynamic masks are perfect for email, URLs, and flexible ID formats
+
+---
+
+<!-- Source: docs/tutorial-basics/optional-mask.md -->
+
+
+# Optional Mask
+
+Optional masks allow certain parts of the mask to be optional. This is useful when you want to accept inputs with or without specific parts, like area codes in phone numbers.
+
+## Basic Syntax
+
+Use square brackets `[ ]` to define optional parts of the mask:
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function PhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: '99 [9]9999-9999',
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="(00) 99999-9999"
+    />
+  );
+}
+```
+
+This mask will accept both:
+- `(99) 99999-9999` (with area code)
+- `(99) 9999-9999` (without area code)
+
+## Common Examples
+
+### Phone Number with Optional Area Code
+
+```tsx
+function PhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: '[99] 9999-9999',
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="00 0000-0000"
+    />
+  );
+}
+```
+
+Users can type:
+- `11 98765-4321` (with area code)
+- `98765-4321` (without area code)
+
+### Email with Optional Domain
+
+```tsx
+function EmailInput() {
+  const emailMask = useMaskInput({
+    mask: '*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]',
+  });
+
+  return (
+    <input
+      type="email"
+      ref={emailMask}
+      placeholder="user@example.com"
+    />
+  );
+}
+```
+
+### Credit Card with Optional Spaces
+
+```tsx
+function CreditCardInput() {
+  const cardMask = useMaskInput({
+    mask: '9999[ 9999][ 9999][ 9999]',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={cardMask}
+      placeholder="0000 0000 0000 0000"
+    />
+  );
+}
+```
+
+### International Phone Number
+
+```tsx
+function InternationalPhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: '[+99] [9]9999-9999',
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="+00 00000-0000"
+    />
+  );
+}
+```
+
+This accepts:
+- `+55 1198765-4321` (with country code and area code)
+- `55 1198765-4321` (without +)
+- `1198765-4321` (without country code)
+
+## Multiple Optional Sections
+
+You can have multiple optional sections in a single mask:
+
+```tsx
+function FlexibleInput() {
+  const flexibleMask = useMaskInput({
+    mask: '[Prefix-]999[-Suffix]',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={flexibleMask}
+      placeholder="Prefix-000-Suffix"
+    />
+  );
+}
+```
+
+## Tips
+
+- Optional sections are skipped when the user doesn't type the required characters
+- Use optional masks when you want to support multiple input formats
+- Combine optional sections with dynamic masks for maximum flexibility
+- The optional marker characters `[` and `]` can be customized via options
+
+---
+
+<!-- Source: docs/tutorial-basics/alias-mask.md -->
+
+
+# Alias Mask
+
+Alias masks provide pre-configured masks for common use cases like dates, currency, email, and more. They save you from writing complex mask patterns manually.
+
+## Available Aliases
+
+The library includes the following built-in aliases:
+
+- `datetime` - Date and time formatting
+- `email` - Email address validation
+- `ip` - IP address (IPv4)
+- `cpf` - Brazilian CPF (tax ID)
+- `cnpj` - Brazilian CNPJ (company tax ID)
+- `br-bank-account` - Brazilian bank account numbers (multiple formats)
+- `br-bank-agency` - Brazilian bank agency numbers
+- `numeric` - Numeric input
+- `currency` - Currency formatting
+- `brl-currency` - Brazilian Real (R$) currency
+- `decimal` - Decimal numbers
+- `integer` - Integer numbers
+- `percentage` - Percentage values
+- `url` - URL formatting
+- `mac` - MAC address
+- `ssn` - Social Security Number
+
+## Basic Usage
+
+Simply use the alias name as the mask:
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function DateInput() {
+  const dateMask = useMaskInput({
+    mask: 'datetime',
+    options: {
+      inputFormat: 'dd/mm/yyyy',
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={dateMask}
+      placeholder="DD/MM/YYYY"
+    />
+  );
+}
+```
+
+## Common Examples
+
+### Date and Time
+
+```tsx
+function DateTimeInput() {
+  const dateTimeMask = useMaskInput({
+    mask: 'datetime',
+    options: {
+      inputFormat: 'dd/mm/yyyy HH:MM',
+      outputFormat: 'yyyy-mm-dd HH:MM',
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={dateTimeMask}
+      placeholder="DD/MM/YYYY HH:MM"
+    />
+  );
+}
+```
+
+If you need the `outputFormat` value, read it from `dateTimeMask.unmaskedValue()`.
+The visible input value stays masked, so `e.target.value` is not the unmasked output.
+
+### Email
+
+```tsx
+function EmailInput() {
+  const emailMask = useMaskInput({
+    mask: 'email',
+  });
+
+  return (
+    <input
+      type="email"
+      ref={emailMask}
+      placeholder="user@example.com"
+    />
+  );
+}
+```
+
+### Currency
+
+```tsx
+function CurrencyInput() {
+  const currencyMask = useMaskInput({
+    mask: 'currency',
+    options: {
+      prefix: 'R$ ',
+      groupSeparator: '.',
+      radixPoint: ',',
+      digits: 2,
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={currencyMask}
+      placeholder="R$ 0,00"
+    />
+  );
+}
+```
+
+### IP Address
+
+```tsx
+function IpAddressInput() {
+  const ipMask = useMaskInput({
+    mask: 'ip',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={ipMask}
+      placeholder="192.168.0.1"
+    />
+  );
+}
+```
+
+### Payment card number
+
+```tsx
+function CardNumberInput() {
+  const cardMask = useMaskInput({
+    mask: '9999 9999 9999 9999',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={cardMask}
+      placeholder="0000 0000 0000 0000"
+    />
+  );
+}
+```
+
+### Company tax ID (example)
+
+Some regions ship dedicated aliases (for example `cnpj` in Brazil). Prefer a custom pattern when you need a format that is not built in.
+
+```tsx
+function CompanyIdInput() {
+  const idMask = useMaskInput({
+    mask: '99.999.999/9999-99',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={idMask}
+      placeholder="00.000.000/0000-00"
+    />
+  );
+}
+```
+
+### Brazilian Bank Account
+
+Automatically handles multiple bank account formats supporting Bradesco, Itaú, Banco do Brasil, Caixa Econômica, Nubank, and other Brazilian banks.
+
+#### Basic Usage
+
+```tsx
+function BankAccountInput() {
+  const bankAccountMask = useMaskInput({
+    mask: 'br-bank-account',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAccountMask}
+      placeholder="1234567-9"
+    />
+  );
+}
+```
+
+#### Supported Formats
+
+The mask automatically adapts to different bank account number formats:
+
+```tsx
+function BankAccountInput() {
+  const bankAccountMask = useMaskInput({
+    mask: 'br-bank-account',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAccountMask}
+      placeholder="00.000.000/0000-00"
+    />
+  );
+}
+```
+
+**Supported formats:**
+- `1234567-9` (Bradesco, Stone, Next)
+- `12345678-9` (BB, Santander, Safra)
+- `123456789-9` (Itaú, Inter, Sicoob)
+- `1234567890-1` (Nubank, Neon, Mercado Pago)
+- `(001)12345678-9` (Caixa Econômica)
+- `123456` or `1234567` (optional separator for Agibank, BV)
+
+**Example with placeholder customization:**
+
+```tsx
+function BankAccountInput() {
+  const bankAccountMask = useMaskInput({
+    mask: 'br-bank-account',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAccountMask}
+      placeholder="(000) 12345678-9"
+    />
+  );
+}
+```
+
+### Brazilian Bank Agency
+
+Automatically handles bank agency numbers for major Brazilian banks.
+
+#### Basic Usage
+
+```tsx
+function BankAgencyInput() {
+  const bankAgencyMask = useMaskInput({
+    mask: 'br-bank-agency',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAgencyMask}
+      placeholder="0000"
+    />
+  );
+}
+```
+
+#### Supported Formats
+
+Bank agency numbers typically range from 3 to 5 digits, commonly formatted as:
+
+- `0000` (4 digits - most common)
+- `000` (3 digits)
+- `00000` (5 digits)
+
+**Example with placeholder customization:**
+
+```tsx
+function BankAgencyInput() {
+  const bankAgencyMask = useMaskInput({
+    mask: 'br-bank-agency',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={bankAgencyMask}
+      placeholder="(0000)"
+    />
+  );
+}
+```
+
+### Numeric Input
+
+```tsx
+function NumericInput() {
+  const numericMask = useMaskInput({
+    mask: 'numeric',
+    options: {
+      min: 0,
+      max: 1000,
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={numericMask}
+      placeholder="0"
+    />
+  );
+}
+```
+
+### Decimal Numbers
+
+```tsx
+function DecimalInput() {
+  const decimalMask = useMaskInput({
+    mask: 'decimal',
+    options: {
+      digits: 2,
+      radixPoint: ',',
+      groupSeparator: '.',
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={decimalMask}
+      placeholder="0,00"
+    />
+  );
+}
+```
+
+### Percentage
+
+```tsx
+function PercentageInput() {
+  const percentageMask = useMaskInput({
+    mask: 'percentage',
+    options: {
+      digits: 2,
+      suffix: ' %',
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={percentageMask}
+      placeholder="0,00 %"
+    />
+  );
+}
+```
+
+### URL
+
+```tsx
+function UrlInput() {
+  const urlMask = useMaskInput({
+    mask: 'url',
+  });
+
+  return (
+    <input
+      type="url"
+      ref={urlMask}
+      placeholder="https://example.com"
+    />
+  );
+}
+```
+
+### MAC Address
+
+```tsx
+function MacAddressInput() {
+  const macMask = useMaskInput({
+    mask: 'mac',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={macMask}
+      placeholder="00:00:00:00:00:00"
+    />
+  );
+}
+```
+
+## Tips
+
+- Aliases provide a quick way to implement common input formats
+- Most aliases accept additional options for customization
+- Use aliases when you need standard formatting patterns
+- Combine alias options with custom configurations for specific requirements
+
+---
+
+<!-- Source: docs/tutorial-basics/alternator-mask.md -->
+
+
+# Alternator Mask
+
+Alternator masks allow you to define multiple mask patterns, where the input can match any one of them. This is like an OR condition - the mask can be one of several choices.
+
+## Basic Syntax
+
+Use the pipe character `|` to separate alternator options:
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function PhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: '9999-9999|99999-9999',
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+This mask accepts both:
+- `1234-5678` (8 digits)
+- `12345-6789` (9 digits)
+
+## Using Arrays
+
+You can also pass an array of masks instead of using the pipe syntax:
+
+```tsx
+function PhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: ['9999-9999', '99999-9999'],
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+## Common Examples
+
+### Phone Numbers (Landline vs Mobile)
+
+```tsx
+function PhoneInput() {
+  const phoneMask = useMaskInput({
+    mask: '(99) 9999-9999|(99) 99999-9999',
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={phoneMask}
+      placeholder="(00) 00000-0000"
+    />
+  );
+}
+```
+
+Accepts both landline (8 digits) and mobile (9 digits) formats.
+
+### Credit Card Types
+
+```tsx
+function CreditCardInput() {
+  const cardMask = useMaskInput({
+    mask: [
+      '9999 9999 9999 9999',  // Visa, Mastercard
+      '9999 999999 99999',     // Amex
+    ],
+  });
+
+  return (
+    <input
+      type="text"
+      ref={cardMask}
+      placeholder="0000 0000 0000 0000"
+    />
+  );
+}
+```
+
+### Date Formats
+
+```tsx
+function DateInput() {
+  const dateMask = useMaskInput({
+    mask: '99/99/9999|99-99-9999|99.99.9999',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={dateMask}
+      placeholder="DD/MM/YYYY"
+    />
+  );
+}
+```
+
+Accepts dates with `/`, `-`, or `.` separators.
+
+### License Plates (Different Formats)
+
+```tsx
+function LicensePlateInput() {
+  const plateMask = useMaskInput({
+    mask: [
+      'AAA-9999',  // Old format
+      'AAA9A99',   // New format (Mercosul)
+    ],
+  });
+
+  return (
+    <input
+      type="text"
+      ref={plateMask}
+      placeholder="ABC-1234"
+    />
+  );
+}
+```
+
+### Mixed Patterns
+
+```tsx
+function MixedInput() {
+  const mixedMask = useMaskInput({
+    mask: '(aaa)|(999)|(9AA)',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mixedMask}
+      placeholder="ABC or 123 or 1AB"
+    />
+  );
+}
+```
+
+Accepts:
+- `ABC` (three letters)
+- `123` (three digits)
+- `1AB` (digit + two letters)
+
+### Complex Alternator
+
+```tsx
+function ComplexInput() {
+  const complexMask = useMaskInput({
+    mask: 'aaaa|9999|9AA9',
+  });
+
+  return (
+    <input
+      type="text"
+      ref={complexMask}
+      placeholder="AAAA or 0000 or 0AA0"
+    />
+  );
+}
+```
+
+## Tips
+
+- Use alternator masks when you need to support multiple input formats
+- Arrays are cleaner for complex alternators with many options
+- The mask automatically detects which pattern matches the input
+- Alternator masks are perfect for phone numbers, dates, and IDs with multiple formats
+
+---
+
+<!-- Source: docs/tutorial-basics/preprocessing-mask.md -->
+
+
+# Preprocessing Mask
+
+Preprocessing masks allow you to define the mask as a function that can dynamically determine the mask pattern. This is useful when you need to sort multiple masks, retrieve mask definitions dynamically, or apply conditional logic based on the input.
+
+## Basic Syntax
+
+Pass a function that returns a valid mask definition:
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+
+function DynamicInput() {
+  const mask = useMaskInput({
+    mask: function() {
+      // Your logic here
+      return ['[1-]AAA-999', '[1-]999-AAA'];
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="AAA-000"
+    />
+  );
+}
+```
+
+## Common Examples
+
+### Conditional Mask Based on Input Length
+
+```tsx
+function ConditionalInput() {
+  const mask = useMaskInput({
+    mask: function() {
+      // Return different masks based on some condition
+      const isLongFormat = true; // Your condition logic
+
+      if (isLongFormat) {
+        return '9999-9999-9999-9999';
+      }
+      return '9999-9999';
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+### Sorted Multiple Masks
+
+```tsx
+function SortedMasksInput() {
+  const mask = useMaskInput({
+    mask: function() {
+      // Sort masks by priority or complexity
+      return [
+        '9999-9999',      // Simple format first
+        '99999-9999',     // Medium format
+        '(99) 99999-9999', // Complex format last
+      ];
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+### Dynamic Mask from API
+
+```tsx
+function ApiBasedInput() {
+  const [maskPattern, setMaskPattern] = useState('9999-9999');
+
+  useEffect(() => {
+    // Fetch mask pattern from API
+    fetch('/api/mask-pattern')
+      .then(res => res.json())
+      .then(data => setMaskPattern(data.pattern));
+  }, []);
+
+  const mask = useMaskInput({
+    mask: function() {
+      return maskPattern;
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+### Country-Based Phone Mask
+
+```tsx
+function CountryPhoneInput({ country }: { country: string }) {
+  const mask = useMaskInput({
+    mask: function() {
+      const countryMasks: Record<string, string> = {
+        'US': '(999) 999-9999',
+        'BR': '(99) 99999-9999',
+        'UK': '9999 999 999',
+        'DE': '9999 9999999',
+      };
+
+      return countryMasks[country] || '9999-9999';
+    },
+  });
+
+  return (
+    <input
+      type="tel"
+      ref={mask}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+### User Preference Based Mask
+
+```tsx
+function UserPreferenceInput() {
+  const userPreference = 'dashes'; // 'dashes' | 'spaces' | 'dots'
+
+  const mask = useMaskInput({
+    mask: function() {
+      switch (userPreference) {
+        case 'dashes':
+          return '9999-9999-9999-9999';
+        case 'spaces':
+          return '9999 9999 9999 9999';
+        case 'dots':
+          return '9999.9999.9999.9999';
+        default:
+          return '9999999999999999';
+      }
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="0000-0000-0000-0000"
+    />
+  );
+}
+```
+
+### Complex Conditional Logic
+
+```tsx
+function ComplexConditionalInput() {
+  const inputType = 'phone'; // 'phone' | 'email' | 'postal'
+
+  const mask = useMaskInput({
+    mask: function() {
+      if (inputType === 'phone') {
+        return ['(99) 9999-9999', '(99) 99999-9999'];
+      }
+      if (inputType === 'email') {
+        return '*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]';
+      }
+      if (inputType === 'postal') {
+        return '99999-9999';
+      }
+      return '9999-9999';
+    },
+  });
+
+  return (
+    <input
+      type="text"
+      ref={mask}
+      placeholder="Enter value"
+    />
+  );
+}
+```
+
+## Tips
+
+- Use preprocessing masks when you need dynamic mask selection
+- Perfect for country-specific formats or user preferences
+- Can be combined with state management for reactive mask changes
+- Useful when mask patterns need to be fetched from an API
+- The function is called when the mask needs to be evaluated
+
+---
+
+<!-- Source: docs/antd.md -->
+
+
+# Ant Design Integration
+
+**use-mask-input** provides dedicated hooks for seamless integration with Ant Design components. These hooks handle Ant Design's `InputRef` structure automatically, making it easy to add masks to your Ant Design forms.
+
+## Installation
+
+Make sure you have both `use-mask-input` and `antd` installed:
+
+```bash
+npm install use-mask-input antd
+```
+
+## useMaskInputAntd
+
+The `useMaskInputAntd` hook is specifically designed for Ant Design's `Input` component. It handles the `InputRef` structure automatically.
+
+### Basic Usage
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function PhoneInput() {
+  const maskRef = useMaskInputAntd({
+    mask: 'phone',
+  });
+
+  return (
+    <Input
+      ref={maskRef}
+      placeholder="(555) 123-4567"
+    />
+  );
+}
+```
+
+### With Options
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function EmailInput() {
+  const maskRef = useMaskInputAntd({
+    mask: 'email',
+  });
+
+  return (
+    <Input
+      ref={maskRef}
+      placeholder="name@example.com"
+    />
+  );
+}
+```
+
+### With Register Callback
+
+You can also use a register callback to integrate with form libraries:
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function FormInput() {
+  const maskRef = useMaskInputAntd({
+    mask: '9999-9999',
+    register: (element) => {
+      // Do something with the element
+      console.log('Input element:', element);
+    },
+  });
+
+  return (
+    <Input
+      ref={maskRef}
+      placeholder="0000-0000"
+    />
+  );
+}
+```
+
+### With Ant Design Form (Form.Item + name)
+
+`useMaskInputAntd` works with Ant Design's native `Form` component. Use `Form.Item` with `name` to let the form manage value and validation automatically:
+
+```tsx
+import { Button, Form, Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function AntdFormExample() {
+  const [form] = Form.useForm();
+
+  const phoneMaskRef = useMaskInputAntd({
+    mask: '(999) 999-9999',
+  });
+
+  const emailMaskRef = useMaskInputAntd({
+    mask: 'email',
+  });
+
+  const currencyMaskRef = useMaskInputAntd({
+    mask: 'currency',
+    options: {
+      prefix: '$ ',
+      radixPoint: '.',
+      digits: 2,
+      groupSeparator: ',',
+      rightAlign: false,
+    },
+  });
+
+  const onFinish = (values: Record<string, string>) => {
+    console.log('Form values:', values);
+  };
+
+  return (
+    <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Form.Item
+        name="phone"
+        label="Phone"
+        rules={[{ required: true, message: 'Phone is required' }]}
+      >
+        <Input ref={phoneMaskRef} placeholder="(555) 123-4567" />
+      </Form.Item>
+
+      <Form.Item
+        name="email"
+        label="Email"
+        rules={[{ required: true, message: 'Email is required' }]}
+      >
+        <Input ref={emailMaskRef} placeholder="name@example.com" />
+      </Form.Item>
+
+      <Form.Item name="amount" label="Amount">
+        <Input ref={currencyMaskRef} placeholder="$ 0.00" />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+}
+```
+
+#### Watching form values
+
+Use `Form.useWatch` to observe masked values in real time:
+
+```tsx
+import { Form, Input, Typography } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function WatchExample() {
+  const [form] = Form.useForm();
+  const values = Form.useWatch([], form);
+
+  const maskRef = useMaskInputAntd({ mask: 'email' });
+
+  return (
+    <Form form={form} layout="vertical">
+      <Form.Item name="email" label="Email">
+        <Input ref={maskRef} />
+      </Form.Item>
+      <Typography.Text code>
+        Current value: {values?.email}
+      </Typography.Text>
+    </Form>
+  );
+}
+```
+
+#### Submitting and accessing values
+
+Call `form.getFieldsValue()` or use the `onFinish` callback to get the form values. The values reflect what Inputmask writes to the DOM (masked by default, or unmasked if `autoUnmask: true` is set in options).
+
+## useHookFormMaskAntd
+
+The `useHookFormMaskAntd` hook combines React Hook Form with Ant Design, providing a seamless way to register masked inputs.
+
+### Basic Usage with React Hook Form
+
+```tsx
+import { Input } from 'antd';
+import { useForm } from 'react-hook-form';
+import { useHookFormMaskAntd } from 'use-mask-input/antd';
+
+interface FormData {
+  phone: string;
+  email: string;
+}
+
+function MyForm() {
+  const { register, handleSubmit } = useForm<FormData>();
+  const registerWithMask = useHookFormMaskAntd(register);
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        {...registerWithMask('phone', 'phone')}
+        placeholder="(555) 123-4567"
+      />
+      <Input
+        {...register('email')}
+        placeholder="email@example.com"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+### With Validation
+
+You can combine masks with React Hook Form validation:
+
+```tsx
+import { Input } from 'antd';
+import { useForm } from 'react-hook-form';
+import { useHookFormMaskAntd } from 'use-mask-input/antd';
+
+interface FormData {
+  phone: string;
+  email: string;
+}
+
+function ValidatedForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const registerWithMask = useHookFormMaskAntd(register);
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <Input
+          {...registerWithMask('phone', 'phone', {
+            required: 'Phone number is required',
+            minLength: {
+              value: 14,
+              message: 'Please enter a valid phone number',
+            },
+          })}
+          placeholder="(555) 123-4567"
+        />
+        {errors.phone && <span>{errors.phone.message}</span>}
+      </div>
+
+      <div>
+        <Input
+          {...registerWithMask('email', 'email', {
+            required: 'Email is required',
+          })}
+          placeholder="name@example.com"
+        />
+        {errors.email && <span>{errors.email.message}</span>}
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+### With Ant Design Form
+
+You can also use it with Ant Design's Form component:
+
+```tsx
+import { Form, Input, Button } from 'antd';
+import { useForm } from 'react-hook-form';
+import { useHookFormMaskAntd } from 'use-mask-input/antd';
+
+function AntdForm() {
+  const { register, handleSubmit } = useForm();
+  const registerWithMask = useHookFormMaskAntd(register);
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
+  return (
+    <Form onFinish={handleSubmit(onSubmit)}>
+      <Form.Item label="Phone">
+        <Input
+          {...registerWithMask('phone', 'phone')}
+          placeholder="(555) 123-4567"
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+}
+```
+
+## API Reference
+
+For full API documentation of all exports (including standard hooks, higher-order functions, and types), see the **[API Reference](./api-reference)** page.
+
+Below is a quick reference for the Ant Design-specific hooks.
+
+### useMaskInputAntd
+
+```tsx
+function useMaskInputAntd(props: {
+  mask: Mask;
+  register?: (element: HTMLElement) => void;
+  options?: Options;
+}): (input: InputRef | null) => void
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
+| `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element. |
+| `options` | `Options` | No | Inputmask configuration options (placeholder, autoUnmask, etc.). |
+
+**Returns** a stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element. Uses `useCallback` internally, so no need for `React.memo`.
+
+### useHookFormMaskAntd
+
+```tsx
+function useHookFormMaskAntd<T extends FieldValues>(
+  registerFn: UseFormRegister<T>
+): (
+  fieldName: Path<T>,
+  mask: Mask,
+  options?: RegisterOptions & Options
+) => UseHookFormMaskAntdReturn<T>
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|:--------:|-------------|
+| `registerFn` | `UseFormRegister<T>` | Yes | The `register` function returned by `useForm()`. |
+
+**Returns** a function with the signature `(fieldName, mask, options?)` that returns an object you spread onto Ant Design's `Input`. Uses `useMemo` internally, so no need for `React.memo`.
+
+## Differences from Standard Hooks
+
+The Ant Design hooks differ from the standard hooks in the following ways:
+
+1. **InputRef Handling**: Automatically unwraps Ant Design's `InputRef` structure (which wraps the actual `<input>` element) before applying the mask
+2. **Type Safety**: Ref callbacks accept `InputRef | null` instead of `HTMLElement | null`, so TypeScript works out of the box with `<Input ref={...} />`
+3. **Same Stability Guarantees**: Both Ant Design hooks use `useCallback` / `useMemo` internally, just like their standard counterparts. No `React.memo` needed
+
+## Examples
+
+### Phone Number Input
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function PhoneInput() {
+  const maskRef = useMaskInputAntd({ mask: 'phone' });
+  return <Input ref={maskRef} placeholder="(555) 123-4567" />;
+}
+```
+
+### Email input
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function EmailInput() {
+  const maskRef = useMaskInputAntd({ mask: 'email' });
+  return <Input ref={maskRef} placeholder="name@example.com" />;
+}
+```
+
+### Credit Card Input
+
+```tsx
+import { Input } from 'antd';
+import { useMaskInputAntd } from 'use-mask-input/antd';
+
+function CreditCardInput() {
+  const maskRef = useMaskInputAntd({
+    mask: '9999 9999 9999 9999',
+  });
+  return <Input ref={maskRef} placeholder="0000 0000 0000 0000" />;
+}
+```
+
+## Next Steps
+
+- Explore [mask types](./tutorial-basics/static-mask)
+- Check out [all available aliases](./tutorial-basics/alias-mask)
+- Learn about [optional masks](./tutorial-basics/optional-mask)
+- Discover [dynamic masks](./tutorial-basics/dynamic-mask)
+
+---
+
+<!-- Source: docs/tanstack-form.md -->
+
+
+# TanStack Form Integration
+
+`use-mask-input` supports TanStack Form through two APIs:
+
+- `useTanStackFormMask` (hook, recommended)
+- `withTanStackFormMask` (function, requires `React.memo`)
+
+## Installation
+
+```bash
+npm install use-mask-input @tanstack/react-form
+```
+
+## useTanStackFormMask
+
+`useTanStackFormMask` returns a helper that receives your TanStack input props and returns masked input props with a stable ref callback.
+
+### Basic usage
+
+```tsx
+import { useForm } from '@tanstack/react-form';
+import { useTanStackFormMask } from 'use-mask-input';
+
+type FormValues = {
+  phone: string;
+};
+
+function MyForm() {
+  const maskField = useTanStackFormMask();
+  const form = useForm({
+    defaultValues: { phone: '' } as FormValues,
+    onSubmit: async ({ value }) => {
+      console.log(value);
+    },
+  });
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        void form.handleSubmit();
+      }}
+    >
+      <form.Field name="phone">
+        {(field) => {
+          const inputProps = maskField(
+            '(99) 99999-9999',
+            {
+              name: field.name,
+              value: field.state.value,
+              onBlur: field.handleBlur,
+              onChange: (event) => field.handleChange(event.target.value),
+            },
+          );
+
+          return <input {...inputProps} placeholder="(00) 00000-0000" />;
+        }}
+      </form.Field>
+    </form>
+  );
+}
+```
+
+### With custom options
+
+```tsx
+const inputProps = maskField(
+  'currency',
+  {
+    name: field.name,
+    value: field.state.value,
+    onBlur: field.handleBlur,
+    onChange: (event) => field.handleChange(event.target.value),
+  },
+  {
+    prefix: '$ ',
+    groupSeparator: ',',
+    digits: 2,
+    rightAlign: false,
+  },
+);
+```
+
+## withTanStackFormMask
+
+`withTanStackFormMask` is the function version. Use it when the input props object is already available and you want to apply the mask at that point.
+
+Because this is not a hook, make sure the component is memoized when needed.
+
+```tsx
+import { memo } from 'react';
+import { withTanStackFormMask } from 'use-mask-input';
+
+const MaskedField = memo(function MaskedField({
+  inputProps,
+}: {
+  inputProps: {
+    name: string;
+    value: string;
+    onBlur: () => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+}) {
+  const maskedProps = withTanStackFormMask(inputProps, '(99) 99999-9999');
+
+  return <input {...maskedProps} />;
+});
+```
+
+## API signatures
+
+```ts
+function useTanStackFormMask(): <T extends TanStackFormInputProps>(
+  mask: Mask,
+  inputProps: T,
+  options?: Options
+) => UseTanStackFormMaskReturn<T>
+```
+
+```ts
+function withTanStackFormMask<T extends TanStackFormInputProps>(
+  inputProps: T,
+  mask: Mask,
+  options?: Options
+): UseTanStackFormMaskReturn<T>
+```
+
+## Tips
+
+- Prefer `useTanStackFormMask` for regular component usage.
+- Keep passing `name`, `value`, `onBlur`, and `onChange` from `field`.
+- Use alias masks like `email`, `currency`, `datetime`, and custom patterns like `(99) 99999-9999`.

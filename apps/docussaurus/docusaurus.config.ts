@@ -82,6 +82,11 @@ const config: Config = {
           position: 'right',
         },
         {
+          href: 'https://use-mask-input.eduardoborges.dev/llm-full.txt',
+          label: 'llm-full.txt',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/eduardoborges/use-mask-input',
           label: 'GitHub',
           position: 'right',
