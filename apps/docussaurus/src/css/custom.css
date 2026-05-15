@@ -1,104 +1,164 @@
 /**
- * GitBook-inspired theme
+ * Vercel-inspired theme — adapted from DESIGN.md
+ * Stark ink-on-canvas, Geist family, hairline dividers, stacked shadows.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
 
-/* GitBook Color Palette */
 :root {
-  /* Light theme - GitBook style */
-  --ifm-color-primary: #3b82f6;
-  --ifm-color-primary-dark: #2563eb;
-  --ifm-color-primary-darker: #1d4ed8;
-  --ifm-color-primary-darkest: #1e40af;
-  --ifm-color-primary-light: #60a5fa;
-  --ifm-color-primary-lighter: #93c5fd;
-  --ifm-color-primary-lightest: #dbeafe;
+  /* Brand & ink */
+  --vc-primary: #171717;
+  --vc-on-primary: #ffffff;
+  --vc-ink: #171717;
+  --vc-body: #4d4d4d;
+  --vc-mute: #888888;
 
-  --ifm-background-color: #ffffff;
-  --ifm-background-surface-color: #f8f9fa;
-  --ifm-heading-color: #1e293b;
-  --ifm-color-content: #334155;
-  --ifm-color-content-secondary: #64748b;
+  /* Surfaces */
+  --vc-canvas: #ffffff;
+  --vc-canvas-soft: #fafafa;
+  --vc-canvas-soft-2: #f5f5f5;
 
-  --ifm-code-background: #f1f5f9;
-  --ifm-code-color: #0f172a;
+  /* Hairlines */
+  --vc-hairline: #ebebeb;
+  --vc-hairline-strong: #a1a1a1;
 
-  --ifm-color-emphasis-100: #f8f9fa;
-  --ifm-color-emphasis-200: #e2e8f0;
-  --ifm-color-emphasis-300: #cbd5e1;
+  /* Accents */
+  --vc-link: #0070f3;
+  --vc-link-deep: #0761d1;
+  --vc-link-bg-soft: #d3e5ff;
+  --vc-error: #ee0000;
+  --vc-warning: #f5a623;
+  --vc-violet: #7928ca;
+  --vc-cyan: #50e3c2;
+  --vc-pink: #ff0080;
 
-  /* GitBook sidebar colors */
-  --gitbook-sidebar-bg: #f8f9fa;
-  --gitbook-sidebar-border: #e2e8f0;
-  --gitbook-sidebar-text: #475569;
-  --gitbook-sidebar-active: #3b82f6;
-  --gitbook-sidebar-hover: #f1f5f9;
+  /* Gradient stops (for hero atmospheric backdrop) */
+  --vc-grad-develop-start: #007cf0;
+  --vc-grad-develop-end: #00dfd8;
+  --vc-grad-preview-start: #7928ca;
+  --vc-grad-preview-end: #ff0080;
+  --vc-grad-ship-start: #ff4d4d;
+  --vc-grad-ship-end: #f9cb28;
 
-  /* Typography */
-  --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  --ifm-font-family-monospace: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  /* Stacked elevation */
+  --vc-shadow-1: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  --vc-shadow-2: 0px 1px 1px rgba(0, 0, 0, 0.02), 0px 2px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --vc-shadow-3: 0px 2px 2px rgba(0, 0, 0, 0.04), 0px 8px 8px -8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --vc-shadow-4: 0px 2px 2px rgba(0, 0, 0, 0.04), 0px 8px 16px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);
+
+  /* Selection */
+  --vc-selection-bg: #171717;
+  --vc-selection-fg: #f2f2f2;
+
+  /* Map onto Docusaurus / Infima tokens */
+  --ifm-color-primary: var(--vc-primary);
+  --ifm-color-primary-dark: #000000;
+  --ifm-color-primary-darker: #000000;
+  --ifm-color-primary-darkest: #000000;
+  --ifm-color-primary-light: #2e2e2e;
+  --ifm-color-primary-lighter: #4d4d4d;
+  --ifm-color-primary-lightest: #888888;
+
+  --ifm-background-color: var(--vc-canvas);
+  --ifm-background-surface-color: var(--vc-canvas-soft);
+  --ifm-heading-color: var(--vc-ink);
+  --ifm-color-content: var(--vc-ink);
+  --ifm-color-content-secondary: var(--vc-body);
+
+  --ifm-code-background: var(--vc-canvas-soft-2);
+  --ifm-code-color: var(--vc-ink);
+
+  --ifm-color-emphasis-100: var(--vc-canvas-soft);
+  --ifm-color-emphasis-200: var(--vc-hairline);
+  --ifm-color-emphasis-300: var(--vc-hairline-strong);
+
+  --ifm-link-color: var(--vc-link);
+  --ifm-link-hover-color: var(--vc-link-deep);
+
+  /* Geist family */
+  --ifm-font-family-base: 'Geist', Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
+  --ifm-heading-font-family: var(--ifm-font-family-base);
 
   --ifm-heading-font-weight: 600;
-  --ifm-heading-line-height: 1.4;
+  --ifm-heading-line-height: 1.25;
   --ifm-h1-font-size: 2.5rem;
-  --ifm-h2-font-size: 2rem;
-  --ifm-h3-font-size: 1.5rem;
-  --ifm-h4-font-size: 1.25rem;
-  --ifm-h5-font-size: 1.125rem;
-  --ifm-h6-font-size: 1rem;
+  --ifm-h2-font-size: 1.75rem;
+  --ifm-h3-font-size: 1.25rem;
+  --ifm-h4-font-size: 1.0625rem;
+  --ifm-h5-font-size: 1rem;
+  --ifm-h6-font-size: 0.9375rem;
 
   --ifm-font-size-base: 16px;
-  --ifm-line-height-base: 1.7;
+  --ifm-line-height-base: 1.6;
 
-  --ifm-navbar-height: 60px;
+  --ifm-navbar-height: 64px;
   --ifm-navbar-padding-vertical: 0.75rem;
   --ifm-navbar-padding-horizontal: 1.5rem;
+  --ifm-navbar-background-color: var(--vc-canvas);
+  --ifm-navbar-shadow: inset 0 -1px 0 var(--vc-hairline);
 
-  --ifm-code-font-size: 0.9em;
-  --ifm-code-border-radius: 0.375rem;
-  --ifm-global-border-radius: 0.5rem;
+  --ifm-code-font-size: 0.875em;
+  --ifm-code-border-radius: 6px;
+  --ifm-global-border-radius: 8px;
 
-  --docusaurus-highlighted-code-line-bg: rgba(59, 130, 246, 0.1);
+  --ifm-toc-border-color: var(--vc-hairline);
+  --ifm-blockquote-border-left-color: var(--vc-hairline-strong);
+
+  --docusaurus-highlighted-code-line-bg: rgba(23, 23, 23, 0.06);
 }
 
-/* Dark theme */
+/* Dark theme — polarity-flipped to ink */
 [data-theme='dark'] {
-  --ifm-color-primary: #60a5fa;
-  --ifm-color-primary-dark: #3b82f6;
-  --ifm-color-primary-darker: #2563eb;
-  --ifm-color-primary-darkest: #1d4ed8;
-  --ifm-color-primary-light: #93c5fd;
-  --ifm-color-primary-lighter: #bfdbfe;
-  --ifm-color-primary-lightest: #dbeafe;
+  --vc-primary: #ffffff;
+  --vc-on-primary: #171717;
+  --vc-ink: #ededed;
+  --vc-body: #a1a1a1;
+  --vc-mute: #707070;
 
-  --ifm-background-color: #0f172a;
-  --ifm-background-surface-color: #1e293b;
-  --ifm-heading-color: #f1f5f9;
-  --ifm-color-content: #cbd5e1;
-  --ifm-color-content-secondary: #94a3b8;
+  --vc-canvas: #0a0a0a;
+  --vc-canvas-soft: #111111;
+  --vc-canvas-soft-2: #171717;
 
-  --ifm-code-background: #1e293b;
-  --ifm-code-color: #e2e8f0;
+  --vc-hairline: #1f1f1f;
+  --vc-hairline-strong: #2e2e2e;
 
-  --ifm-color-emphasis-100: #1e293b;
-  --ifm-color-emphasis-200: #334155;
-  --ifm-color-emphasis-300: #475569;
+  --vc-link: #3b9eff;
+  --vc-link-deep: #52a8ff;
 
-  --gitbook-sidebar-bg: #1e293b;
-  --gitbook-sidebar-border: #334155;
-  --gitbook-sidebar-text: #cbd5e1;
-  --gitbook-sidebar-active: #60a5fa;
-  --gitbook-sidebar-hover: #334155;
+  --vc-shadow-1: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --vc-shadow-2: 0px 1px 1px rgba(0, 0, 0, 0.4), 0px 2px 2px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --vc-shadow-3: 0px 2px 2px rgba(0, 0, 0, 0.3), 0px 8px 8px -8px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --vc-shadow-4: 0px 2px 2px rgba(0, 0, 0, 0.3), 0px 8px 16px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
 
-  --docusaurus-highlighted-code-line-bg: rgba(96, 165, 250, 0.15);
+  --ifm-color-primary: var(--vc-primary);
+  --ifm-color-primary-dark: #ededed;
+  --ifm-color-primary-darker: #d4d4d4;
+  --ifm-color-primary-darkest: #a1a1a1;
+  --ifm-color-primary-light: #ffffff;
+  --ifm-color-primary-lighter: #ffffff;
+  --ifm-color-primary-lightest: #ffffff;
+
+  --ifm-background-color: var(--vc-canvas);
+  --ifm-background-surface-color: var(--vc-canvas-soft);
+  --ifm-heading-color: var(--vc-ink);
+  --ifm-color-content: var(--vc-ink);
+  --ifm-color-content-secondary: var(--vc-body);
+
+  --ifm-code-background: var(--vc-canvas-soft-2);
+  --ifm-code-color: var(--vc-ink);
+
+  --ifm-color-emphasis-100: var(--vc-canvas-soft);
+  --ifm-color-emphasis-200: var(--vc-hairline);
+  --ifm-color-emphasis-300: var(--vc-hairline-strong);
+
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
 }
 
 /* Base typography */
 html {
   scroll-behavior: smooth;
-  font-feature-settings: 'kern' 1, 'liga' 1;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'ss01', 'ss02';
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -109,39 +169,51 @@ body {
   font-size: var(--ifm-font-size-base);
   line-height: var(--ifm-line-height-base);
   color: var(--ifm-color-content);
+  background-color: var(--vc-canvas);
 }
 
-/* Headings */
+::selection {
+  background: var(--vc-selection-bg);
+  color: var(--vc-selection-fg);
+}
+
+/* Headings — sentence-case with negative tracking (DESIGN.md voice) */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--ifm-font-family-base);
-  font-weight: var(--ifm-heading-font-weight);
-  line-height: var(--ifm-heading-line-height);
+  font-weight: 600;
+  line-height: 1.2;
   color: var(--ifm-heading-color);
-  letter-spacing: -0.01em;
   margin-top: 0;
 }
 
 h1 {
   font-size: var(--ifm-h1-font-size);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.05em;
+  line-height: 1;
 }
 
 h2 {
   font-size: var(--ifm-h2-font-size);
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  letter-spacing: -0.04em;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
 }
 
 h3 {
   font-size: var(--ifm-h3-font-size);
-  font-weight: 600;
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
+  letter-spacing: -0.025em;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Code */
+h4 {
+  font-size: var(--ifm-h4-font-size);
+  letter-spacing: -0.02em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Inline code */
 code {
   font-family: var(--ifm-font-family-monospace);
   font-size: var(--ifm-code-font-size);
@@ -150,221 +222,461 @@ code {
   padding: 0.125rem 0.375rem;
   background: var(--ifm-code-background);
   color: var(--ifm-code-color);
+  border: 1px solid var(--vc-hairline);
 }
 
 pre code {
-  padding: 10px;
+  padding: 0;
   background: transparent;
+  border: none;
   font-weight: 400;
 }
 
-/* Navbar - GitBook style */
+/* Code block content padding */
+.prism-code,
+div[class^='codeBlockContent'] pre,
+div[class*='codeBlockContent_'] pre {
+  padding: 1rem 1.25rem !important;
+}
+
+/* ─── Navbar ─── */
 .navbar {
-  border-bottom: 1px solid var(--ifm-color-emphasis-200);
-  background-color: var(--ifm-background-color);
+  border-bottom: 1px solid var(--vc-hairline);
+  background-color: var(--vc-canvas);
   box-shadow: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0 1.5rem;
+  height: 64px;
+  backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme='dark'] .navbar {
+  background-color: rgba(10, 10, 10, 0.8);
 }
 
 .navbar__title {
   font-weight: 600;
-  font-size: 1.125rem;
-  letter-spacing: -0.01em;
-  color: var(--ifm-heading-color);
+  font-size: 0.9375rem;
+  letter-spacing: -0.02em;
+  color: var(--vc-ink);
+  font-family: var(--ifm-font-family-monospace);
 }
 
 .navbar__item {
   font-weight: 500;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
 }
 
-/* Sidebar - GitBook style */
+.navbar__link {
+  color: var(--vc-body);
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.navbar__link:hover {
+  color: var(--vc-ink);
+  background: var(--vc-canvas-soft);
+}
+
+.navbar__link--active {
+  color: var(--vc-ink);
+}
+
+/* ─── Sidebar ─── */
 .theme-doc-sidebar-container {
-  background-color: var(--gitbook-sidebar-bg);
-  border-right: 1px solid var(--gitbook-sidebar-border);
+  background-color: var(--vc-canvas);
+  border-right: 1px solid var(--vc-hairline);
 }
 
 .theme-doc-sidebar-menu {
-  padding: 1rem 0;
+  padding: 1rem 0.5rem;
+}
+
+.menu {
+  font-family: var(--ifm-font-family-base);
+  padding: 0.5rem;
 }
 
 .menu__link {
-  color: var(--gitbook-sidebar-text);
+  color: var(--vc-body);
   font-weight: 400;
-  font-size: 0.9375rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  margin: 0.125rem 0.75rem;
-  transition: all 0.15s ease;
+  font-size: 0.8125rem;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 6px;
+  margin: 0;
+  transition: color 0.12s ease, background-color 0.12s ease;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
 }
 
 .menu__link:hover {
-  background-color: var(--gitbook-sidebar-hover);
-  color: var(--ifm-color-primary);
+  background-color: var(--vc-canvas-soft);
+  color: var(--vc-ink);
 }
 
-.menu__link--active {
-  background-color: rgba(59, 130, 246, 0.1);
-  color: var(--gitbook-sidebar-active);
+.menu__link--active,
+.menu__link--active:hover {
+  background-color: var(--vc-canvas-soft-2);
+  color: var(--vc-ink);
   font-weight: 500;
 }
 
-[data-theme='dark'] .menu__link--active {
-  background-color: rgba(96, 165, 250, 0.15);
+[data-theme='dark'] .menu__link--active,
+[data-theme='dark'] .menu__link--active:hover {
+  background-color: var(--vc-canvas-soft-2);
 }
 
 .menu__list-item {
-  margin: 0.25rem 0;
+  margin: 0.0625rem 0;
 }
 
 .menu__list-item-collapsible {
-  margin: 0.25rem 0;
+  margin: 0.0625rem 0;
+  border-radius: 6px;
 }
 
 .menu__caret {
-  color: var(--gitbook-sidebar-text);
+  color: var(--vc-mute);
+  border-radius: 6px;
 }
 
-.menu__list-item-collapsible .menu__link {
+.menu__caret:hover {
+  background: var(--vc-canvas-soft);
+}
+
+/* Sidebar category titles — caption-mono uppercase eyebrow */
+.menu__list-item--collapsed .menu__link--sublist,
+.menu__list-item-collapsible > .menu__link {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   font-weight: 500;
-  color: var(--ifm-heading-color);
+  color: var(--vc-mute);
 }
 
 .menu__list-item-collapsible--active > .menu__link {
-  color: var(--gitbook-sidebar-active);
+  color: var(--vc-ink);
 }
 
-/* Sidebar categories */
-.menu__list-item-collapsible .menu__link {
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  color: var(--gitbook-sidebar-text);
-  opacity: 0.8;
-}
-
-/* Focus styles */
+/* ─── Focus ─── */
 :focus-visible {
-  outline: 2px solid var(--ifm-color-primary);
+  outline: 2px solid var(--vc-link);
   outline-offset: 2px;
-  border-radius: 0.25rem;
+  border-radius: 4px;
 }
 
-/* Buttons */
+/* ─── Buttons ─── */
 .button {
-  border-radius: var(--ifm-global-border-radius);
+  border-radius: 9999px;
   font-weight: 500;
-  font-size: 0.9375rem;
-  transition: all 0.15s ease;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
   font-family: var(--ifm-font-family-base);
+  border: 1px solid transparent;
+  padding: 0 0.875rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button--lg {
+  height: 2.75rem;
+  font-size: 1rem;
+  padding: 0 1.25rem;
 }
 
 .button--primary {
-  background: var(--ifm-color-primary);
-  border-color: var(--ifm-color-primary);
-  color: white;
+  background: var(--vc-primary);
+  border-color: var(--vc-primary);
+  color: var(--vc-on-primary);
   font-weight: 500;
 }
 
 .button--primary:hover {
-  background: var(--ifm-color-primary-dark);
-  border-color: var(--ifm-color-primary-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  background: var(--vc-ink);
+  border-color: var(--vc-ink);
+  color: var(--vc-on-primary);
+  opacity: 0.9;
 }
 
-.button--outline {
-  border-width: 1px;
-  border-color: var(--ifm-color-emphasis-300);
+[data-theme='dark'] .button--primary:hover {
+  opacity: 0.85;
+}
+
+.button--outline,
+.button--secondary {
+  background: var(--vc-canvas);
+  border: 1px solid var(--vc-hairline-strong);
+  color: var(--vc-ink);
   font-weight: 500;
 }
 
-.button--outline:hover {
-  background: var(--ifm-color-emphasis-100);
-  border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+.button--outline:hover,
+.button--secondary:hover {
+  background: var(--vc-canvas-soft);
+  border-color: var(--vc-ink);
+  color: var(--vc-ink);
 }
 
-/* Code blocks */
-.prism-code {
-  border-radius: var(--ifm-global-border-radius);
+/* ─── Code blocks ─── */
+.prism-code,
+div[class^='codeBlockContainer'] {
+  border-radius: 8px;
   font-family: var(--ifm-font-family-monospace);
-  border: 1px solid var(--ifm-color-emphasis-200);
+  border: 1px solid var(--vc-hairline);
+  background: var(--vc-canvas-soft-2) !important;
+  box-shadow: none;
 }
 
-/* Footer */
+[data-theme='dark'] .prism-code,
+[data-theme='dark'] div[class^='codeBlockContainer'] {
+  background: #050505 !important;
+  border-color: var(--vc-hairline);
+}
+
+div[class^='codeBlockTitle'] {
+  background: var(--vc-canvas-soft) !important;
+  border-bottom: 1px solid var(--vc-hairline);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem !important;
+  color: var(--vc-body);
+  letter-spacing: 0;
+  padding: 0.625rem 1rem !important;
+}
+
+[data-theme='dark'] div[class^='codeBlockTitle'] {
+  background: var(--vc-canvas-soft) !important;
+}
+
+.token.comment { color: var(--vc-mute); }
+
+/* ─── Footer ─── */
 .footer {
-  background-color: var(--ifm-background-surface-color);
-  border-top: 1px solid var(--ifm-color-emphasis-200);
+  background-color: var(--vc-canvas);
+  border-top: 1px solid var(--vc-hairline);
+  color: var(--vc-body);
+}
+
+.footer--dark {
+  background-color: var(--vc-canvas);
+  color: var(--vc-body);
 }
 
 .footer__title {
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vc-mute);
+  margin-bottom: 1rem;
 }
 
-/* Links */
+.footer__link-item {
+  color: var(--vc-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.footer__link-item:hover {
+  color: var(--vc-ink);
+  text-decoration: none;
+}
+
+.footer__copyright {
+  color: var(--vc-mute);
+  font-size: 0.8125rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--vc-hairline);
+}
+
+/* ─── Links ─── */
 a {
-  color: var(--ifm-color-primary);
+  color: var(--vc-link);
   text-decoration: none;
   transition: color 0.15s ease;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 a:hover {
-  color: var(--ifm-color-primary-dark);
+  color: var(--vc-link-deep);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-/* Main content area */
+/* ─── Main content ─── */
 .main-wrapper {
-  background-color: var(--ifm-background-color);
+  background-color: var(--vc-canvas);
 }
 
-/* Doc content */
 .theme-doc-markdown {
-  max-width: 800px;
+  max-width: 768px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 2rem;
 }
 
-/* Cards */
+.theme-doc-markdown h1:first-child {
+  margin-bottom: 1.5rem;
+  font-size: 2.25rem;
+  letter-spacing: -0.05em;
+}
+
+article p {
+  color: var(--vc-body);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+article li {
+  color: var(--vc-body);
+  font-size: 0.9375rem;
+}
+
+article strong {
+  color: var(--vc-ink);
+  font-weight: 600;
+}
+
+/* ─── Cards ─── */
 .card {
-  border-radius: var(--ifm-global-border-radius);
-  border: 1px solid var(--ifm-color-emphasis-200);
-  transition: all 0.15s ease;
+  border-radius: 12px;
+  border: 1px solid var(--vc-hairline);
+  background: var(--vc-canvas);
+  box-shadow: var(--vc-shadow-2);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .card:hover {
-  border-color: var(--ifm-color-primary);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  border-color: var(--vc-hairline-strong);
+  box-shadow: var(--vc-shadow-3);
 }
 
-/* Tables */
+/* ─── Tables ─── */
 table {
-  border-radius: var(--ifm-global-border-radius);
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--ifm-color-emphasis-200);
+  border: 1px solid var(--vc-hairline);
+  font-size: 0.875rem;
 }
 
-/* Responsive typography */
+table thead {
+  background: var(--vc-canvas-soft);
+}
+
+table thead th {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vc-body);
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid var(--vc-hairline);
+}
+
+table tbody td {
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid var(--vc-hairline);
+  color: var(--vc-body);
+}
+
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ─── TOC ─── */
+.table-of-contents {
+  font-size: 0.8125rem;
+}
+
+.table-of-contents__link {
+  color: var(--vc-body);
+  letter-spacing: -0.01em;
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--vc-ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* ─── Pagination ─── */
+.pagination-nav__link {
+  border: 1px solid var(--vc-hairline);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--vc-hairline-strong);
+  background: var(--vc-canvas-soft);
+}
+
+.pagination-nav__sublabel {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vc-mute);
+}
+
+.pagination-nav__label {
+  color: var(--vc-ink);
+  font-weight: 500;
+}
+
+/* ─── Breadcrumbs ─── */
+.breadcrumbs__item .breadcrumbs__link {
+  color: var(--vc-body);
+  font-size: 0.8125rem;
+  background: transparent;
+  padding: 0.25rem 0.5rem;
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--vc-ink);
+  background: var(--vc-canvas-soft);
+}
+
+/* ─── Admonitions ─── */
+.theme-admonition,
+div[class^='admonition'] {
+  border-radius: 8px;
+  border: 1px solid var(--vc-hairline);
+  background: var(--vc-canvas-soft);
+  box-shadow: none;
+}
+
+/* ─── Responsive ─── */
 @media screen and (max-width: 996px) {
   :root {
     --ifm-h1-font-size: 2rem;
-    --ifm-h2-font-size: 1.75rem;
-    --ifm-h3-font-size: 1.375rem;
+    --ifm-h2-font-size: 1.5rem;
+    --ifm-h3-font-size: 1.125rem;
   }
 
   .theme-doc-markdown {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 1.25rem;
   }
 }
 
 @media screen and (max-width: 576px) {
   :root {
     --ifm-h1-font-size: 1.75rem;
-    --ifm-h2-font-size: 1.5rem;
-    --ifm-h3-font-size: 1.25rem;
+    --ifm-h2-font-size: 1.375rem;
+    --ifm-h3-font-size: 1.125rem;
     --ifm-font-size-base: 15px;
+  }
+
+  .navbar {
+    padding: 0 1rem;
   }
 }

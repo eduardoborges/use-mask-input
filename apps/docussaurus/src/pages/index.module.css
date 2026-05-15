@@ -2,164 +2,356 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  background: var(--vc-canvas);
 }
 
-/* Hero */
+/* ─── Hero ─── */
 .hero {
-  padding: 6rem 0 4rem;
-  text-align: center;
+  position: relative;
+  padding: 7rem 1.5rem 5rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--vc-hairline);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Mesh gradient — atmospheric backdrop */
+.mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.55;
+  filter: blur(48px) saturate(140%);
+}
+
+[data-theme='dark'] .mesh {
+  opacity: 0.4;
+}
+
+.meshBlob1,
+.meshBlob2,
+.meshBlob3 {
+  position: absolute;
+  border-radius: 50%;
+  width: 520px;
+  height: 520px;
+}
+
+.meshBlob1 {
+  top: -180px;
+  left: -120px;
+  background: radial-gradient(circle at center, var(--vc-grad-develop-start), transparent 60%);
+}
+
+.meshBlob2 {
+  top: -200px;
+  right: -100px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle at center, var(--vc-grad-preview-end), transparent 60%);
+}
+
+.meshBlob3 {
+  top: -80px;
+  left: 35%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle at center, var(--vc-grad-ship-end), transparent 60%);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--vc-body);
+  background: var(--vc-canvas);
+  border: 1px solid var(--vc-hairline);
+  border-radius: 9999px;
+  padding: 0.25rem 0.625rem 0.25rem 0.5rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+  box-shadow: var(--vc-shadow-1);
+}
+
+.eyebrowDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vc-cyan);
+  box-shadow: 0 0 8px var(--vc-cyan);
 }
 
 .heroTitle {
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.1;
+  font-family: var(--ifm-font-family-base);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  color: var(--vc-ink);
   margin: 0 0 1rem;
-  letter-spacing: -0.03em;
-  color: var(--ifm-heading-color);
-  font-family: var(--ifm-font-family-monospace);
+  max-width: 780px;
 }
 
 .heroSubtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  line-height: 1.6;
-  color: var(--ifm-color-content-secondary);
-  margin: 0 auto 2rem;
-  max-width: 480px;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.55;
+  color: var(--vc-body);
+  margin: 0 0 2rem;
+  max-width: 580px;
+  letter-spacing: -0.01em;
+}
+
+.installRow {
+  margin-bottom: 1.75rem;
 }
 
 .install {
-  display: inline-block;
-  background: var(--ifm-code-background);
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 0.375rem;
-  padding: 0.625rem 1.25rem;
-  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: var(--vc-canvas);
+  border: 1px solid var(--vc-hairline);
+  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+  margin: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  color: var(--vc-ink);
+  box-shadow: var(--vc-shadow-2);
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
-.install code {
-  font-size: 0.9rem;
-  color: var(--ifm-code-color);
-  font-family: var(--ifm-font-family-monospace);
+.installPrompt {
+  color: var(--vc-mute);
+  user-select: none;
 }
 
 .heroButtons {
   display: flex;
-  gap: 0.75rem;
-  justify-content: center;
+  gap: 0.625rem;
   flex-wrap: wrap;
 }
 
-.ctaButton,
-.secondaryButton {
-  padding: 0.65rem 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
-  transition: all 0.15s ease;
+.cta {
+  text-decoration: none !important;
 }
 
-.ctaButton {
-  background: var(--ifm-color-primary);
-  border-color: var(--ifm-color-primary);
-  color: white;
+.cta:hover {
+  text-decoration: none !important;
 }
 
-.ctaButton:hover {
-  background: var(--ifm-color-primary-dark);
-  border-color: var(--ifm-color-primary-dark);
-  color: white;
+/* ─── Section primitives ─── */
+.sectionHeader {
+  margin-bottom: 2.5rem;
+  max-width: 640px;
 }
 
-.secondaryButton {
-  border-width: 1px;
-  border-color: var(--ifm-color-emphasis-300);
-  color: var(--ifm-color-content);
-  background: transparent;
+.sectionEyebrow {
+  display: inline-block;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--vc-mute);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0;
 }
 
-.secondaryButton:hover {
-  border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+.sectionTitle {
+  font-family: var(--ifm-font-family-base);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--vc-ink);
+  margin: 0 0 0.75rem;
 }
 
-/* Examples */
+.sectionLead {
+  font-size: 1rem;
+  color: var(--vc-body);
+  line-height: 1.6;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Examples ─── */
 .examples {
-  padding: 0 0 4rem;
+  padding: 5rem 1.5rem;
+  border-bottom: 1px solid var(--vc-hairline);
+}
+
+.examplesInner {
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
 .examplesGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  max-width: 960px;
-  margin: 0 auto;
+  gap: 1.25rem;
 }
 
-.codeBlock {
+.codeCard {
+  border-radius: 8px;
   overflow: hidden;
 }
 
-.codeBlock div[class^='codeBlockContainer'] {
+.codeCard div[class^='codeBlockContainer'] {
   margin: 0;
-  border-radius: 0;
-  box-shadow: none;
+  border-radius: 8px;
+  box-shadow: var(--vc-shadow-2);
 }
 
-/* Stats */
-.stats {
-  padding: 3rem 0 4rem;
-  border-top: 1px solid var(--ifm-color-emphasis-200);
+/* ─── Features ─── */
+.features {
+  padding: 5rem 1.5rem;
+  border-bottom: 1px solid var(--vc-hairline);
+  background: var(--vc-canvas-soft);
 }
 
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  max-width: 600px;
+.featuresInner {
+  max-width: 1080px;
   margin: 0 auto;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.featureCard {
+  background: var(--vc-canvas);
+  border: 1px solid var(--vc-hairline);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--vc-shadow-2);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.featureCard:hover {
+  box-shadow: var(--vc-shadow-3);
+  transform: translateY(-1px);
+}
+
+.featureTitle {
+  font-family: var(--ifm-font-family-base);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.5rem;
+  color: var(--vc-ink);
+}
+
+.featureBody {
+  font-size: 0.875rem;
+  color: var(--vc-body);
+  line-height: 1.55;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Stats ─── */
+.stats {
+  padding: 4rem 1.5rem 6rem;
+}
+
+.statsInner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
 }
 
 .stat {
   text-align: center;
+  flex: 1;
 }
 
 .statValue {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
+  font-family: var(--ifm-font-family-base);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
   line-height: 1;
-  margin-bottom: 0.4rem;
-  color: var(--ifm-color-primary);
-  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  color: var(--vc-ink);
+  letter-spacing: -0.04em;
 }
 
 .statLabel {
+  font-family: var(--ifm-font-family-monospace);
   font-size: 0.75rem;
-  color: var(--ifm-color-content-secondary);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  color: var(--vc-mute);
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
-/* Responsive */
-@media screen and (max-width: 768px) {
+.statDivider {
+  width: 1px;
+  height: 36px;
+  background: var(--vc-hairline);
+}
+
+/* ─── Responsive ─── */
+@media screen and (max-width: 996px) {
   .hero {
-    padding: 4rem 0 3rem;
+    padding: 5rem 1.25rem 4rem;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .examplesGrid {
     grid-template-columns: 1fr;
   }
+}
+
+@media screen and (max-width: 640px) {
+  .hero {
+    padding: 4rem 1.25rem 3rem;
+  }
+
+  .heroTitle {
+    letter-spacing: -0.04em;
+  }
 
   .heroButtons {
     flex-direction: column;
     align-items: stretch;
-    max-width: 280px;
-    margin: 0 auto;
   }
 
-  .statsGrid {
-    grid-template-columns: repeat(3, 1fr);
+  .cta {
+    width: 100%;
+  }
+
+  .examples,
+  .features {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsInner {
     gap: 1rem;
+  }
+
+  .statDivider {
+    height: 28px;
   }
 }
