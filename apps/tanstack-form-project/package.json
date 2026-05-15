@@ -10,17 +10,17 @@
   },
   "dependencies": {
     "@tanstack/react-form": "^1.24.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "use-mask-input": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.7.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
-    "oxlint": "1.57.0",
+    "oxlint": "1.65.0",
     "typescript": "~5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.2"
   }
 }

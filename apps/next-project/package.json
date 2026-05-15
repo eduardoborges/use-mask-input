@@ -8,13 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "^16.1.7",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "next": "^16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "use-mask-input": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.7.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "typescript": "^5"
