@@ -22,6 +22,11 @@
       "types": "./dist/antd.d.ts",
       "import": "./dist/antd.js",
       "require": "./dist/antd.cjs"
+    },
+    "./shadcn": {
+      "types": "./dist/shadcn.d.ts",
+      "import": "./dist/shadcn.js",
+      "require": "./dist/shadcn.cjs"
     }
   },
   "engines": {
