@@ -15,7 +15,7 @@ sidebar_position: 1
   <img src="https://img.shields.io/npm/dw/use-mask-input" alt="npm downloads" />
 </div>
 
-Input masks for React. Works with plain inputs, React Hook Form, TanStack Form, and Ant Design.
+Input masks for React. Works with plain inputs, React Hook Form, TanStack Form, shadcn/ui, and Ant Design.
 
 ```bash
 npm install use-mask-input
@@ -106,6 +106,22 @@ function EmailInput() {
 ```
 
 See the full [Ant Design Integration](./antd) guide.
+
+## With shadcn/ui
+
+shadcn/ui's `Input` exposes an `HTMLInputElement` ref directly, so the base hooks work without any adapter:
+
+```tsx
+import { useMaskInput } from 'use-mask-input';
+import { Input } from '@/components/ui/input';
+
+function CepField() {
+  const ref = useMaskInput({ mask: '99999-999' });
+  return <Input ref={ref} placeholder="00000-000" />;
+}
+```
+
+See the full [shadcn/ui Integration](./shadcn) guide.
 
 ## APIs
 

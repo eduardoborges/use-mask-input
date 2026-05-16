@@ -153,7 +153,7 @@ function Hero() {
         </h1>
 
         <p className={styles.heroSubtitle}>
-          A tiny hook for elegant input masking. Works with plain inputs,
+          A tiny hook for elegant input masking. Works with plain inputs, shadcn/ui,
           React Hook Form, TanStack Form, and Ant Design.
         </p>
 
@@ -201,14 +201,18 @@ function Examples() {
 
         <div className={styles.examplesGrid}>
           <div className={styles.codeCard}>
-            <DocusaurusCodeBlock language="tsx" title="basic.tsx">
-              {BASIC_EXAMPLE}
-            </DocusaurusCodeBlock>
+            <DocusaurusCodeBlock
+              language="tsx"
+              title="basic.tsx"
+              children={BASIC_EXAMPLE}
+            />
           </div>
           <div className={styles.codeCard}>
-            <DocusaurusCodeBlock language="tsx" title="with-react-hook-form.tsx">
-              {HOOK_FORM_EXAMPLE}
-            </DocusaurusCodeBlock>
+            <DocusaurusCodeBlock
+              language="tsx"
+              title="with-react-hook-form.tsx"
+              children={HOOK_FORM_EXAMPLE}
+            />
           </div>
         </div>
       </div>
