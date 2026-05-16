@@ -7,7 +7,6 @@ export default defineConfig({
   entry: {
     index: 'src/index.tsx',
     antd: 'src/antd/index.ts',
-    shadcn: 'src/shadcn/index.ts',
   },
   outDir: 'dist',
   format: ['esm', 'cjs'],
