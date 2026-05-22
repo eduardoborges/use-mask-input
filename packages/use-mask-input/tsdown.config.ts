@@ -1,7 +1,5 @@
 /* eslint-disable import-x/no-extraneous-dependencies */
-import { defineConfig } from 'tsup';
-
-const args = process.argv.slice(2);
+import { defineConfig } from 'tsdown';
 
 export default defineConfig({
   entry: {
@@ -16,8 +14,5 @@ export default defineConfig({
   sourcemap: true,
   noExternal: ['inputmask'],
   treeshake: true,
-  splitting: true,
   clean: true,
-  bundle: true,
-  watch: args.includes('--watch'),
 });
