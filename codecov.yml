@@ -1,0 +1,70 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%
+    patch:
+      default:
+        target: 80%
+        threshold: 1%
+
+flag_management:
+  default_rules:
+    carryforward: true
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+  individual_flags:
+    - name: unit
+      paths:
+        - packages/use-mask-input/src/
+
+component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+      - type: patch
+        target: 80%
+        threshold: 1%
+  individual_components:
+    - component_id: core
+      name: core
+      paths:
+        - packages/use-mask-input/src/core/**
+    - component_id: react_hook_form
+      name: react-hook-form
+      paths:
+        - packages/use-mask-input/src/api/useHookFormMask.ts
+        - packages/use-mask-input/src/api/withHookFormMask.ts
+        - packages/use-mask-input/src/antd/useHookFormMaskAntd.ts
+    - component_id: tanstack_form
+      name: tanstack-form
+      paths:
+        - packages/use-mask-input/src/api/useTanStackFormMask.ts
+        - packages/use-mask-input/src/api/withTanStackFormMask.ts
+    - component_id: antd
+      name: antd
+      paths:
+        - packages/use-mask-input/src/antd/**
+    - component_id: utils
+      name: utils
+      paths:
+        - packages/use-mask-input/src/utils/**
+
+comment:
+  layout: "header, diff, flags, components, files, footer"
+  behavior: default
+  require_changes: false
+
+ignore:
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "**/index.ts"
+  - "**/index.tsx"
+  - "**/types/**"
+  - "apps/**"
+  - "docs/**"

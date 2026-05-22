@@ -58,6 +58,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./packages/use-mask-input/coverage/lcov.info
+          flags: unit
           fail_ci_if_error: false
 
       - name: Run Lint
