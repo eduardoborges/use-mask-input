@@ -53,6 +53,13 @@ jobs:
       - name: Run Tests
         run: pnpm run test
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./packages/use-mask-input/coverage/lcov.info
+          fail_ci_if_error: false
+
       - name: Run Lint
         run: pnpm run lint
 
