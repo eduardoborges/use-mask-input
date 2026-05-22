@@ -13,18 +13,18 @@
     "clsx": "^2.1.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-hook-form": "7.75.0",
-    "tailwind-merge": "^3.3.1",
+    "react-hook-form": "7.76.0",
+    "tailwind-merge": "^3.6.0",
     "use-mask-input": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^25.7.0",
-    "@types/react": "^19.2.14",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.4",
-    "tailwindcss": "^4.1.8",
-    "@tailwindcss/vite": "^4.1.8",
-    "typescript": "~5.9.3",
-    "vite": "^7.3.2"
+    "@vitejs/plugin-react": "^6.0.2",
+    "tailwindcss": "^4.3.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.14"
   }
 }

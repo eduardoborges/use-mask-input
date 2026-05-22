@@ -51,17 +51,17 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
     "@types/inputmask": "5.0.7",
-    "@types/node": "^25.7.0",
-    "@types/react": ">=19",
-    "@types/react-dom": ">=19",
-    "@vitest/coverage-v8": "4.1.1",
-    "antd": "^6.3.5",
-    "oxlint": "1.65.0",
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/coverage-v8": "4.1.7",
+    "antd": "^6.4.3",
     "inputmask": "5.0.10-beta.61",
     "jsdom": "^29.1.1",
-    "react-hook-form": "7.75.0",
+    "oxlint": "1.66.0",
+    "react-hook-form": "7.76.0",
     "tsup": "8.5.1",
-    "typescript": "5.9",
-    "vitest": "4.1.1"
+    "typescript": "~6.0.3",
+    "vitest": "4.1.7"
   }
 }
