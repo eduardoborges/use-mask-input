@@ -193,7 +193,7 @@ describe('withTanStackFormMask', () => {
       const result = withTanStackFormMask(inputProps, 'cpf') as any;
 
       expect(result.prevRef).toBeUndefined();
-      expect(Object.prototype.hasOwnProperty.call(result, 'prevRef')).toBe(true);
+      expect(Object.hasOwn(result, 'prevRef')).toBe(true);
     });
   });
 });
