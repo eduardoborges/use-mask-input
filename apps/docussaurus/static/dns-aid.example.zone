@@ -1,0 +1,5 @@
+; DNS-AID example for use-mask-input documentation
+; Publish on the eduardoborges.dev zone (Cloudflare DNS + DNSSEC recommended)
+; Draft: https://datatracker.ietf.org/doc/draft-mozleywilliams-dnsop-dnsaid/
+
+_index._agents.eduardoborges.dev. 3600 IN HTTPS 1 use-mask-input.eduardoborges.dev. alpn=h2,h3 port=443 mandatory=alpn,port

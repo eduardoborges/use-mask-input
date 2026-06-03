@@ -1,0 +1,29 @@
+/
+  Link: </.well-known/api-catalog>; rel="api-catalog", </.well-known/agent-skills/index.json>; rel="describedby", </llm.txt>; rel="describedby", </api-reference>; rel="service-doc", </auth.md>; rel="service-doc"
+
+/index.html
+  Link: </.well-known/api-catalog>; rel="api-catalog", </.well-known/agent-skills/index.json>; rel="describedby", </llm.txt>; rel="describedby", </api-reference>; rel="service-doc", </auth.md>; rel="service-doc"
+
+/.well-known/api-catalog
+  Content-Type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
+
+/.well-known/agent-skills/index.json
+  Content-Type: application/json; charset=utf-8
+
+/.well-known/oauth-protected-resource
+  Content-Type: application/json; charset=utf-8
+
+/.well-known/mcp/server-card.json
+  Content-Type: application/json; charset=utf-8
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+
+/auth.md
+  Content-Type: text/markdown; charset=utf-8
+
+/llm.txt
+  Content-Type: text/plain; charset=utf-8
+
+/llm-full.txt
+  Content-Type: text/plain; charset=utf-8

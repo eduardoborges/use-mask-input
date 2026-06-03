@@ -1,0 +1,77 @@
+# use-mask-input documentation
+# https://use-mask-input.eduardoborges.dev
+# RFC 9309: https://www.rfc-editor.org/rfc/rfc9309
+# Content Signals: https://contentsignals.org/
+
+User-agent: *
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Allow: /.well-known/
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: GPTBot
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: Claude-Web
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: Amazonbot
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: Bytespider
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: CCBot
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llm.txt
+Allow: /llm-full.txt
+Disallow: /404.html
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+Sitemap: https://use-mask-input.eduardoborges.dev/sitemap.xml

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import DocusaurusCodeBlock from '@theme/CodeBlock';
+import WebMcpTools from '@site/src/components/WebMcpTools';
 import styles from './index.module.css';
 
 const FALLBACK_WEEKLY = 85000;
@@ -364,6 +365,7 @@ export default function Home(): React.JSX.Element {
       description="A tiny React hook for elegant input masks. Works with plain inputs, React Hook Form, TanStack Form, and Ant Design."
     >
       <main className={styles.homepage}>
+        <WebMcpTools />
         <Hero />
         <Examples />
         <Features />

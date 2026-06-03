@@ -1,0 +1,6 @@
+{
+  "resource": "https://use-mask-input.eduardoborges.dev/",
+  "authorization_servers": [],
+  "scopes_supported": [],
+  "bearer_methods_supported": ["header"]
+}

@@ -1,0 +1,33 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://use-mask-input.eduardoborges.dev/.well-known/api-catalog",
+      "item": [
+        {
+          "href": "https://use-mask-input.eduardoborges.dev/api-reference"
+        }
+      ]
+    },
+    {
+      "anchor": "https://use-mask-input.eduardoborges.dev/api-reference",
+      "service-desc": [
+        {
+          "href": "https://use-mask-input.eduardoborges.dev/llm-full.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://use-mask-input.eduardoborges.dev/api-reference",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://www.npmjs.com/package/use-mask-input",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

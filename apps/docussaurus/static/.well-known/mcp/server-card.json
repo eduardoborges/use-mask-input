@@ -1,0 +1,12 @@
+{
+  "serverInfo": {
+    "name": "use-mask-input-docs",
+    "version": "3.8.0"
+  },
+  "endpoint": "https://use-mask-input.eduardoborges.dev/llm-full.txt",
+  "capabilities": {
+    "tools": [],
+    "resources": ["llm.txt", "llm-full.txt", "api-reference"],
+    "prompts": []
+  }
+}

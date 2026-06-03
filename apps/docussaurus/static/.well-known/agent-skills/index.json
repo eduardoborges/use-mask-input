@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "use-mask-input",
+      "type": "skill-md",
+      "description": "Apply React input masks with useMaskInput, React Hook Form, and Ant Design integrations.",
+      "url": "https://use-mask-input.eduardoborges.dev/.well-known/agent-skills/use-mask-input/SKILL.md",
+      "digest": "sha256:7b6fd2206632c079b48eb5d9076d0ca9e54335cf481df5759a2d120584e09f11"
+    }
+  ]
+}
