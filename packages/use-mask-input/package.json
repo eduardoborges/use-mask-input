@@ -9,14 +9,14 @@
     "url": "https://github.com/eduardoborges/use-mask-input"
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "source": "./src/index.tsx",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       },
       "require": {
         "types": "./dist/index.d.cts",
@@ -25,8 +25,8 @@
     },
     "./antd": {
       "import": {
-        "types": "./dist/antd.d.mts",
-        "default": "./dist/antd.mjs"
+        "types": "./dist/antd.d.ts",
+        "default": "./dist/antd.js"
       },
       "require": {
         "types": "./dist/antd.d.cts",
