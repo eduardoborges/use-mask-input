@@ -3,6 +3,7 @@
   "version": "3.10.1",
   "private": false,
   "description": "A react Hook for build elegant input masks. Compatible with React Hook Form",
+  "license": "MIT",
   "author": "Eduardo Borges<euduardoborges@gmail.com>",
   "type": "module",
   "repository": {
