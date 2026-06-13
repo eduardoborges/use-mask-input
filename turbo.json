@@ -8,6 +8,9 @@
       "dependsOn": [
         "^build"
       ],
+      "passThroughEnv": [
+        "CODECOV_TOKEN"
+      ],
       "outputs": [
         "dist/**",
         ".next/**",
