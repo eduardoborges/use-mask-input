@@ -49,15 +49,6 @@ The homepage registers WebMCP tools when `navigator.modelContext` is available (
 
 HTML-to-markdown negotiation (`Accept: text/markdown`) is a **zone-level Cloudflare** feature. Enable **Markdown for Agents** under [AI Crawl Control](https://dash.cloudflare.com/) for the zone that serves `use-mask-input.eduardoborges.dev`. Disable managed robots.txt in the dashboard if it overrides the static file from this repo.
 
-## DNS for AI Discovery (DNS-AID)
-
-Add DNS records on the **apex zone** (`eduardoborges.dev`) in Cloudflare DNS. Example (adjust priority and enable DNSSEC on the zone):
-
-```dns
-_index._agents.eduardoborges.dev. 3600 IN HTTPS 1 use-mask-input.eduardoborges.dev. alpn=h2,h3 port=443
-```
-
-See `apps/docussaurus/static/dns-aid.example.zone` for a copy-paste template.
 
 ## LLM context
 

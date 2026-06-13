@@ -1,5 +1,10 @@
-; DNS-AID example for use-mask-input documentation
-; Publish on the eduardoborges.dev zone (Cloudflare DNS + DNSSEC recommended)
+; DNS-AID for https://use-mask-input.eduardoborges.dev
+; Create in the eduardoborges.dev zone on Cloudflare (DNS + DNSSEC).
+; Scanners query the SITE hostname, not only the apex:
+;   _index._agents.use-mask-input.eduardoborges.dev
 ; Draft: https://datatracker.ietf.org/doc/draft-mozleywilliams-dnsop-dnsaid/
 
-_index._agents.eduardoborges.dev. 3600 IN HTTPS 1 use-mask-input.eduardoborges.dev. alpn=h2,h3 port=443 mandatory=alpn,port
+_index._agents.use-mask-input.eduardoborges.dev. 3600 IN HTTPS 1 use-mask-input.eduardoborges.dev. alpn=h2,h3 port=443 mandatory=alpn,port
+
+; Optional apex index if you also advertise agents at eduardoborges.dev:
+; _index._agents.eduardoborges.dev. 3600 IN HTTPS 1 use-mask-input.eduardoborges.dev. alpn=h2,h3 port=443 mandatory=alpn,port
