@@ -1,6 +1,9 @@
 {
   "name": "use-mask-input",
   "version": "3.10.2",
+  "bugs": {
+    "url": "https://github.com/eduardoborges/use-mask-input/issues"
+  },
   "private": false,
   "description": "A react Hook for build elegant input masks. Compatible with React Hook Form",
   "license": "MIT",
