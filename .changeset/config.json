@@ -11,6 +11,7 @@
     "vite-project",
     "next-project",
     "tanstack-form-project",
+    "shadcn-project",
     "docs"
   ],
   "preReleaseBranches": [
