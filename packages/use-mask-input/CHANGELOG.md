@@ -1,3 +1,9 @@
+## 3.10.2
+
+### Patch Changes
+
+- 639985b: Add npm license metadata to the package manifest.
+
 ## 3.10.1
 
 ### Patch Changes
