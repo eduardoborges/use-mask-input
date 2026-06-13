@@ -14,5 +14,6 @@ export default defineConfig({
   sourcemap: true,
   noExternal: ['inputmask'],
   treeshake: true,
+  minify: true,
   clean: true,
 });

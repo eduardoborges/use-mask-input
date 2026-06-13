@@ -51,6 +51,7 @@
   "files": [
     "dist",
     "src",
+    "!src/**/*.spec.*",
     "README.md",
     "CHANGELOG.md"
   ],
