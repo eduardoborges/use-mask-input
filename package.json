@@ -2,7 +2,7 @@
   "name": "use-mask-input-monorepo",
   "version": "0.0.0",
   "private": true,
-  "description": "Monorepo for use-mask-input",
+  "description": "Input masks for React. Works with React Hook Form, TanStack Form, Ant Design, and plain inputs.",
   "repository": {
     "url": "https://github.com/eduardoborges/use-mask-input"
   },
@@ -13,6 +13,7 @@
   "keywords": [
     "react",
     "react-hook-form",
+    "tanstack-form",
     "antd",
     "input-mask",
     "input-masking"
