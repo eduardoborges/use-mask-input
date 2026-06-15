@@ -6,6 +6,17 @@
   "repository": {
     "url": "https://github.com/eduardoborges/use-mask-input"
   },
+  "bugs": {
+    "url": "https://github.com/eduardoborges/use-mask-input/issues"
+  },
+  "homepage": "https://use-mask-input.eduardoborges.dev/",
+  "keywords": [
+    "react",
+    "react-hook-form",
+    "antd",
+    "input-mask",
+    "input-masking"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=vite-project",
