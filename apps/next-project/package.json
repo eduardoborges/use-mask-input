@@ -8,14 +8,14 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "^16.2.6",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "use-mask-input": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1",
-    "@types/react": "^19.2.15",
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "typescript": "^6.0.3"
   }
