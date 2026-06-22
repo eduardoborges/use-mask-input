@@ -1,4 +1,4 @@
-import type { RefCallback } from 'react';
+import type { ChangeEvent, FocusEvent, RefCallback } from 'react';
 import type {
   FieldValues, Path,
   UseFormRegisterReturn,
@@ -45,7 +45,10 @@ export interface UseHookFormMaskReturn<
 
 export interface TanStackFormInputProps {
   name?: string;
+  value?: string | number | readonly string[];
   ref?: RefCallback<HTMLElement | null>;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   [key: string]: unknown;
 }
 
