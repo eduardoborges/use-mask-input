@@ -2,6 +2,9 @@ import { findInputElement, resolveInputRef } from '../core/elementResolver';
 
 import type { Input, Mask, UnmaskedValueApi } from '../types';
 
+// Kept self-contained (not relying on the ambient src/@types augmentation) so
+// this module type-checks when consumers compile the package source directly,
+// e.g. the example apps that alias `use-mask-input` to `src` and build with `tsc`.
 type MaskedElement = (HTMLInputElement | HTMLTextAreaElement) & {
   inputmask?: { unmaskedvalue?: () => string };
 };
