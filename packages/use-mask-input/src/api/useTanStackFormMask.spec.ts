@@ -83,4 +83,24 @@ describe('useTanStackFormMask', () => {
 
     expect(inputmask).toHaveBeenCalledWith(expect.objectContaining(options));
   });
+
+  it('infers the onChange event type without an explicit annotation', () => {
+    const { result } = renderHook(() => useTanStackFormMask());
+    const handleChange = vi.fn();
+
+    // Reproduces issue #183: the inline `event` parameter must be typed as a
+    // ChangeEvent (not implicit `any`), so `event.target.value` is accessible.
+    const masked = result.current('cpf', {
+      name: 'cpf',
+      value: '',
+      onBlur: vi.fn(),
+      onChange: (event) => handleChange(event.target.value),
+    });
+
+    const input = document.createElement('input');
+    input.value = '12345';
+    masked.onChange?.({ target: input } as never);
+
+    expect(handleChange).toHaveBeenCalledWith('12345');
+  });
 });
