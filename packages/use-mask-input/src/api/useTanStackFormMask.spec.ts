@@ -7,6 +7,7 @@ import {
 
 import useTanStackFormMask from './useTanStackFormMask';
 
+import type { ChangeEvent } from 'react';
 import type { TanStackFormInputProps } from '../types';
 
 vi.mock('../core/inputmask', () => ({
@@ -102,5 +103,49 @@ describe('useTanStackFormMask', () => {
     masked.onChange?.({ target: input } as never);
 
     expect(handleChange).toHaveBeenCalledWith('12345');
+  });
+
+  it('infers the onChange event type for a masked textarea field', () => {
+    const { result } = renderHook(() => useTanStackFormMask());
+    const handleChange = vi.fn();
+
+    // use-mask-input also supports masking <textarea> elements. The inline
+    // `event` parameter must infer a type whose `.target` covers
+    // HTMLTextAreaElement, not be pinned to HTMLInputElement only.
+    const masked = result.current('999-999', {
+      name: 'notes',
+      value: '',
+      onBlur: vi.fn(),
+      onChange: (event) => handleChange(event.target.value),
+    });
+
+    const textarea = document.createElement('textarea');
+    textarea.value = 'hello';
+    masked.onChange?.({ target: textarea } as never);
+
+    expect(handleChange).toHaveBeenCalledWith('hello');
+  });
+
+  it('accepts a handler explicitly typed for HTMLInputElement-only members', () => {
+    const { result } = renderHook(() => useTanStackFormMask());
+    const handleFiles = vi.fn();
+
+    // A handler narrowly annotated as ChangeEvent<HTMLInputElement> (reading an
+    // input-only member like `.files`) must still be assignable to onChange.
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+      handleFiles(event.target.files);
+    };
+
+    const masked = result.current('cpf', {
+      name: 'cpf',
+      value: '',
+      onBlur: vi.fn(),
+      onChange,
+    });
+
+    const input = document.createElement('input');
+    masked.onChange?.({ target: input } as never);
+
+    expect(handleFiles).toHaveBeenCalledWith(input.files);
   });
 });

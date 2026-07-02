@@ -47,8 +47,12 @@ export interface TanStackFormInputProps {
   name?: string;
   value?: string | number | readonly string[];
   ref?: RefCallback<HTMLElement | null>;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  // Method shorthand (not an arrow-typed property) so the parameter is checked
+  // bivariantly: handlers explicitly typed for just HTMLInputElement (e.g. using
+  // `event.target.files`) or just HTMLTextAreaElement (e.g. `event.target.cols`)
+  // both remain assignable, alongside the common inline, unannotated handler.
+  onChange?(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+  onBlur?(event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   [key: string]: unknown;
 }
 
