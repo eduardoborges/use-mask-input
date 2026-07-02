@@ -1,3 +1,20 @@
+## 3.10.3
+
+### Patch Changes
+
+- f20a510: Improve TypeScript types around TanStack Form and the masked element.
+
+  - `TanStackFormInputProps` now declares `value`, `onChange`, and `onBlur`
+    explicitly, so the inline `onChange: (event) => field.handleChange(event.target.value)`
+    handler infers `event` as a `ChangeEvent<HTMLInputElement>` instead of an
+    implicit `any` under `noImplicitAny` (fixes #183).
+  - Declare the `inputmask` instance property on `HTMLInputElement` and
+    `HTMLTextAreaElement` so `unmaskedValue()` reads are fully typed.
+
+- 6b38852: Widen `TanStackFormInputProps.onChange`/`onBlur` to accept `HTMLTextAreaElement` in addition to `HTMLInputElement`.
+
+  `use-mask-input` supports masking `<textarea>` elements, but #184 pinned the TanStack Form `onChange`/`onBlur` event types to `ChangeEvent<HTMLInputElement>`/`FocusEvent<HTMLInputElement>` only. That broke consumers masking a `<textarea>` field who explicitly annotate their handler as `ChangeEvent<HTMLTextAreaElement>`, and mistyped the event for anyone relying on inline (unannotated) handlers rendering a `<textarea>`. The event types are now `ChangeEvent<HTMLInputElement | HTMLTextAreaElement>` / `FocusEvent<HTMLInputElement | HTMLTextAreaElement>`.
+
 ## 3.10.2
 
 ### Patch Changes
