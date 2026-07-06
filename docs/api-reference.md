@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # API Reference
 
-**use-mask-input** exports six main APIs and two Ant Design-specific hooks. Choose the one that fits your use case:
+**use-mask-input** exports six main APIs, two Ant Design-specific hooks, and two standalone formatting utilities. Choose the one that fits your use case:
 
 | API | Type | React Hook Form | Ant Design | Needs `memo`? |
 |-----|------|:---------------:|:----------:|:-------------:|
@@ -16,6 +16,8 @@ sidebar_position: 2
 | [`withTanStackFormMask`](#withtanstackformmask) | Function | - | - | **Yes** |
 | [`useMaskInputAntd`](#usemaskinputantd) | Hook | - | Yes | No |
 | [`useHookFormMaskAntd`](#usehookformmaskantd) | Hook | Yes | Yes | No |
+| [`formatWithMask`](#formatwithmask) | Function | - | - | No |
+| [`unformatWithMask`](#unformatwithmask) | Function | - | - | No |
 
 ---
 
@@ -450,6 +452,79 @@ function MyForm() {
     </form>
   );
 }
+```
+
+---
+
+## Utilities
+
+`formatWithMask` and `unformatWithMask` work directly on plain values, with no DOM element required. Use them to format data for display (e.g. rendering a persisted value) or to sanitize data before sending it to the backend.
+
+### formatWithMask
+
+Formats a raw value using the given mask.
+
+```ts
+function formatWithMask(
+  value: string,
+  mask: Mask,
+  options?: Options
+): string
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `value` | `string` | Yes | The raw value to format. |
+| `mask` | `Mask` | Yes | The mask pattern or alias. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+The formatted (masked) value.
+
+**Example**
+
+```ts
+import { formatWithMask } from 'use-mask-input';
+
+formatWithMask('12345678900', 'cpf'); // '123.456.789-00'
+formatWithMask('999999', '999-999'); // '999-999'
+```
+
+---
+
+### unformatWithMask
+
+Removes the mask from a formatted value, returning the raw underlying value.
+
+```ts
+function unformatWithMask(
+  value: string,
+  mask: Mask,
+  options?: Options
+): string
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `value` | `string` | Yes | The masked value to unformat. |
+| `mask` | `Mask` | Yes | The mask pattern or alias. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+The raw, unmasked value.
+
+**Example**
+
+```ts
+import { unformatWithMask } from 'use-mask-input';
+
+unformatWithMask('123.456.789-00', 'cpf'); // '12345678900'
 ```
 
 ---
