@@ -45,3 +45,31 @@ export function applyMaskToElement(
     maskInstance.mask(element);
   }
 }
+
+/**
+ * Formats a raw value using the given mask, without needing a mounted element.
+ * Useful for displaying already-persisted (unmasked) values in the UI.
+ *
+ * @param value - The raw value to format
+ * @param mask - The mask pattern
+ * @param options - Optional configuration options
+ * @returns The masked value
+ */
+export function formatWithMask(value: string, mask: Mask, options?: Options): string {
+  const inputmaskInstance = moduleInterop(inputmask);
+  return inputmaskInstance.format(value, getMaskOptions(mask, options));
+}
+
+/**
+ * Removes the mask from a formatted value, without needing a mounted element.
+ * Useful for sanitizing input before sending it to the backend.
+ *
+ * @param value - The masked value to unformat
+ * @param mask - The mask pattern
+ * @param options - Optional configuration options
+ * @returns The raw, unmasked value
+ */
+export function unformatWithMask(value: string, mask: Mask, options?: Options): string {
+  const inputmaskInstance = moduleInterop(inputmask);
+  return inputmaskInstance.unmask(value, getMaskOptions(mask, options));
+}

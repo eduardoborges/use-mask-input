@@ -120,6 +120,8 @@ function EmailInput() {
 | `withTanStackFormMask` | Function. Mask for TanStack input props. Requires `React.memo`. |
 | `useMaskInputAntd` | Hook. `useMaskInput` for Ant Design. |
 | `useHookFormMaskAntd` | Hook. `useHookFormMask` for Ant Design. |
+| `formatWithMask` | Function. Formats a raw value using a mask, without a mounted element. |
+| `unformatWithMask` | Function. Removes the mask from a formatted value, without a mounted element. |
 
 ## Built-in Aliases
 
