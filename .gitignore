@@ -16,10 +16,6 @@ dist
 .rpt2_cache
 coverage
 .wrangler
-.claude
-.cursor
-.crush
-.vscode
 
 # misc
 .DS_Store
