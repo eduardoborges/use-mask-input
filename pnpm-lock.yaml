@@ -9,7 +9,7 @@ overrides:
   react-dom: ^19.2.6
   '@types/react': ^19.2.5
   '@types/react-dom': ^19.2.3
-  react-hook-form: 7.75.0
+  react-hook-form: 7.82.0
   qs@>=6.7.0 <=6.14.1: '>=6.14.2'
   minimatch@<3.1.3: '>=3.1.3'
   rollup@>=4.0.0 <4.59.0: '>=4.59.0'
@@ -136,8 +136,8 @@ importers:
         specifier: ^19.2.6
         version: 19.2.7(react@19.2.7)
       react-hook-form:
-        specifier: 7.75.0
-        version: 7.75.0(react@19.2.7)
+        specifier: 7.82.0
+        version: 7.82.0(react@19.2.7)
       tailwind-merge:
         specifier: ^3.6.0
         version: 3.6.0
@@ -211,7 +211,7 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ^5.4.0
-        version: 5.4.0(react-hook-form@7.75.0(react@19.2.7))
+        version: 5.4.0(react-hook-form@7.82.0(react@19.2.7))
       antd:
         specifier: ^6.4.4
         version: 6.5.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -222,8 +222,8 @@ importers:
         specifier: ^19.2.6
         version: 19.2.7(react@19.2.7)
       react-hook-form:
-        specifier: 7.75.0
-        version: 7.75.0(react@19.2.7)
+        specifier: 7.82.0
+        version: 7.82.0(react@19.2.7)
       use-mask-input:
         specifier: workspace:*
         version: link:../../packages/use-mask-input
@@ -299,8 +299,8 @@ importers:
         specifier: 1.74.0
         version: 1.74.0
       react-hook-form:
-        specifier: 7.75.0
-        version: 7.75.0(react@19.2.7)
+        specifier: 7.82.0
+        version: 7.82.0(react@19.2.7)
       tsdown:
         specifier: ^0.22.9
         version: 0.22.9(typescript@6.0.3)
@@ -1916,7 +1916,7 @@ packages:
   '@hookform/resolvers@5.4.0':
     resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
     peerDependencies:
-      react-hook-form: 7.75.0
+      react-hook-form: 7.82.0
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -7225,8 +7225,8 @@ packages:
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
 
-  react-hook-form@7.75.0:
-    resolution: {integrity: sha512-Ovv94H+0p3sJ7B9B5QxPuCP1u8V/cHuVGyH55cSwodYDtoJwK+fqk3vjfIgSX59I2U/bU4z0nRJ9HMLpNiWEmw==}
+  react-hook-form@7.82.0:
+    resolution: {integrity: sha512-Zw/uFZ2dO+02GHlBn7JFGn8kZJ7LdM33B/0BXOovzFay+CMhf94JMw5BVu+F1tVkUKjNvBuaE3fz5BJhga10Tg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^19.2.6
@@ -11192,10 +11192,10 @@ snapshots:
     dependencies:
       '@hapi/hoek': 9.3.0
 
-  '@hookform/resolvers@5.4.0(react-hook-form@7.75.0(react@19.2.7))':
+  '@hookform/resolvers@5.4.0(react-hook-form@7.82.0(react@19.2.7))':
     dependencies:
       '@standard-schema/utils': 0.3.0
-      react-hook-form: 7.75.0(react@19.2.7)
+      react-hook-form: 7.82.0(react@19.2.7)
 
   '@img/colour@1.1.0': {}
 
@@ -16688,7 +16688,7 @@ snapshots:
 
   react-fast-compare@3.2.2: {}
 
-  react-hook-form@7.75.0(react@19.2.7):
+  react-hook-form@7.82.0(react@19.2.7):
     dependencies:
       react: 19.2.7
 
