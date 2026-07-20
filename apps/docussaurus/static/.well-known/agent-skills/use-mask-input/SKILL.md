@@ -31,5 +31,5 @@ Use string aliases instead of raw patterns: `cpf`, `cnpj`, `currency`, `datetime
 
 ## Machine-readable reference
 
-- Summary: https://use-mask-input.eduardoborges.dev/llm.txt
-- Full API: https://use-mask-input.eduardoborges.dev/llm-full.txt
+- Summary: https://use-mask-input.eduardoborges.dev/llms.txt
+- Full API: https://use-mask-input.eduardoborges.dev/llms-full.txt

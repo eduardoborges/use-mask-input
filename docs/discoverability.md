@@ -18,11 +18,11 @@ Source: `apps/docussaurus/static/robots.txt`
 
 ## Link headers (RFC 8288)
 
-The homepage response includes `Link` headers (via Cloudflare Pages `_headers`) pointing to the API catalog, agent skills index, `llm.txt`, API reference, and `auth.md`.
+The homepage response includes `Link` headers (via Cloudflare Pages `_headers`) pointing to the API catalog, agent skills index, `llms.txt`, API reference, and `auth.md`.
 
 ## API catalog (RFC 9727)
 
-[`/.well-known/api-catalog`](https://use-mask-input.eduardoborges.dev/.well-known/api-catalog) returns `application/linkset+json` describing the library API reference and machine-readable `llm-full.txt` spec.
+[`/.well-known/api-catalog`](https://use-mask-input.eduardoborges.dev/.well-known/api-catalog) returns `application/linkset+json` describing the library API reference and machine-readable `llms-full.txt` spec.
 
 ## Agent skills
 
@@ -54,8 +54,8 @@ HTML-to-markdown negotiation (`Accept: text/markdown`) is a **zone-level Cloudfl
 
 | File | URL |
 | --- | --- |
-| Summary | [`/llm.txt`](https://use-mask-input.eduardoborges.dev/llm.txt) |
-| Full reference | [`/llm-full.txt`](https://use-mask-input.eduardoborges.dev/llm-full.txt) |
+| Summary | [`/llms.txt`](https://use-mask-input.eduardoborges.dev/llms.txt) |
+| Full reference | [`/llms-full.txt`](https://use-mask-input.eduardoborges.dev/llms-full.txt) |
 
 ## Validate
 

@@ -1,0 +1,3 @@
+# Legacy llm.txt -> standard llms.txt naming (llmstxt.org convention)
+/llm.txt        /llms.txt        301
+/llm-full.txt   /llms-full.txt   301

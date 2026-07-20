@@ -47,8 +47,8 @@ export default function WebMcpTools(): null {
       async () => ({
         intro: `${SITE}/intro`,
         apiReference: `${SITE}/api-reference`,
-        llmTxt: `${SITE}/llm.txt`,
-        llmFullTxt: `${SITE}/llm-full.txt`,
+        llmTxt: `${SITE}/llms.txt`,
+        llmFullTxt: `${SITE}/llms-full.txt`,
         apiCatalog: `${SITE}/.well-known/api-catalog`,
         agentSkills: `${SITE}/.well-known/agent-skills/index.json`,
         robotsTxt: `${SITE}/robots.txt`,

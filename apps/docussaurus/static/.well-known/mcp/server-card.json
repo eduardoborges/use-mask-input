@@ -3,10 +3,10 @@
     "name": "use-mask-input-docs",
     "version": "3.8.0"
   },
-  "endpoint": "https://use-mask-input.eduardoborges.dev/llm-full.txt",
+  "endpoint": "https://use-mask-input.eduardoborges.dev/llms-full.txt",
   "capabilities": {
     "tools": [],
-    "resources": ["llm.txt", "llm-full.txt", "api-reference"],
+    "resources": ["llms.txt", "llms-full.txt", "api-reference"],
     "prompts": []
   }
 }

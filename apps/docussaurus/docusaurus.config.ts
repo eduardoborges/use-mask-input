@@ -77,13 +77,13 @@ const config: Config = {
           label: 'Documentation',
         },
         {
-          href: 'https://use-mask-input.eduardoborges.dev/llm.txt',
-          label: 'llm.txt',
+          href: 'https://use-mask-input.eduardoborges.dev/llms.txt',
+          label: 'llms.txt',
           position: 'right',
         },
         {
-          href: 'https://use-mask-input.eduardoborges.dev/llm-full.txt',
-          label: 'llm-full.txt',
+          href: 'https://use-mask-input.eduardoborges.dev/llms-full.txt',
+          label: 'llms-full.txt',
           position: 'right',
         },
         {

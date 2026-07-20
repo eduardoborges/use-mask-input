@@ -4,7 +4,7 @@ This site is **public documentation** for the [use-mask-input](https://www.npmjs
 
 ## Audience
 
-AI agents and crawlers may read published docs, `llm.txt`, and `llm-full.txt` under the policy in [`/robots.txt`](https://use-mask-input.eduardoborges.dev/robots.txt).
+AI agents and crawlers may read published docs, `llms.txt`, and `llms-full.txt` under the policy in [`/robots.txt`](https://use-mask-input.eduardoborges.dev/robots.txt).
 
 ## Credentials
 

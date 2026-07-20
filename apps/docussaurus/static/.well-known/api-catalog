@@ -12,7 +12,7 @@
       "anchor": "https://use-mask-input.eduardoborges.dev/api-reference",
       "service-desc": [
         {
-          "href": "https://use-mask-input.eduardoborges.dev/llm-full.txt",
+          "href": "https://use-mask-input.eduardoborges.dev/llms-full.txt",
           "type": "text/plain"
         }
       ],

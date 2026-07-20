@@ -2,7 +2,7 @@
 
 > Complete documentation for use-mask-input, a React hook library for input masks. Compatible with plain React, React Hook Form, TanStack Form, and Ant Design.
 
-This file aggregates all documentation pages into a single document optimized for LLM ingestion. For a shorter overview, see [llm.txt](./llm.txt).
+This file aggregates all documentation pages into a single document optimized for LLM ingestion. For a shorter overview, see [llms.txt](./llms.txt).
 
 
 ---
