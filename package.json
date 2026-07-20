@@ -32,11 +32,11 @@
     "release": "changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
-    "oxlint": "1.66.0",
-    "turbo": "^2.9.18",
+    "@changesets/cli": "^2.31.1",
+    "oxlint": "1.74.0",
+    "turbo": "^2.10.5",
     "typescript": "~6.0.3",
-    "wrangler": "^4.100.0"
+    "wrangler": "^4.112.0"
   },
   "engines": {
     "node": ">=16",

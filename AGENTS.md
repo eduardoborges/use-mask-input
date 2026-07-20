@@ -38,6 +38,8 @@ use-mask-input/
 └── .github/workflows/          # CI/CD pipelines
 ```
 
+> **`apps/*` are unmodified starter boilerplates** (create-next-app, create-vite, etc.), not product code. They exist only to smoke-test the library against each integration (Next.js, Vite, TanStack Form, shadcn, Ant Design). Keep their dependency versions matching the framework's standard boilerplate — do **not** bump them to bleeding-edge or ahead of what the official scaffold ships (e.g. Next's boilerplate pins `typescript@^5`, `@types/node@^20`, exact `next`/`react` versions). Only `packages/use-mask-input` follows the latest deps. When updating an app, mirror its upstream `create-*` template's `package.json` and add back `use-mask-input: workspace:*`.
+
 ## Essential Commands
 
 ### Installation & Setup
