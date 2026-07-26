@@ -90,11 +90,15 @@ export default function useHookFormMask<
           return _ref;
         };
 
-        nextEntry.stableRef = (
-          nextEntry.latestRHFRef
-            ? flow(syncRHFRef, applyMaskToRef)
-            : applyMaskToRef
-        ) as RefCallback<HTMLElement | null>;
+        const composedRef = nextEntry.latestRHFRef
+          ? flow(syncRHFRef, applyMaskToRef)
+          : applyMaskToRef;
+
+        // React 19 treats a ref callback's return value as a cleanup function,
+        // so the composed callback must return void — never the resolved element.
+        nextEntry.stableRef = ((_ref: HTMLElement | null): void => {
+          composedRef(_ref);
+        }) as RefCallback<HTMLElement | null>;
 
         entry = nextEntry;
         entryCacheRef.current.set(cacheKey, nextEntry);
