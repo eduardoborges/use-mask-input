@@ -79,11 +79,26 @@ export default function useHookFormMask<
           return _ref;
         };
 
-        nextEntry.stableRef = (
-          nextEntry.latestRHFRef
-            ? flow(applyMaskToRef, (_ref: HTMLElement | null) => nextEntry.latestRHFRef?.(_ref))
-            : applyMaskToRef
-        ) as RefCallback<HTMLElement | null>;
+        // RHF must run first: it writes the field's predefined value onto the
+        // element. If we masked before that, Inputmask would initialise with an
+        // empty buffer and RHF's later value assignment would leave its internal
+        // state out of sync with the DOM, swallowing the first onChange after a
+        // select-all + delete (#193). Masking after RHF seeds Inputmask with the
+        // current value, keeping its buffer in sync from the start.
+        const syncRHFRef = (_ref: HTMLElement | null) => {
+          nextEntry.latestRHFRef?.(_ref);
+          return _ref;
+        };
+
+        const composedRef = nextEntry.latestRHFRef
+          ? flow(syncRHFRef, applyMaskToRef)
+          : applyMaskToRef;
+
+        // React 19 treats a ref callback's return value as a cleanup function,
+        // so the composed callback must return void — never the resolved element.
+        nextEntry.stableRef = ((_ref: HTMLElement | null): void => {
+          composedRef(_ref);
+        }) as RefCallback<HTMLElement | null>;
 
         entry = nextEntry;
         entryCacheRef.current.set(cacheKey, nextEntry);

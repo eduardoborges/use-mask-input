@@ -66,6 +66,76 @@ describe('useHookFormMask', () => {
     expect(maskFn).toHaveBeenCalled();
   });
 
+  it('calls the RHF ref before applying the mask so predefined values sync (#193)', () => {
+    const input = document.createElement('input');
+    const order: string[] = [];
+    const refCallback = vi.fn(() => order.push('rhf-ref'));
+    const registerFn = vi.fn(() => ({
+      ref: refCallback,
+      prevRef: vi.fn(),
+      onChange: vi.fn(),
+      onBlur: vi.fn(),
+      name: 'phone',
+    }));
+    const maskFn = vi.fn(() => order.push('mask'));
+    vi.mocked(inputmask).mockReturnValue({ mask: maskFn } as any);
+
+    const { result } = renderHook(
+      () => useHookFormMask(registerFn as UseFormRegister<FieldValues>),
+    );
+    const registration = result.current('phone', '999-999');
+
+    registration.ref?.(input);
+
+    // RHF writes the field's predefined value onto the element first; masking
+    // afterwards seeds Inputmask with that value and keeps its buffer in sync.
+    expect(order).toEqual(['rhf-ref', 'mask']);
+    expect(refCallback).toHaveBeenCalledWith(input);
+  });
+
+  it('returns void from the ref callback on mount and detach (React 19 cleanup contract)', () => {
+    // React 19 treats a ref callback's return value as a cleanup function, so
+    // the composed RHF + mask ref must never leak the resolved element or null.
+    const input = document.createElement('input');
+    const registerFn = vi.fn(() => ({
+      // RHF's own ref callback returns void; the composed one must too.
+      ref: vi.fn(() => input),
+      prevRef: vi.fn(),
+      onChange: vi.fn(),
+      onBlur: vi.fn(),
+      name: 'phone',
+    }));
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
+
+    const { result } = renderHook(
+      () => useHookFormMask(registerFn as UseFormRegister<FieldValues>),
+    );
+    const registration = result.current('phone', '999-999');
+
+    expect(registration.ref?.(input)).toBeUndefined();
+    expect(registration.ref?.(null)).toBeUndefined();
+  });
+
+  it('returns void from the ref callback when RHF provides no ref', () => {
+    const input = document.createElement('input');
+    const registerFn = vi.fn(() => ({
+      ref: undefined,
+      prevRef: vi.fn(),
+      onChange: vi.fn(),
+      onBlur: vi.fn(),
+      name: 'phone',
+    }));
+    vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
+
+    const { result } = renderHook(
+      () => useHookFormMask(registerFn as unknown as UseFormRegister<FieldValues>),
+    );
+    const registration = result.current('phone', '999-999');
+
+    expect(registration.ref?.(input)).toBeUndefined();
+    expect(registration.ref?.(null)).toBeUndefined();
+  });
+
   it('merges register options with mask options', () => {
     const registerFn = makeRegisterFn('phone');
     vi.mocked(inputmask).mockReturnValue({ mask: vi.fn() } as any);
