@@ -2,9 +2,29 @@
 import inputmask from './inputmask';
 
 import { getMaskOptions } from './maskConfig';
+import { isHTMLElement } from './elementResolver';
 import { moduleInterop } from '../utils';
 
 import type { Mask, Options } from '../types';
+
+/**
+ * Drops the native `maxlength` before inputmask touches the element.
+ *
+ * A masked input holds the full mask placeholder as its value, so `maxlength`
+ * counts the literals the user never typed and the browser blocks keystrokes
+ * long before the mask is filled. inputmask also copies the attribute into its
+ * own validator, which rejects any buffer longer than it — and the buffer is
+ * always the whole mask. Either way the field ends up unusable, so the
+ * attribute has to go before `mask()` reads it.
+ *
+ * @see https://github.com/eduardoborges/use-mask-input/issues/191
+ * @param element - The element about to be masked
+ */
+export function stripMaxLength(element: unknown): void {
+  if (isHTMLElement(element)) {
+    element.removeAttribute('maxlength');
+  }
+}
 
 /**
  * Creates a mask instance with the given mask and options.
@@ -39,11 +59,10 @@ export function applyMaskToElement(
     ? element
     : (element.querySelector('input') as HTMLElement);
 
-  if (inputElement) {
-    maskInstance.mask(inputElement);
-  } else {
-    maskInstance.mask(element);
-  }
+  const target = inputElement ?? element;
+
+  stripMaxLength(target);
+  maskInstance.mask(target);
 }
 
 /**

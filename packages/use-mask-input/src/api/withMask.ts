@@ -2,6 +2,7 @@
 import inputmask from '../core/inputmask';
 
 import { getMaskOptions } from '../core/maskConfig';
+import { stripMaxLength } from '../core/maskEngine';
 import { getUnmaskedValue, makeMaskCacheKey, setUnmaskedValue } from '../utils';
 import isServer from '../utils/isServer';
 import interopDefaultSync from '../utils/moduleInterop';
@@ -34,6 +35,7 @@ export default function withMask(mask: Mask, options?: Options): UseMaskInputRet
 
     currentInput = input;
     const maskInput = interopDefaultSync(inputmask)(getMaskOptions(mask, options));
+    stripMaxLength(input);
     maskInput.mask(input as HTMLElement);
   }) as UseMaskInputReturn;
 
