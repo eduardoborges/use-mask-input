@@ -35,7 +35,7 @@ export default function withMask(mask: Mask, options?: Options): UseMaskInputRet
 
     currentInput = input;
     const maskInput = interopDefaultSync(inputmask)(getMaskOptions(mask, options));
-    stripMaxLength(input);
+    stripMaxLength(input, mask, options);
     maskInput.mask(input as HTMLElement);
   }) as UseMaskInputReturn;
 

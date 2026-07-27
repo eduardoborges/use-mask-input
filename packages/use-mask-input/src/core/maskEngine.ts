@@ -8,22 +8,32 @@ import { moduleInterop } from '../utils';
 import type { Mask, Options } from '../types';
 
 /**
- * Drops the native `maxlength` before inputmask touches the element.
+ * Drops the native `maxlength` when the mask renders characters the user never types.
  *
- * A masked input holds the full mask placeholder as its value, so `maxlength`
- * counts the literals the user never typed and the browser blocks keystrokes
- * long before the mask is filled. inputmask also copies the attribute into its
- * own validator, which rejects any buffer longer than it — and the buffer is
- * always the whole mask. Either way the field ends up unusable, so the
- * attribute has to go before `mask()` reads it.
+ * A mask like `999.999.999-99` keeps its literals and placeholder in the value, so
+ * `maxlength` counts characters nobody typed: the browser stops accepting keystrokes,
+ * and inputmask copies the attribute into a validator that rejects any buffer longer
+ * than it. Either way the field takes no input at all.
+ *
+ * Open-ended masks (`numeric`, `integer`, `decimal`) render nothing while empty, so
+ * their value only ever holds what was typed and `maxlength` still caps what it says
+ * it caps. Those keep the attribute. Rendering the empty value is what tells the two
+ * apart, since aliases hide their real pattern.
+ *
+ * ponytail: the empty render is a proxy, not a proof. A mask that starts empty but
+ * grows a literal later (`br-bank-agency` gains a `-` at the 6th digit) still loses
+ * that many characters off the cap. Sharpen this only if someone hits it.
  *
  * @see https://github.com/eduardoborges/use-mask-input/issues/191
  * @param element - The element about to be masked
+ * @param mask - The mask pattern about to be applied
+ * @param options - Optional configuration options
  */
-export function stripMaxLength(element: unknown): void {
-  if (isHTMLElement(element)) {
-    element.removeAttribute('maxlength');
-  }
+export function stripMaxLength(element: unknown, mask: Mask, options?: Options): void {
+  if (!isHTMLElement(element) || !element.hasAttribute('maxlength')) return;
+  if (formatWithMask('', mask, options).length === 0) return;
+
+  element.removeAttribute('maxlength');
 }
 
 /**
@@ -61,7 +71,7 @@ export function applyMaskToElement(
 
   const target = inputElement ?? element;
 
-  stripMaxLength(target);
+  stripMaxLength(target, mask, options);
   maskInstance.mask(target);
 }
 

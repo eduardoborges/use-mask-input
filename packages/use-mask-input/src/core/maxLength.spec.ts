@@ -1,24 +1,29 @@
 import { describe, expect, it } from 'vitest';
 
-import { applyMaskToElement, createMaskInstance } from './maskEngine';
+import { applyMaskToElement, createMaskInstance, stripMaxLength } from './maskEngine';
 import withMask from '../api/withMask';
 
 /**
- * Behavioral proof for issue #191: a `maxLength` on a masked input used to
- * block typing entirely. Runs the REAL engine — no mocks — because the bug
- * lives in how inputmask reads the attribute, not in our own code.
+ * Behavioral proof for issue #191: a `maxLength` on a masked input used to block
+ * typing entirely. Runs the REAL engine — no mocks — because the bug lives in how
+ * inputmask reads the attribute, not in our own code.
  *
- * Two independent layers did the blocking, and both are covered here:
- *   1. inputmask copies `el.maxLength` into its validator, which rejects any
+ * Two layers did the blocking:
+ *   1. the browser counts the mask placeholder already sitting in `value` against
+ *      `maxlength` and refuses the keystroke before inputmask sees it;
+ *   2. inputmask copies `el.maxLength` into its own validator, which rejects any
  *      buffer longer than it. The buffer is always the full mask, so any
- *      `maxLength` below the masked length rejects every keystroke. That is
- *      the layer asserted below, via `setValue`.
- *   2. the browser counts the mask placeholder already sitting in `value`
- *      against `maxlength` and refuses the keystroke before inputmask sees it.
- *      jsdom does not enforce `maxlength`, so this one is covered by asserting
- *      the attribute is gone from the DOM.
+ *      `maxLength` below the masked length rejects every keystroke.
+ *
+ * jsdom reports `ontouchstart`, so inputmask considers it mobile and clears the
+ * attribute itself at the end of `mask()`. Asserting on the attribute after
+ * masking therefore proves nothing here — it is gone either way. Layer 1 is
+ * covered by testing `stripMaxLength` directly, layer 2 behaviorally through
+ * `setValue`. That mobile path is also the one inputmask gets wrong on its own:
+ * it removes the attribute only after reading it into the validator.
  */
-function maskedInput(apply: (el: HTMLInputElement) => void, maxLength = 11) {
+
+function maskedInput(apply: (el: HTMLInputElement) => void, maxLength: number) {
   const input = document.createElement('input');
   input.setAttribute('maxlength', String(maxLength));
   document.body.appendChild(input);
@@ -33,6 +38,12 @@ function setValue(input: HTMLInputElement, value: string) {
   return input.value;
 }
 
+function inputWithMaxLength(maxLength: number) {
+  const input = document.createElement('input');
+  input.setAttribute('maxlength', String(maxLength));
+  return input;
+}
+
 describe('maxLength on a masked input (issue #191)', () => {
   it('reproduces the block when the attribute survives (control)', () => {
     const input = document.createElement('input');
@@ -45,40 +56,95 @@ describe('maxLength on a masked input (issue #191)', () => {
     expect(setValue(input, '12345678901')).toBe('');
   });
 
-  it('applyMaskToElement accepts a full value despite a short maxLength', () => {
-    const input = maskedInput((el) => applyMaskToElement(el, 'cpf'));
+  describe('stripMaxLength', () => {
+    it('removes the attribute for a mask that renders literals', () => {
+      const input = inputWithMaxLength(11);
 
-    expect(input.getAttribute('maxlength')).toBeNull();
-    expect(setValue(input, '12345678901')).toBe('123.456.789-01');
+      stripMaxLength(input, 'cpf');
+
+      expect(input.hasAttribute('maxlength')).toBe(false);
+    });
+
+    it('removes it for a mask that renders a prefix', () => {
+      const input = inputWithMaxLength(3);
+
+      stripMaxLength(input, 'currency');
+
+      expect(input.hasAttribute('maxlength')).toBe(false);
+    });
+
+    it.each(['numeric', 'integer', 'decimal'])('keeps it for the open-ended %s mask', (mask) => {
+      const input = inputWithMaxLength(3);
+
+      stripMaxLength(input, mask);
+
+      expect(input.getAttribute('maxlength')).toBe('3');
+    });
+
+    it('ignores an element that never had the attribute', () => {
+      const input = document.createElement('input');
+
+      stripMaxLength(input, 'cpf');
+
+      expect(input.hasAttribute('maxlength')).toBe(false);
+    });
+
+    it('ignores a non-element', () => {
+      expect(() => stripMaxLength(null, 'cpf')).not.toThrow();
+    });
   });
 
-  it('withMask accepts a full value despite a short maxLength', () => {
-    const input = maskedInput((el) => withMask('999.999.999-99')(el));
+  describe('a fixed mask accepts its full value despite a short maxLength', () => {
+    it('via applyMaskToElement', () => {
+      const input = maskedInput((el) => applyMaskToElement(el, 'cpf'), 11);
 
-    expect(input.getAttribute('maxlength')).toBeNull();
-    expect(setValue(input, '12345678901')).toBe('123.456.789-01');
+      expect(setValue(input, '12345678901')).toBe('123.456.789-01');
+    });
+
+    it('via withMask', () => {
+      const input = maskedInput((el) => withMask('999.999.999-99')(el), 11);
+
+      expect(setValue(input, '12345678901')).toBe('123.456.789-01');
+    });
+
+    it('for an input inside a wrapper', () => {
+      const wrapper = document.createElement('div');
+      const input = document.createElement('input');
+      input.setAttribute('maxlength', '11');
+      wrapper.appendChild(input);
+      document.body.appendChild(wrapper);
+
+      applyMaskToElement(wrapper, 'cpf');
+
+      expect(setValue(input, '12345678901')).toBe('123.456.789-01');
+    });
+
+    it('when no maxLength was set at all', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+
+      applyMaskToElement(input, 'cpf');
+
+      expect(setValue(input, '12345678901')).toBe('123.456.789-01');
+    });
   });
 
-  it('strips maxLength from the input inside a wrapper', () => {
-    const wrapper = document.createElement('div');
-    const input = document.createElement('input');
-    input.setAttribute('maxlength', '11');
-    wrapper.appendChild(input);
-    document.body.appendChild(wrapper);
+  /**
+   * An open-ended mask renders nothing while empty, so its value only ever holds
+   * what the user typed and `maxLength` caps exactly what it claims to. Stripping
+   * it there would throw away a limit that works.
+   */
+  describe('an open-ended mask still honors its maxLength', () => {
+    it.each(['numeric', 'integer', 'decimal'])('%s caps the value', (mask) => {
+      const input = maskedInput((el) => applyMaskToElement(el, mask), 3);
 
-    applyMaskToElement(wrapper, 'cpf');
+      expect(setValue(input, '1234')).toBe('123');
+    });
 
-    expect(input.getAttribute('maxlength')).toBeNull();
-    expect(setValue(input, '12345678901')).toBe('123.456.789-01');
-  });
+    it('via withMask too', () => {
+      const input = maskedInput((el) => withMask('numeric')(el), 3);
 
-  it('leaves an input without maxLength alone', () => {
-    const input = document.createElement('input');
-    document.body.appendChild(input);
-
-    applyMaskToElement(input, 'cpf');
-
-    expect(input.getAttribute('maxlength')).toBeNull();
-    expect(setValue(input, '12345678901')).toBe('123.456.789-01');
+      expect(setValue(input, '1234')).toBe('123');
+    });
   });
 });
