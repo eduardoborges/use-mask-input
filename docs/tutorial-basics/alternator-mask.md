@@ -28,6 +28,18 @@ function PhoneInput() {
 }
 ```
 
+The same mask works in Vue through the directive, since both entries share one engine:
+
+```html
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="['9999-9999', '99999-9999']" />
+</template>
+```
+
 This mask accepts both:
 - `1234-5678` (8 digits)
 - `12345-6789` (9 digits)

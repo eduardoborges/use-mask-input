@@ -29,7 +29,7 @@ npm install use-mask-input
 
 In `<script setup>`, importing `vMaskInput` is all it takes. Vue resolves any `vFoo` binding to `v-foo`, so there is no registration step and no plugin to install.
 
-```vue
+```html
 <script setup>
 import { vMaskInput } from 'use-mask-input/vue';
 </script>
@@ -41,7 +41,7 @@ import { vMaskInput } from 'use-mask-input/vue';
 
 ### Binding forms
 
-```vue
+```html
 <template>
   <!-- a built-in alias -->
   <input v-mask-input="'cpf'" />
@@ -79,7 +79,7 @@ The directive re-applies the mask when the bound mask changes and removes the In
 
 `v-model` needs no adapter. Inputmask replaces the element's `value` property with its own accessor, so `v-model` reads and writes *through* the mask engine rather than fighting it.
 
-```vue
+```html
 <script setup>
 import { ref } from 'vue';
 import { vMaskInput } from 'use-mask-input/vue';
@@ -101,7 +101,7 @@ Directive order does not matter. `v-model v-mask-input` and `v-mask-input v-mode
 
 There is no adapter and no helper, because none is needed. `useField` plus `v-model` plus the directive is the entire integration.
 
-```vue
+```html
 <script setup>
 import { useField, useForm } from 'vee-validate';
 import { vMaskInput } from 'use-mask-input/vue';
@@ -134,7 +134,7 @@ Everything else behaves normally: dirty tracking, validation on change and on bl
 
 Put the directive on the component. Vue applies directives to a component's root element, and the mask engine searches inside it for the real input:
 
-```vue
+```html
 <template>
   <!-- PrimeVue -->
   <InputText v-mask-input="'cpf'" />
@@ -155,13 +155,13 @@ The same aliases as the React entry, since both share `core/maskConfig`:
 
 `cpf` · `cnpj` · `br-bank-account` · `br-bank-agency` · `currency` · `brl-currency` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
 
-```vue
+```html
 <input v-mask-input="'cnpj'" />
 ```
 
 Aliases carry defaults that your options override individually. This keeps the alias's `,` radix point and `.` group separator while changing only the prefix:
 
-```vue
+```html
 <input v-mask-input="{ mask: 'brl-currency', options: { prefix: 'US$ ' } }" />
 ```
 
@@ -183,7 +183,7 @@ import type {
 
 `VueMaskBinding` is useful when passing a mask down as a prop:
 
-```vue
+```html
 <script setup lang="ts">
 import { vMaskInput } from 'use-mask-input/vue';
 import type { VueMaskBinding } from 'use-mask-input/vue';
@@ -200,7 +200,7 @@ defineProps<{ mask: VueMaskBinding }>();
 
 Use it when you need the raw value imperatively, or a ref you can hold:
 
-```vue
+```html
 <script setup>
 import { useMaskInput } from 'use-mask-input/vue';
 
@@ -249,7 +249,7 @@ The mask applies on the client after hydration. Server-rendered markup contains 
 
 ### `unmaskedValue()` is not reactive
 
-```vue
+```html
 <template>
   <!-- WRONG: renders once, never updates -->
   <p>{{ unmaskedValue() }}</p>

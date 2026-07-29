@@ -34,7 +34,7 @@ function PhoneInput() {
 
 Or in Vue:
 
-```vue
+```html
 <script setup>
 import { vMaskInput } from 'use-mask-input/vue';
 </script>
@@ -141,7 +141,7 @@ See the full [shadcn/ui Integration](./shadcn) guide.
 
 Import from the `use-mask-input/vue` subpath. In `<script setup>` the directive needs no registration, because Vue resolves a `vMaskInput` binding to `v-mask-input` on its own:
 
-```vue
+```html
 <script setup>
 import { vMaskInput } from 'use-mask-input/vue';
 import { ref } from 'vue';

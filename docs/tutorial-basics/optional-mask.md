@@ -28,6 +28,18 @@ function PhoneInput() {
 }
 ```
 
+The same mask works in Vue through the directive, since both entries share one engine:
+
+```html
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'99 [9]9999-9999'" />
+</template>
+```
+
 This mask will accept both:
 - `(99) 99999-9999` (with area code)
 - `(99) 9999-9999` (without area code)

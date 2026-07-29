@@ -129,6 +129,32 @@ function MyForm() {
   );
 }`;
 
+const VUE_EXAMPLE = `<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'(99) 99999-9999'" />
+</template>`;
+
+const VEE_VALIDATE_EXAMPLE = `<script setup>
+import { useField, useForm } from 'vee-validate';
+import { vMaskInput } from 'use-mask-input/vue';
+
+const cpf = { mask: 'cpf', options: { autoUnmask: true } };
+const { handleSubmit } = useForm();
+const { value } = useField('cpf');
+
+// submit receives { cpf: '12345678901' }
+const onSubmit = handleSubmit(console.log);
+</script>
+
+<template>
+  <form @submit="onSubmit">
+    <input v-model="value" v-mask-input="cpf" />
+  </form>
+</template>`;
+
 function MeshGradient() {
   return (
     <div className={styles.mesh} aria-hidden="true">
@@ -146,16 +172,17 @@ function Hero() {
       <div className={styles.heroInner}>
         <div className={styles.eyebrow}>
           <span className={styles.eyebrowDot} />
-          v3 · React 19 ready
+          v3 · React 19 and Vue 3
         </div>
 
         <h1 className={styles.heroTitle}>
-          Stop fighting with input masks in React. 🤯
+          Stop fighting with input masks. 🤯
         </h1>
 
         <p className={styles.heroSubtitle}>
-          A tiny hook for elegant input masking. Works with plain inputs, shadcn/ui,
-          React Hook Form, TanStack Form, and Ant Design.
+          One mask engine, two frameworks. A hook for React, a directive for Vue 3,
+          and no adapter needed for React Hook Form, TanStack Form, vee-validate,
+          shadcn/ui or Ant Design.
         </p>
 
         <div className={styles.installRow}>
@@ -195,8 +222,9 @@ function Examples() {
           <span className={styles.sectionEyebrow}>// drop-in</span>
           <h2 className={styles.sectionTitle}>Copy. Paste. Mask.</h2>
           <p className={styles.sectionLead}>
-            One hook, predictable refs, and a familiar API. No wrapper
-            components, no custom inputs to learn.
+            A hook on React, a directive on Vue. Both drive the same engine, so
+            a mask behaves identically on either side. No wrapper components, no
+            custom inputs to learn.
           </p>
         </div>
 
@@ -215,6 +243,20 @@ function Examples() {
               children={HOOK_FORM_EXAMPLE}
             />
           </div>
+          <div className={styles.codeCard}>
+            <DocusaurusCodeBlock
+              language="html"
+              title="basic.vue"
+              children={VUE_EXAMPLE}
+            />
+          </div>
+          <div className={styles.codeCard}>
+            <DocusaurusCodeBlock
+              language="html"
+              title="with-vee-validate.vue"
+              children={VEE_VALIDATE_EXAMPLE}
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -225,15 +267,15 @@ function Features() {
   const items = [
     {
       title: 'Lightweight',
-      body: 'A thin React layer over Inputmask — the only runtime dependency. No wrappers, no extra abstractions.',
+      body: 'A thin layer over Inputmask, the only runtime dependency. Importing the Vue entry never pulls React into your bundle.',
     },
     {
       title: 'Composable',
-      body: 'Plain refs, React Hook Form, TanStack Form, Ant Design — pick any.',
+      body: 'Plain refs, React Hook Form, TanStack Form, Ant Design, vee-validate, PrimeVue, Element Plus. Pick any.',
     },
     {
       title: 'Typed',
-      body: 'First-class TypeScript. Mask presets, options, and refs all inferred.',
+      body: 'First-class TypeScript on both entries. Mask presets, options, refs and directive bindings all inferred.',
     },
     {
       title: 'Accessible',
@@ -361,8 +403,8 @@ function Stats() {
 export default function Home(): React.JSX.Element {
   return (
     <Layout
-      title="use-mask-input — Input masks for React"
-      description="A tiny React hook for elegant input masks. Works with plain inputs, React Hook Form, TanStack Form, and Ant Design."
+      title="use-mask-input — Input masks for React and Vue"
+      description="Input masks for React and Vue 3. Works with plain inputs, React Hook Form, TanStack Form, vee-validate, shadcn/ui and Ant Design."
     >
       <main className={styles.homepage}>
         <WebMcpTools />

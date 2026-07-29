@@ -77,6 +77,16 @@ const config: Config = {
           label: 'Documentation',
         },
         {
+          to: '/api-reference',
+          position: 'left',
+          label: 'API',
+        },
+        {
+          to: '/vue',
+          position: 'left',
+          label: 'Vue 3',
+        },
+        {
           href: 'https://use-mask-input.eduardoborges.dev/llms.txt',
           label: 'llms.txt',
           position: 'right',
@@ -102,6 +112,14 @@ const config: Config = {
             {
               label: 'Getting Started',
               to: '/intro',
+            },
+            {
+              label: 'API Reference',
+              to: '/api-reference',
+            },
+            {
+              label: 'Vue 3',
+              to: '/vue',
             },
           ],
         },

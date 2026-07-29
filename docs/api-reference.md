@@ -487,7 +487,7 @@ const vMaskInput: ObjectDirective<HTMLElement, VueMaskBinding>
 
 In `<script setup>`, importing a binding named `vMaskInput` is enough. Vue resolves any `vFoo` variable to the `v-foo` directive, so there is no registration step and no plugin.
 
-```vue
+```html
 <script setup>
 import { vMaskInput } from 'use-mask-input/vue';
 </script>
@@ -530,7 +530,7 @@ User options always take precedence over an alias's defaults, and the rest of th
 
 Inputmask replaces the element's `value` property with its own accessor, so `v-model` reads and writes through the engine rather than around it. No adapter is needed, and directive order does not matter.
 
-```vue
+```html
 <input v-model="cpf" v-mask-input="{ mask: 'cpf', options: { autoUnmask: true } }" />
 ```
 
@@ -561,7 +561,7 @@ function useMaskInput(mask: Mask, options?: Options): {
 | `maskRef` | `(target) => void` | Ref callback. Bind with `:ref="maskRef"`. |
 | `unmaskedValue` | `() => string` | The current raw value, or `''` before mount. |
 
-```vue
+```html
 <script setup>
 import { useMaskInput } from 'use-mask-input/vue';
 
