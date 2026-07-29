@@ -31,3 +31,6 @@ code {
   color: #c00;
   font-size: 0.85rem;
 }
+
+section { max-width: 62rem; }
+h1 { margin-bottom: 0.25rem; }
