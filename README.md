@@ -118,7 +118,7 @@ import { vMaskInput, useMaskInput } from 'use-mask-input/vue';
 
 ### The directive
 
-In `<script setup>`, importing `vMaskInput` is enough — Vue resolves a `vFoo` binding to `v-foo`, so there is no registration step and no plugin.
+In `<script setup>`, importing `vMaskInput` is enough. Vue resolves a `vFoo` binding to `v-foo`, so there is no registration step and no plugin.
 
 ```vue
 <script setup>
@@ -144,7 +144,7 @@ Outside `<script setup>`, register it yourself: `app.directive('mask-input', vMa
 <!-- displays 123.456.789-01, and cpf === '12345678901' -->
 ```
 
-Without `autoUnmask`, `v-model` receives the masked string. Directive order does not matter — `v-model` before or after `v-mask-input` behaves identically.
+Without `autoUnmask`, `v-model` receives the masked string. Directive order does not matter: `v-model` before or after `v-mask-input` behaves identically.
 
 ### With vee-validate
 
@@ -200,7 +200,7 @@ const submit = () => console.log(unmaskedValue());
 - **`noValuePatching: true` is unsupported.** It disables the property accessor that the whole `v-model` integration relies on.
 - **Replace the options object, don't mutate it.** Options are compared shallowly, so an in-place mutation may not re-apply the mask.
 
-There is deliberately no `<MaskInput>` component and no vee-validate helper — `v-model` plus the directive already covers both.
+There is deliberately no `<MaskInput>` component and no vee-validate helper, because `v-model` plus the directive already covers both.
 
 ## APIs
 

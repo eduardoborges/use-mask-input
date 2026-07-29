@@ -7,7 +7,7 @@ import path from 'path';
 
 const config: Config = {
   title: 'use-mask-input',
-  tagline: 'A React Hook for building elegant and simple input masks',
+  tagline: 'Input masks for React and Vue 3, built on Inputmask',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future

@@ -61,7 +61,7 @@ export default function WebMcpTools(): null {
       {
         type: 'object',
         properties: {
-          query: { type: 'string', description: 'Topic such as cpf, hook-form, antd, tanstack' },
+          query: { type: 'string', description: 'Topic such as cpf, hook-form, antd, tanstack, vue, vee-validate' },
         },
         required: ['query'],
         additionalProperties: false,
@@ -80,6 +80,10 @@ export default function WebMcpTools(): null {
           antd: '/antd',
           tanstack: '/tanstack-form',
           shadcn: '/shadcn',
+          vue: '/vue',
+          directive: '/vue',
+          'vee-validate': '/vue',
+          composable: '/vue',
         };
         const match = Object.entries(routes).find(([key]) => q.includes(key));
         return {

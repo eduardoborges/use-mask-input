@@ -4,7 +4,10 @@ sidebar_position: 2
 
 # API Reference
 
-**use-mask-input** exports six main APIs, two Ant Design-specific hooks, and two standalone formatting utilities. Choose the one that fits your use case:
+**use-mask-input** has two entry points. `use-mask-input` holds the React API: six main exports plus two Ant Design hooks. `use-mask-input/vue` holds the Vue 3 API: a directive and a composable. Both share the same mask engine, the same aliases, and the two standalone formatting utilities.
+
+### React, from `use-mask-input`
+
 
 | API | Type | React Hook Form | Ant Design | Needs `memo`? |
 |-----|------|:---------------:|:----------:|:-------------:|
@@ -16,8 +19,20 @@ sidebar_position: 2
 | [`withTanStackFormMask`](#withtanstackformmask) | Function | - | - | **Yes** |
 | [`useMaskInputAntd`](#usemaskinputantd) | Hook | - | Yes | No |
 | [`useHookFormMaskAntd`](#usehookformmaskantd) | Hook | Yes | Yes | No |
-| [`formatWithMask`](#formatwithmask) | Function | - | - | No |
-| [`unformatWithMask`](#unformatwithmask) | Function | - | - | No |
+
+### Vue 3, from `use-mask-input/vue`
+
+| API | Type | vee-validate | Wrapper components |
+|-----|------|:------------:|:------------------:|
+| [`vMaskInput`](#vmaskinput) | Directive | Yes, no adapter | Yes |
+| [`useMaskInput` (Vue)](#usemaskinput-vue) | Composable | Yes, no adapter | Yes |
+
+### Shared
+
+| API | Type | Entry point |
+|-----|------|-------------|
+| [`formatWithMask`](#formatwithmask) | Function | Both |
+| [`unformatWithMask`](#unformatwithmask) | Function | Both |
 
 ---
 
@@ -456,6 +471,140 @@ function MyForm() {
 
 ---
 
+## Vue 3
+
+Exported from the `use-mask-input/vue` subpath. `vue` is an optional peer dependency, and the Vue entry never imports React.
+
+Both surfaces route mask application through one internal implementation, so a given mask and options produce identical engine configuration either way.
+
+### vMaskInput
+
+A Vue directive that applies a mask to the bound element.
+
+```ts
+const vMaskInput: ObjectDirective<HTMLElement, VueMaskBinding>
+```
+
+In `<script setup>`, importing a binding named `vMaskInput` is enough. Vue resolves any `vFoo` variable to the `v-foo` directive, so there is no registration step and no plugin.
+
+```vue
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'cpf'" />
+</template>
+```
+
+For the Options API or global registration:
+
+```ts
+import { createApp } from 'vue';
+import { vMaskInput } from 'use-mask-input/vue';
+
+createApp(App).directive('mask-input', vMaskInput);
+```
+
+**Binding value**
+
+| Form | Example | Meaning |
+|------|---------|---------|
+| `string` | `v-mask-input="'cpf'"` | An alias or a raw pattern. |
+| `string[]` | `v-mask-input="['999-999', '999-999-999']"` | Several patterns; the engine picks the one that fits. |
+| `object` | `v-mask-input="{ mask: 'currency', options: { prefix: 'R$ ' } }"` | A mask plus options. |
+| `null` | `v-mask-input="null"` | No mask is applied. |
+
+User options always take precedence over an alias's defaults, and the rest of the alias survives the merge.
+
+**Lifecycle**
+
+| Hook | Behaviour |
+|------|-----------|
+| `mounted` | Resolves the target element and applies the mask. |
+| `updated` | Re-applies only when the mask or options actually changed, compared structurally. An unrelated re-render leaves the value and caret alone. |
+| `unmounted` | Calls `el.inputmask.remove()`, so no listeners outlive the element. |
+| `getSSRProps` | Returns `{}`, so server rendering emits no unhandled-directive warning. |
+
+**Works with `v-model`**
+
+Inputmask replaces the element's `value` property with its own accessor, so `v-model` reads and writes through the engine rather than around it. No adapter is needed, and directive order does not matter.
+
+```vue
+<input v-model="cpf" v-mask-input="{ mask: 'cpf', options: { autoUnmask: true } }" />
+```
+
+With `autoUnmask: true` the bound value is `12345678901` while the input displays `123.456.789-01`. Without it, the bound value is the masked string.
+
+### useMaskInput (Vue)
+
+Composable form, for imperative reads and for a ref you can hold.
+
+```ts
+function useMaskInput(mask: Mask, options?: Options): {
+  maskRef: (target: MaskRefTarget) => void;
+  unmaskedValue: () => string;
+}
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `mask` | `Mask` | Yes | The mask pattern or alias. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `maskRef` | `(target) => void` | Ref callback. Bind with `:ref="maskRef"`. |
+| `unmaskedValue` | `() => string` | The current raw value, or `''` before mount. |
+
+```vue
+<script setup>
+import { useMaskInput } from 'use-mask-input/vue';
+
+const { maskRef, unmaskedValue } = useMaskInput('cpf');
+
+function submit() {
+  console.log(unmaskedValue()); // '12345678901'
+}
+</script>
+
+<template>
+  <input :ref="maskRef" />
+  <button @click="submit">Submit</button>
+</template>
+```
+
+`unmaskedValue()` is **not reactive**. Calling it in a template renders once and never updates, because reading the DOM registers no reactive dependency. Use it from event handlers; for a value the template tracks, use `v-model` with `autoUnmask`.
+
+The directive already covers wrapper components, so reach for the composable when you specifically need `unmaskedValue()` or an imperative handle.
+
+### Vue element resolution
+
+Both surfaces resolve the element the mask should land on:
+
+| Target | Resolution |
+|--------|-----------|
+| A native `<input>` or `<textarea>` | Used directly. |
+| A wrapper element | Searched with `querySelector('input, textarea')`. |
+| A component instance (from `:ref`) | Unwrapped via `$el`, then searched. |
+| A fragment-root component | Not supported; resolves to `null`. Vue warns about this case for directives too. |
+
+This is what makes PrimeVue, Element Plus and Ant Design Vue work without a dedicated adapter.
+
+### Vue caveats
+
+| Caveat | Detail |
+|--------|--------|
+| `unmaskedValue()` is not reactive | Use it in handlers, not in templates. |
+| `noValuePatching: true` is unsupported | It disables the `value` accessor the `v-model` integration depends on. |
+| Options are compared shallowly | Replace the options object rather than mutating it in place. |
+
+---
+
 ## Utilities
 
 `formatWithMask` and `unformatWithMask` work directly on plain values, with no DOM element required. Use them to format data for display (e.g. rendering a persisted value) or to sanitize data before sending it to the backend.
@@ -542,6 +691,22 @@ type Mask =
   | (string & {})       // custom pattern like '999-999'
   | (string[] & {})     // dynamic mask array
   | null;               // no mask
+```
+
+### VueMaskBinding
+
+Everything the `v-mask-input` directive accepts.
+
+```ts
+type VueMaskBinding = Mask | { mask: Mask; options?: Options };
+```
+
+### MaskRefTarget
+
+What Vue hands a `:ref` callback: a DOM element for a native tag, or the component's public instance for a component.
+
+```ts
+type MaskRefTarget = Element | { $el?: unknown } | null;
 ```
 
 ### Options
