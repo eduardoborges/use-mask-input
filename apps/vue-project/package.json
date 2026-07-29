@@ -1,0 +1,25 @@
+{
+  "name": "vue-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "use-mask-input": "workspace:*",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.24"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.9.0",
+    "oxlint": "1.66.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16",
+    "vue-tsc": "^3.2.2"
+  }
+}
