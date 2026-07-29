@@ -55,7 +55,7 @@ import { vMaskInput } from 'use-mask-input/vue';
   <!-- with options -->
   <input v-mask-input="{ mask: 'currency', options: { prefix: 'R$ ' } }" />
 
-  <!-- null is inert: no mask is applied -->
+  <!-- null applies no mask, and removes one that is already there -->
   <input v-mask-input="null" />
 </template>
 ```
@@ -74,6 +74,12 @@ createApp(App).directive('mask-input', vMaskInput);
 ### Lifecycle
 
 The directive re-applies the mask when the bound mask changes and removes the Inputmask instance when the element unmounts. An unrelated re-render does not re-apply it, so the caret is not thrown to the end while the user is typing.
+
+Because the binding is reactive, you can switch masking off by binding `null`, which tears down the existing mask rather than leaving it in place:
+
+```html
+<input v-mask-input="enabled ? 'cpf' : null" />
+```
 
 ## Using `v-model`
 

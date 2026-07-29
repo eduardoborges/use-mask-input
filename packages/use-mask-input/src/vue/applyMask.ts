@@ -4,6 +4,10 @@ import isServer from '../utils/isServer';
 
 import type { Mask, Options, VueMaskBinding, VueMaskConfig } from './types';
 
+type MaskedElement = HTMLElement & {
+  inputmask?: { remove?: () => void };
+};
+
 /**
  * Single implementation both Vue surfaces route through, so the directive and
  * the composable cannot drift apart on what a given mask means.
@@ -70,6 +74,11 @@ export function sameBinding(a: VueMaskBinding, b: VueMaskBinding): boolean {
 /**
  * Applies a binding's mask to an already-resolved element.
  *
+ * A null mask is not merely "do nothing": it has to tear down whatever mask is
+ * already on the element. A binding is reactive, so `v-mask-input="on ? 'cpf' : null"`
+ * turns the mask off, and simply returning early would leave the element still
+ * formatting as a CPF.
+ *
  * @param element - The element to mask
  * @param binding - Mask, or `{ mask, options }`
  */
@@ -80,7 +89,11 @@ export default function applyMask(
   if (isServer || !element) return;
 
   const { mask, options } = normalizeBinding(binding);
-  if (mask === null || mask === undefined) return;
+
+  if (mask === null || mask === undefined) {
+    (element as MaskedElement).inputmask?.remove?.();
+    return;
+  }
 
   applyMaskToElement(element, mask, options);
 }

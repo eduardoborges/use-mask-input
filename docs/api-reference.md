@@ -513,7 +513,7 @@ createApp(App).directive('mask-input', vMaskInput);
 | `string` | `v-mask-input="'cpf'"` | An alias or a raw pattern. |
 | `string[]` | `v-mask-input="['999-999', '999-999-999']"` | Several patterns; the engine picks the one that fits. |
 | `object` | `v-mask-input="{ mask: 'currency', options: { prefix: 'R$ ' } }"` | A mask plus options. |
-| `null` | `v-mask-input="null"` | No mask is applied. |
+| `null` | `v-mask-input="null"` | No mask is applied, and any mask already on the element is removed. |
 
 User options always take precedence over an alias's defaults, and the rest of the alias survives the merge.
 
@@ -522,7 +522,7 @@ User options always take precedence over an alias's defaults, and the rest of th
 | Hook | Behaviour |
 |------|-----------|
 | `mounted` | Resolves the target element and applies the mask. |
-| `updated` | Re-applies only when the mask or options actually changed, compared structurally. An unrelated re-render leaves the value and caret alone. |
+| `updated` | Re-applies only when the mask or options actually changed, compared structurally. An unrelated re-render leaves the value and caret alone. Changing the binding to `null` removes the mask. |
 | `unmounted` | Calls `el.inputmask.remove()`, so no listeners outlive the element. |
 | `getSSRProps` | Returns `{}`, so server rendering emits no unhandled-directive warning. |
 

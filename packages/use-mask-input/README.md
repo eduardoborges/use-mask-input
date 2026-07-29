@@ -146,6 +146,8 @@ Outside `<script setup>`, register it yourself: `app.directive('mask-input', vMa
 
 Without `autoUnmask`, `v-model` receives the masked string. Directive order does not matter: `v-model` before or after `v-mask-input` behaves identically.
 
+Binding `null` turns masking off and removes any mask already applied, so `v-mask-input="enabled ? 'cpf' : null"` works as a toggle.
+
 ### With vee-validate
 
 No helper, no wrapper. `useField` plus `v-model` plus the directive is the whole integration, and `handleSubmit` receives the unmasked value:

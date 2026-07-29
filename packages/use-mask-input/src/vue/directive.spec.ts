@@ -120,3 +120,34 @@ describe('v-mask-input', () => {
     expect(vMaskInput.getSSRProps?.({} as never, {} as never)).toEqual({});
   });
 });
+
+describe('v-mask-input, toggling a binding off and on', () => {
+  // `v-mask-input="enabled ? 'cpf' : null"` is a reactive binding, so a null
+  // mask has to tear the existing one down rather than just do nothing.
+  it('removes the mask when the binding becomes null', async () => {
+    const wrapper = mountHost('cpf');
+    const { element } = wrapper;
+    expect(maskOf(element)).toBeDefined();
+
+    await wrapper.setProps({ binding: null });
+
+    expect(maskOf(element)).toBeUndefined();
+  });
+
+  it('re-applies when the binding comes back', async () => {
+    const wrapper = mountHost('cpf');
+    const { element } = wrapper;
+
+    await wrapper.setProps({ binding: null });
+    expect(maskOf(element)).toBeUndefined();
+
+    await wrapper.setProps({ binding: 'cnpj' });
+    expect(maskOf(element)).toBeDefined();
+  });
+
+  it('is a no-op when the binding starts null', () => {
+    const wrapper = mountHost(null);
+    expect(maskOf(wrapper.element)).toBeUndefined();
+    expect(() => wrapper.unmount()).not.toThrow();
+  });
+});
