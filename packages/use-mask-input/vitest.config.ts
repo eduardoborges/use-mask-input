@@ -9,11 +9,12 @@ import { defineConfig } from 'vitest/config';
  * keyboard: configuration, element resolution, and Vue's mount/update/unmount
  * lifecycle.
  *
- * `browser` is deliberately small and covers only what jsdom demonstrably gets
- * wrong. jsdom reports `ontouchstart`, so Inputmask takes its mobile path and
- * clears `maxlength` itself (see maxLength.spec.ts); caret and selection APIs
- * are approximations; and simulated keystrokes do not round-trip through the
- * engine the way a real browser does. Those cases live in `*.browser.spec.ts`.
+ * `browser` covers only what jsdom demonstrably gets wrong, for both frameworks.
+ * jsdom reports `ontouchstart`, so Inputmask takes its mobile path and clears
+ * `maxlength` itself (see maxLength.spec.ts); caret and selection APIs are
+ * approximations; and simulated keystrokes do not round-trip through the engine
+ * the way a real browser does. Those cases live in `*.browser.spec.ts` — which
+ * is why #191 and #193 are proven here by symptom rather than by proxy.
  */
 export default defineConfig({
   test: {
