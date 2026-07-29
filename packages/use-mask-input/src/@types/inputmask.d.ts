@@ -11,6 +11,12 @@
 
 interface InputmaskInstance {
   unmaskedvalue?: () => string;
+  /** Resolved configuration, after alias defaults are merged with user options. */
+  opts?: Record<string, unknown>;
+  /** Detaches the mask from its element. Used by the Vue directive on unmount. */
+  remove?: () => void;
+  /** Pushes a value through the engine's own validation and formatting. */
+  setValue?: (value: string) => void;
 }
 
 interface HTMLInputElement {

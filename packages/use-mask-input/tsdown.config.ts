@@ -6,11 +6,12 @@ export default defineConfig({
   entry: {
     index: 'src/index.tsx',
     antd: 'src/antd/index.ts',
+    vue: 'src/vue/index.ts',
   },
   outDir: 'dist',
   format: ['esm', 'cjs'],
   target: 'es2022',
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'vue'],
   dts: true,
   sourcemap: true,
   noExternal: ['inputmask'],

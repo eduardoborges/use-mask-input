@@ -2,7 +2,7 @@
   "name": "use-mask-input-monorepo",
   "version": "0.0.0",
   "private": true,
-  "description": "Input masks for React. Works with React Hook Form, TanStack Form, Ant Design, and plain inputs.",
+  "description": "Input masks for React and Vue 3. Works with React Hook Form, TanStack Form, vee-validate, Ant Design, and plain inputs.",
   "repository": {
     "url": "https://github.com/eduardoborges/use-mask-input"
   },
@@ -16,13 +16,17 @@
     "tanstack-form",
     "antd",
     "input-mask",
-    "input-masking"
+    "input-masking",
+    "vue",
+    "vue-mask",
+    "vee-validate"
   ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=vite-project",
     "dev:tanstack": "turbo run dev --filter=tanstack-form-project",
     "dev:next": "turbo run dev --filter=next-project",
+    "dev:vue": "turbo run dev --filter=vue-project",
     "dev:docs": "turbo run start --filter=docs",
     "lint": "turbo run lint",
     "test": "turbo run test",

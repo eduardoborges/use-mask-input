@@ -2,7 +2,7 @@
   "name": "use-mask-input",
   "version": "3.11.1",
   "private": false,
-  "description": "A react Hook for build elegant input masks. Compatible with React Hook Form",
+  "description": "Input masks for React and Vue 3. Works with React Hook Form, TanStack Form, vee-validate, and Ant Design.",
   "license": "MIT",
   "author": "Eduardo Borges<euduardoborges@gmail.com>",
   "type": "module",
@@ -33,6 +33,16 @@
         "types": "./dist/antd.d.cts",
         "default": "./dist/antd.cjs"
       }
+    },
+    "./vue": {
+      "import": {
+        "types": "./dist/vue.d.mts",
+        "default": "./dist/vue.mjs"
+      },
+      "require": {
+        "types": "./dist/vue.d.cts",
+        "default": "./dist/vue.cjs"
+      }
     }
   },
   "engines": {
@@ -43,10 +53,11 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "lint": "oxlint ./src",
-    "test": "vitest --dir ./src --run --coverage",
+    "test": "vitest --project=unit --dir ./src --run --coverage",
+    "test:browser": "vitest --project=browser --run",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "postbuild": "cp ../../README.md README.md"
+    "postbuild": "node scripts/assert-entry-isolation.mjs && cp ../../README.md README.md"
   },
   "files": [
     "dist",
@@ -59,10 +70,24 @@
   "peerDependencies": {
     "antd": ">=5",
     "react": ">=17",
-    "react-dom": ">=17"
+    "react-dom": ">=17",
+    "vee-validate": ">=4",
+    "vue": ">=3.4"
   },
   "peerDependenciesMeta": {
     "antd": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "vee-validate": {
+      "optional": true
+    },
+    "vue": {
       "optional": true
     }
   },
@@ -74,14 +99,33 @@
     "@types/node": "^26.1.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@vitest/browser": "4.1.10",
+    "@vitest/browser-playwright": "^4.1.10",
     "@vitest/coverage-v8": "4.1.10",
+    "@vue/server-renderer": "^3.5.40",
+    "@vue/test-utils": "^2.4.11",
     "antd": "^6.5.1",
     "inputmask": "5.0.10-beta.61",
     "jsdom": "^29.1.1",
     "oxlint": "1.74.0",
+    "playwright": "^1.62.0",
     "react-hook-form": "7.82.0",
     "tsdown": "^0.22.9",
     "typescript": "~6.0.3",
-    "vitest": "4.1.10"
-  }
+    "vee-validate": "^4.15.1",
+    "vitest": "4.1.10",
+    "vue": "^3.5.40"
+  },
+  "keywords": [
+    "react",
+    "vue",
+    "react-hook-form",
+    "tanstack-form",
+    "vee-validate",
+    "antd",
+    "input-mask",
+    "input-masking",
+    "vue-mask",
+    "mask"
+  ]
 }
