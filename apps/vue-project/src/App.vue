@@ -55,43 +55,29 @@ const persisted = '12345678901'
 
   <section>
     <h2>2. Numeric and currency</h2>
-    <p class="warn">
-      Known issue, not Vue-specific and present on the React entry too: aliases
-      with a forced decimal part accept only the decimal digits and never shift
-      input into the integer part. <code>numeric</code>, <code>integer</code>,
-      <code>decimal</code> and <code>percentage</code> are unaffected.
-    </p>
     <MaskDemo
       label="brl-currency"
       source="'brl-currency'"
       binding="brl-currency"
       placeholder="R$ 0,00"
-      note="ships autoUnmask; affected by the same decimal issue"
+      note="ships autoUnmask, so v-model holds the raw number"
     />
     <MaskDemo
       label="currency"
-      source="{ mask: 'currency', options: { placeholder: '0' } }"
-      :binding="{ mask: 'currency', options: { placeholder: '0' } }"
+      source="{ mask: 'currency', options: { placeholder: '0.00' } }"
+      :binding="{ mask: 'currency', options: { placeholder: '0.00' } }"
       placeholder="$ 0.00"
-      note="BROKEN: types as $ 0.18 — see the note above"
     />
     <MaskDemo
       label="currency, euro"
       source="{ prefix: '€ ', radixPoint: ',', groupSeparator: '.', placeholder: '0,00' }"
       :binding="{ mask: 'currency', options: { prefix: '€ ', radixPoint: ',', groupSeparator: '.', placeholder: '0,00' } }"
       placeholder="€ 0,00"
-      note="BROKEN the same way; options themselves apply correctly"
+      note="user options override the alias defaults"
     />
     <MaskDemo label="numeric" source="'numeric'" binding="numeric" placeholder="1234" />
     <MaskDemo label="integer" source="'integer'" binding="integer" placeholder="1234" />
     <MaskDemo label="decimal" source="'decimal'" binding="decimal" placeholder="12.34" />
-    <MaskDemo
-      label="decimal, 3 forced digits"
-      source="{ mask: 'decimal', options: { digits: 3, digitsOptional: false } }"
-      :binding="{ mask: 'decimal', options: { digits: 3, digitsOptional: false } }"
-      placeholder="12.340"
-      note="BROKEN: digitsOptional:false hits the same issue"
-    />
     <MaskDemo label="percentage" source="'percentage'" binding="percentage" placeholder="45 %" />
   </section>
 
@@ -202,15 +188,6 @@ const persisted = '12345678901'
 .lede {
   max-width: 40rem;
   color: #555;
-}
-.warn {
-  font-size: 0.8rem;
-  color: #8a4b00;
-  background: #fff6e5;
-  border: 1px solid #f0d9b0;
-  border-radius: 4px;
-  padding: 0.5rem 0.7rem;
-  max-width: 46rem;
 }
 .hint {
   font-size: 0.8rem;
