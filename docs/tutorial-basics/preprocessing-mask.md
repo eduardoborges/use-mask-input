@@ -31,6 +31,24 @@ function DynamicInput() {
 }
 ```
 
+In Vue, pass the same function through the object binding. Compute it in `setup`
+so the reference stays stable across renders, since the directive compares
+bindings structurally and a fresh function each render would re-apply the mask:
+
+```html
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+
+const binding = {
+  mask: () => ['[1-]AAA-999', '[1-]999-AAA'],
+};
+</script>
+
+<template>
+  <input v-mask-input="binding" placeholder="AAA-000" />
+</template>
+```
+
 ## Common Examples
 
 ### Conditional Mask Based on Input Length

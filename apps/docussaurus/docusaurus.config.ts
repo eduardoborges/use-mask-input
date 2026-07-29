@@ -7,7 +7,7 @@ import path from 'path';
 
 const config: Config = {
   title: 'use-mask-input',
-  tagline: 'A React Hook for building elegant and simple input masks',
+  tagline: 'Input masks for React and Vue 3, built on Inputmask',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -77,6 +77,16 @@ const config: Config = {
           label: 'Documentation',
         },
         {
+          to: '/api-reference',
+          position: 'left',
+          label: 'API',
+        },
+        {
+          to: '/vue',
+          position: 'left',
+          label: 'Vue 3',
+        },
+        {
           href: 'https://use-mask-input.eduardoborges.dev/llms.txt',
           label: 'llms.txt',
           position: 'right',
@@ -102,6 +112,14 @@ const config: Config = {
             {
               label: 'Getting Started',
               to: '/intro',
+            },
+            {
+              label: 'API Reference',
+              to: '/api-reference',
+            },
+            {
+              label: 'Vue 3',
+              to: '/vue',
             },
           ],
         },

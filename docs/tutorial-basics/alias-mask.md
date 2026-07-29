@@ -52,6 +52,18 @@ function DateInput() {
 }
 ```
 
+The same mask works in Vue through the directive, since both entries share one engine:
+
+```html
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'datetime'" />
+</template>
+```
+
 ## Common Examples
 
 ### Date and Time

@@ -399,6 +399,14 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off"
       }
+    },
+    {
+      "files": [
+        "**/vue/**"
+      ],
+      "rules": {
+        "react-hooks/rules-of-hooks": "off"
+      }
     }
   ]
 }

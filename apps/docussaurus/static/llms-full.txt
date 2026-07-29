@@ -1,6 +1,6 @@
 # use-mask-input — Full Documentation
 
-> Complete documentation for use-mask-input, a React hook library for input masks. Compatible with plain React, React Hook Form, TanStack Form, and Ant Design.
+> Complete documentation for use-mask-input, a library for input masks in React and Vue 3. Compatible with plain React, React Hook Form, TanStack Form, Ant Design, and Vue 3 with vee-validate. Version 3.11.1.
 
 This file aggregates all documentation pages into a single document optimized for LLM ingestion. For a shorter overview, see [llms.txt](./llms.txt).
 
@@ -23,7 +23,9 @@ This file aggregates all documentation pages into a single document optimized fo
   <img src="https://img.shields.io/npm/dw/use-mask-input" alt="npm downloads" />
 </div>
 
-Input masks for React. Works with plain inputs, React Hook Form, TanStack Form, and Ant Design.
+Input masks for React and Vue 3. Works with plain inputs, React Hook Form, TanStack Form, Ant Design, and Vue 3 with `v-model` and vee-validate.
+
+Both frameworks share the same mask engine and the same built-in aliases, so a `cpf` mask behaves identically in each. Every peer dependency is optional: `react` and `react-dom` for the React entry, `vue` and `vee-validate` for the Vue entry, `antd` for the Ant Design entry. The Vue entry never imports React, so a Vue app never pulls React into its bundle or its install graph.
 
 ```bash
 npm install use-mask-input
@@ -115,6 +117,20 @@ function EmailInput() {
 
 See the full [Ant Design Integration](./antd) guide.
 
+## With Vue 3
+
+```vue
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'cpf'" />
+</template>
+```
+
+See the full [Vue 3](./vue) guide.
+
 ## APIs
 
 | API | When to use |
@@ -127,8 +143,10 @@ See the full [Ant Design Integration](./antd) guide.
 | [`withTanStackFormMask`](./api-reference#withtanstackformmask) | Non-hook mask for TanStack input props. **Requires `React.memo`.** |
 | [`useMaskInputAntd`](./api-reference#usemaskinputantd) | `useMaskInput` for Ant Design. |
 | [`useHookFormMaskAntd`](./api-reference#usehookformmaskantd) | `useHookFormMask` for Ant Design. |
+| [`vMaskInput`](./vue) | Vue 3 directive. The default choice for Vue. |
+| [`useMaskInput`](./vue) (Vue) | Vue 3 composable for imperative reads and `unmaskedValue()`. |
 
-Full signatures and parameters in the [API Reference](./api-reference).
+Full signatures and parameters in the [API Reference](./api-reference), and in the [Vue 3](./vue) guide for the Vue entry.
 
 ## Mask Types
 
@@ -146,7 +164,9 @@ Full signatures and parameters in the [API Reference](./api-reference).
 
 # API Reference
 
-**use-mask-input** exports six main APIs and two Ant Design-specific hooks. Choose the one that fits your use case:
+**use-mask-input** exports six main React APIs, two Ant Design-specific hooks, and two Vue 3 exports. Choose the one that fits your use case.
+
+The React APIs below come from `use-mask-input`, the Ant Design hooks from `use-mask-input/antd`, and the Vue 3 exports (`vMaskInput`, `useMaskInput`) from `use-mask-input/vue`. The Vue surface is documented in full in the [Vue 3](./vue) guide.
 
 | API | Type | React Hook Form | Ant Design | Needs `memo`? |
 |-----|------|:---------------:|:----------:|:-------------:|
@@ -158,6 +178,8 @@ Full signatures and parameters in the [API Reference](./api-reference).
 | [`withTanStackFormMask`](#withtanstackformmask) | Function | - | - | **Yes** |
 | [`useMaskInputAntd`](#usemaskinputantd) | Hook | - | Yes | No |
 | [`useHookFormMaskAntd`](#usehookformmaskantd) | Hook | Yes | Yes | No |
+| [`vMaskInput`](./vue) | Vue directive | - | - | n/a |
+| [`useMaskInput`](./vue) (Vue) | Vue composable | - | - | n/a |
 
 
 ## Hooks
@@ -647,6 +669,42 @@ type UseTanStackFormMaskReturn<T extends TanStackFormInputProps> =
     ref: RefCallback<HTMLElement | null>;
     prevRef: RefCallback<HTMLElement | null> | undefined;
   };
+```
+
+### VueMaskConfig
+
+Exported from `use-mask-input/vue`.
+
+```ts
+interface VueMaskConfig {
+  mask: Mask;
+  options?: Options;
+}
+```
+
+### VueMaskBinding
+
+Everything `v-mask-input` accepts.
+
+```ts
+type VueMaskBinding = Mask | VueMaskConfig;
+```
+
+### MaskRefTarget
+
+What Vue hands a `:ref` callback: a DOM element for a native tag, or the component's public instance for a component.
+
+```ts
+type MaskRefTarget = Element | { $el?: unknown } | null;
+```
+
+### UseMaskInputReturn (Vue)
+
+```ts
+interface UseMaskInputReturn {
+  maskRef: (target: MaskRefTarget) => void;
+  unmaskedValue: () => string;
+}
 ```
 
 ---
@@ -1990,7 +2048,7 @@ import { useMaskInputAntd } from 'use-mask-input/antd';
 
 function PhoneInput() {
   const maskRef = useMaskInputAntd({
-    mask: 'phone',
+    mask: '(999) 999-9999',
   });
 
   return (
@@ -2172,7 +2230,7 @@ function MyForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
-        {...registerWithMask('phone', 'phone')}
+        {...registerWithMask('phone', '(999) 999-9999')}
         placeholder="(555) 123-4567"
       />
       <Input
@@ -2211,7 +2269,7 @@ function ValidatedForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Input
-          {...registerWithMask('phone', 'phone', {
+          {...registerWithMask('phone', '(999) 999-9999', {
             required: 'Phone number is required',
             minLength: {
               value: 14,
@@ -2260,7 +2318,7 @@ function AntdForm() {
     <Form onFinish={handleSubmit(onSubmit)}>
       <Form.Item label="Phone">
         <Input
-          {...registerWithMask('phone', 'phone')}
+          {...registerWithMask('phone', '(999) 999-9999')}
           placeholder="(555) 123-4567"
         />
       </Form.Item>
@@ -2333,7 +2391,7 @@ import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
 function PhoneInput() {
-  const maskRef = useMaskInputAntd({ mask: 'phone' });
+  const maskRef = useMaskInputAntd({ mask: '(999) 999-9999' });
   return <Input ref={maskRef} placeholder="(555) 123-4567" />;
 }
 ```
@@ -2509,3 +2567,224 @@ function withTanStackFormMask<T extends TanStackFormInputProps>(
 - Prefer `useTanStackFormMask` for regular component usage.
 - Keep passing `name`, `value`, `onBlur`, and `onChange` from `field`.
 - Use alias masks like `email`, `currency`, `datetime`, and custom patterns like `(99) 99999-9999`.
+
+---
+
+<!-- Source: docs/vue.md -->
+
+
+# Vue 3
+
+**use-mask-input** ships a Vue 3 entry point alongside the React one. It reuses the same mask engine and the same [built-in aliases](./api-reference), so a `cpf` mask behaves identically in both frameworks.
+
+```ts
+import { vMaskInput, useMaskInput } from 'use-mask-input/vue';
+```
+
+Two exports, and that is the whole surface:
+
+| Export | Type | Use it for |
+|--------|------|------------|
+| `vMaskInput` | Directive | Everything. The default choice. |
+| `useMaskInput` | Composable | Imperative reads and `unmaskedValue()`. |
+
+## Installation
+
+```bash
+npm install use-mask-input
+```
+
+`vue` is an optional peer dependency, as is `vee-validate`. React is never imported by the Vue entry, so a Vue app never pulls React into its bundle or its install graph. `react` and `react-dom` are optional peer dependencies as well.
+
+## The directive
+
+In `<script setup>`, importing `vMaskInput` is all it takes. Vue resolves any `vFoo` binding to `v-foo`, so there is no registration step and no plugin to install.
+
+```vue
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'cpf'" />
+</template>
+```
+
+### Binding forms
+
+```vue
+<template>
+  <!-- a built-in alias -->
+  <input v-mask-input="'cpf'" />
+
+  <!-- a raw pattern -->
+  <input v-mask-input="'(99) 99999-9999'" />
+
+  <!-- several patterns; the engine picks the one that fits -->
+  <input v-mask-input="['999-999', '999-999-999']" />
+
+  <!-- with options -->
+  <input v-mask-input="{ mask: 'currency', options: { prefix: 'R$ ' } }" />
+
+  <!-- null is inert: no mask is applied -->
+  <input v-mask-input="null" />
+</template>
+```
+
+User options always win over an alias's defaults, and the rest of the alias survives the merge. `{ mask: 'brl-currency', options: { prefix: 'US$ ' } }` keeps the alias's `,` radix point and `.` group separator.
+
+### Outside `<script setup>`
+
+```ts
+import { createApp } from 'vue';
+import { vMaskInput } from 'use-mask-input/vue';
+
+createApp(App).directive('mask-input', vMaskInput);
+```
+
+### Lifecycle
+
+The directive applies the mask on mount, re-applies it when the bound mask changes, and removes the Inputmask instance when the element unmounts. An unrelated re-render does **not** re-apply it, so the caret is not thrown to the end while the user is typing.
+
+## Using `v-model`
+
+`v-model` needs no adapter and no extra code. Inputmask replaces the element's `value` property with its own accessor, so `v-model` reads and writes *through* the mask engine rather than fighting it.
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import { vMaskInput } from 'use-mask-input/vue';
+
+const cpf = ref('');
+</script>
+
+<template>
+  <input v-model="cpf" v-mask-input="{ mask: 'cpf', options: { autoUnmask: true } }" />
+  <p>Raw value: {{ cpf }}</p>
+</template>
+```
+
+With `autoUnmask: true` the input displays `123.456.789-01` while `cpf` holds `12345678901`. Without it, `cpf` holds the masked string.
+
+Directive order does not matter. `v-model v-mask-input` and `v-mask-input v-model` produce identical results, because whichever runs second still goes through the same accessor.
+
+## vee-validate
+
+There is no adapter and no helper, because none is needed. `useField` plus `v-model` plus the directive is the entire integration.
+
+```vue
+<script setup>
+import { useField, useForm } from 'vee-validate';
+import { vMaskInput } from 'use-mask-input/vue';
+
+const { handleSubmit } = useForm();
+const { value, errorMessage } = useField(
+  'cpf',
+  (v) => v?.length === 11 || 'CPF must have 11 digits',
+);
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values); // { cpf: '12345678901' }
+});
+</script>
+
+<template>
+  <form @submit="onSubmit">
+    <input v-model="value" v-mask-input="{ mask: 'cpf', options: { autoUnmask: true } }" />
+    <span v-if="errorMessage">{{ errorMessage }}</span>
+    <button type="submit">Submit</button>
+  </form>
+</template>
+```
+
+With `autoUnmask: true`, the value that reaches your validation rules, your schema and your submit handler is the raw one, which is almost always what a backend wants, while the user keeps seeing the mask.
+
+Everything else behaves normally: dirty tracking, validation on change and on blur, `setValue`, and `resetForm` re-rendering the masked display.
+
+## Component libraries
+
+Put the directive on the component. Vue applies directives to a component's root element, and the mask engine searches inside it for the real input:
+
+```vue
+<template>
+  <!-- PrimeVue -->
+  <InputText v-mask-input="'cpf'" />
+
+  <!-- Element Plus -->
+  <el-input v-mask-input="'cpf'" />
+
+  <!-- Ant Design Vue -->
+  <a-input v-mask-input="'cpf'" />
+</template>
+```
+
+This does not work for a component with a **fragment root** (multiple root nodes). Vue itself warns about that case: *"Runtime directive used on component with non-element root node."* Give the component a single root element.
+
+## The composable
+
+Use it when you need the raw value imperatively, or a ref you can hold:
+
+```vue
+<script setup>
+import { useMaskInput } from 'use-mask-input/vue';
+
+const { maskRef, unmaskedValue } = useMaskInput('cpf');
+
+function submit() {
+  console.log(unmaskedValue()); // '12345678901'
+}
+</script>
+
+<template>
+  <input :ref="maskRef" />
+  <button @click="submit">Submit</button>
+</template>
+```
+
+`useMaskInput(mask, options?)` returns:
+
+| Property | Description |
+|----------|-------------|
+| `maskRef` | Ref callback. Bind with `:ref="maskRef"`. |
+| `unmaskedValue()` | Returns the current raw value, or `''` before mount. |
+
+For most cases the directive is the better choice. It covers wrapper components too, and it gets proper teardown on unmount.
+
+## Server-side rendering
+
+The Vue entry is SSR-safe, under the same `isServer` contract as the React entry. The composable returns a no-op on the server and `unmaskedValue()` returns `''`; the directive contributes no props during server rendering and emits no unhandled-directive warning, because it exposes `getSSRProps`.
+
+## Caveats
+
+### `unmaskedValue()` is not reactive
+
+```vue
+<template>
+  <!-- WRONG: renders once, never updates -->
+  <p>{{ unmaskedValue() }}</p>
+</template>
+```
+
+Reading the DOM registers no reactive dependency, so Vue never knows to re-render. `unmaskedValue()` is for event handlers and imperative code. When the template needs to track the value, use `v-model` with `autoUnmask: true` instead.
+
+### `noValuePatching: true` is unsupported
+
+That option disables the `value` property accessor that the entire `v-model` integration depends on. With it enabled, `v-model` and the mask become two independent writers and drift apart.
+
+### Replace options, don't mutate them
+
+Options are compared shallowly to decide whether to re-apply the mask. Mutating an options object in place may not trigger a re-apply:
+
+```ts
+// won't reliably re-apply
+options.prefix = 'US$ ';
+
+// will
+options = { ...options, prefix: 'US$ ' };
+```
+
+## What is deliberately not included
+
+There is no component and no vee-validate helper in the Vue entry, and no Vue plugin. `v-model` plus the directive already covers everything they would have done, and every extra export is surface that has to be maintained and kept consistent forever.
+
+If you hit a case where they would genuinely help, [open an issue](https://github.com/eduardoborges/use-mask-input/issues). A concrete use case is a much better basis for that decision than a guess.

@@ -4,35 +4,15 @@ import type {
   UseFormRegisterReturn,
 } from 'react-hook-form';
 
-import type { Options as MaskOptions } from './inputmask.types';
+import type { UnmaskedValueApi } from './mask';
 
 export type { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 
-export type Mask = 'datetime'
-  | 'email'
-  | 'numeric'
-  | 'currency'
-  | 'decimal'
-  | 'integer'
-  | 'percentage'
-  | 'url'
-  | 'ip'
-  | 'mac'
-  | 'ssn'
-  | 'brl-currency'
-  | 'cpf'
-  | 'cnpj'
-  | 'br-bank-account'
-  | 'br-bank-agency'
-  | (string & {})
-  | (string[] & {})
-  | null;
-export type Options = MaskOptions;
-export type Input = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
-
-export interface UnmaskedValueApi {
-  unmaskedValue: () => string;
-}
+// Framework-agnostic types live in ./mask so the Vue entry can import them
+// without pulling this module's react / react-hook-form imports with them.
+export type {
+  Input, Mask, Options, UnmaskedValueApi,
+} from './mask';
 
 export type UseMaskInputReturn = RefCallback<HTMLElement | null> & UnmaskedValueApi;
 

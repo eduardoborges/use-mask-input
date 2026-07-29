@@ -26,7 +26,7 @@ import { useMaskInputAntd } from 'use-mask-input/antd';
 
 function PhoneInput() {
   const maskRef = useMaskInputAntd({
-    mask: 'phone',
+    mask: '(999) 999-9999',
   });
 
   return (
@@ -208,7 +208,7 @@ function MyForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
-        {...registerWithMask('phone', 'phone')}
+        {...registerWithMask('phone', '(999) 999-9999')}
         placeholder="(555) 123-4567"
       />
       <Input
@@ -247,7 +247,7 @@ function ValidatedForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Input
-          {...registerWithMask('phone', 'phone', {
+          {...registerWithMask('phone', '(999) 999-9999', {
             required: 'Phone number is required',
             minLength: {
               value: 14,
@@ -296,7 +296,7 @@ function AntdForm() {
     <Form onFinish={handleSubmit(onSubmit)}>
       <Form.Item label="Phone">
         <Input
-          {...registerWithMask('phone', 'phone')}
+          {...registerWithMask('phone', '(999) 999-9999')}
           placeholder="(555) 123-4567"
         />
       </Form.Item>
@@ -369,7 +369,7 @@ import { Input } from 'antd';
 import { useMaskInputAntd } from 'use-mask-input/antd';
 
 function PhoneInput() {
-  const maskRef = useMaskInputAntd({ mask: 'phone' });
+  const maskRef = useMaskInputAntd({ mask: '(999) 999-9999' });
   return <Input ref={maskRef} placeholder="(555) 123-4567" />;
 }
 ```

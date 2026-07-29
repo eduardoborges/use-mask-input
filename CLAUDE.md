@@ -3,9 +3,13 @@
 Guidance for AI agents in `use-mask-input`. Only non-obvious stuff lives here; scripts, deps, and file layout are discoverable from `package.json` and the tree.
 
 ## What this is
-React input-mask library wrapping [inputmask](https://github.com/RobinHerbots/Inputmask). Works with plain inputs, React Hook Form, TanStack Form, and Ant Design. pnpm + Turborepo monorepo.
+Input-mask library wrapping [inputmask](https://github.com/RobinHerbots/Inputmask). React (plain inputs, React Hook Form, TanStack Form, Ant Design) and Vue 3 (directive, composable, vee-validate). pnpm + Turborepo monorepo.
 
 Published package: `packages/use-mask-input`. Everything else is a consumer/smoke-test.
+
+### Maintenance policy across frameworks
+- `src/core` is shared. A fix there serves both frameworks and is made **once** — that is what happened for #191 (maxlength) and #192 (options passthrough).
+- `src/api` (React) and `src/vue` are independent binding layers. Bugs there are fixed **where reported**, with no obligation to mirror. #193 is the illustrative case: an RHF ref-ordering bug the Vue directive cannot have.
 
 ## Toolchain (differs from most repos — check before assuming)
 | Concern | Tool | Not |

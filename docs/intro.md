@@ -15,7 +15,9 @@ sidebar_position: 1
   <img src="https://img.shields.io/npm/dw/use-mask-input" alt="npm downloads" />
 </div>
 
-Input masks for React. Works with plain inputs, React Hook Form, TanStack Form, shadcn/ui, and Ant Design.
+Input masks for React and Vue 3, built on the [Inputmask](https://robinherbots.github.io/Inputmask/) engine.
+
+On React it works with plain inputs, React Hook Form, TanStack Form, shadcn/ui and Ant Design. On Vue it ships a directive and a composable, and needs no adapter for vee-validate.
 
 ```bash
 npm install use-mask-input
@@ -28,6 +30,18 @@ function PhoneInput() {
   const ref = useMaskInput({ mask: '(99) 99999-9999' });
   return <input ref={ref} />;
 }
+```
+
+Or in Vue:
+
+```html
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'(99) 99999-9999'" />
+</template>
 ```
 
 ## With React Hook Form
@@ -123,7 +137,29 @@ function CepField() {
 
 See the full [shadcn/ui Integration](./shadcn) guide.
 
+## With Vue 3
+
+Import from the `use-mask-input/vue` subpath. In `<script setup>` the directive needs no registration, because Vue resolves a `vMaskInput` binding to `v-mask-input` on its own:
+
+```html
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+import { ref } from 'vue';
+
+const cpf = ref('');
+</script>
+
+<template>
+  <input v-model="cpf" v-mask-input="{ mask: 'cpf', options: { autoUnmask: true } }" />
+  <!-- displays 123.456.789-01, and cpf holds 12345678901 -->
+</template>
+```
+
+`v-model` works without an adapter, and so does vee-validate. See the full [Vue 3](./vue) guide.
+
 ## APIs
+
+### React
 
 | API | When to use |
 |-----|-------------|
@@ -135,6 +171,20 @@ See the full [shadcn/ui Integration](./shadcn) guide.
 | [`withTanStackFormMask`](./api-reference#withtanstackformmask) | Non-hook mask for TanStack input props. **Requires `React.memo`.** |
 | [`useMaskInputAntd`](./api-reference#usemaskinputantd) | `useMaskInput` for Ant Design. |
 | [`useHookFormMaskAntd`](./api-reference#usehookformmaskantd) | `useHookFormMask` for Ant Design. |
+
+### Vue
+
+| API | When to use |
+|-----|-------------|
+| [`vMaskInput`](./api-reference#vmaskinput) | Default choice. A directive, usable as `v-mask-input`. |
+| [`useMaskInput` (Vue)](./api-reference#usemaskinput-vue) | Composable, for imperative reads and `unmaskedValue()`. |
+
+### Both
+
+| API | When to use |
+|-----|-------------|
+| [`formatWithMask`](./api-reference#formatwithmask) | Format a stored value without a mounted element. |
+| [`unformatWithMask`](./api-reference#unformatwithmask) | Strip a mask from a formatted value. |
 
 Full signatures and parameters in the [API Reference](./api-reference).
 

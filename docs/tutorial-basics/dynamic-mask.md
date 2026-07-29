@@ -39,6 +39,18 @@ function FixedLengthInput() {
 }
 ```
 
+The same mask works in Vue through the directive, since both entries share one engine:
+
+```html
+<script setup>
+import { vMaskInput } from 'use-mask-input/vue';
+</script>
+
+<template>
+  <input v-mask-input="'aa-9{4}'" />
+</template>
+```
+
 This mask requires exactly 4 digits after the letters.
 
 ### Variable Length
