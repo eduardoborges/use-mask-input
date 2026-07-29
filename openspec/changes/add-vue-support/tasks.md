@@ -86,5 +86,5 @@
 - [x] 11.5 Add `vue`, `vue-mask`, and `vee-validate` to `keywords` in both `package.json` files
 - [x] 11.6 Write a **minor** changeset
 - [x] 11.7 Run `/check` plus the browser suite and confirm green, including that existing React, antd, RHF, and TanStack specs are unaffected
-- [ ] 11.8 Open a follow-up issue for backfilling React browser tests, referencing design decision 8
+- [x] 11.8 Open a follow-up issue for backfilling React browser tests, referencing design decision 8 (#198)
 - [ ] 11.9 Open the PR with a semantic title (`feat: add Vue 3 support via use-mask-input/vue`)

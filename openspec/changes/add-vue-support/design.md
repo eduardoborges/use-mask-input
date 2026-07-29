@@ -204,4 +204,4 @@ All resolved during implementation. Recorded so the reasoning is not re-derived.
 
 ### Still open
 
-10. **When to backfill React browser tests.** Tracked as a follow-up, not scheduled. Would finally test #191 and #193 by symptom rather than by proxy.
+10. **When to backfill React browser tests.** Tracked as #198. Would finally test #191 and #193 by symptom rather than by proxy.
