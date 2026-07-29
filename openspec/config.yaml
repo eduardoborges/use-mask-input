@@ -1,0 +1,37 @@
+schema: spec-driven
+
+context: |
+  `use-mask-input` — input-mask library wrapping RobinHerbots/Inputmask.
+  pnpm 11 + Turborepo monorepo. Published package: packages/use-mask-input.
+  Everything under apps/ is a consumer/smoke-test.
+
+  Toolchain (differs from most repos): oxlint (not eslint), tsdown (not tsup),
+  vitest + jsdom (not jest), pnpm (not npm/yarn). Changeset REQUIRED for any
+  change to the published lib. Semantic PR titles.
+
+  src/core (maskConfig, maskEngine, inputmask, elementResolver) is already
+  framework-agnostic. src/api and src/types are React-coupled. src/antd is the
+  precedent for a secondary entry point (use-mask-input/antd).
+
+  Invariants: hooks must stay SSR-safe (isServer no-op); element resolution must
+  dig the real <input> out of wrapper components; user options always override an
+  alias's defaults. Tests colocated as *.spec.ts(x), SSR paths as *-server.spec.
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
