@@ -5,7 +5,7 @@ import {
 import { resolveInputRef } from '../core';
 import withMask from './withMask';
 import isServer from '../utils/isServer';
-import { getUnmaskedValue, setUnmaskedValue } from '../utils';
+import { getUnmaskedValue, removeMask, setUnmaskedValue } from '../utils';
 
 import type {
   Input, Mask, Options, UseMaskInputReturn,
@@ -36,6 +36,12 @@ export default function useMaskInput(props: UseMaskInputOptions): UseMaskInputRe
 
   const refCallback = useCallback((input: Input | null): void => {
     if (!input) {
+      // React hands us `null` when the ref comes off the element, which is not
+      // always an unmount: the element can outlive the detach, or be handed to
+      // a different ref. Leaving Inputmask attached leaves its listeners and its
+      // `value` accessor on it. See `removeMask` for why the teardown lives here
+      // and not in a React 19 cleanup return.
+      removeMask(ref.current);
       ref.current = null;
       return;
     }

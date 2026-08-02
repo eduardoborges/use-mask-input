@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { applyMaskToElement, resolveInputRef } from '../core';
-import { makeMaskCacheKey, setPrevRef } from '../utils';
+import { makeMaskCacheKey, removeMask, setPrevRef } from '../utils';
 
 import type { InputRef } from 'antd';
 import type { RefCallback } from 'react';
@@ -45,8 +45,14 @@ export default function useHookFormMaskAntd<
       const cacheKey = makeMaskCacheKey(fieldName, mask);
 
       if (!refCache.has(cacheKey)) {
+        // antd hands back an InputRef, so the detach call carries no element to
+        // unmask. Remember the one we masked.
+        let maskedElement: HTMLElement | null = null;
+
         const refWithMask: RefCallback<InputRef | null> = (inputRef) => {
           const element = inputRef ? resolveInputRef(inputRef.input) : null;
+          if (!element) removeMask(maskedElement);
+          maskedElement = element;
           if (element) applyMaskToElement(element, mask, options as Options);
           if (ref) ref(element);
         };

@@ -4,6 +4,7 @@ export { default as moduleInterop } from './moduleInterop';
 export {
   getUnmaskedValue,
   makeMaskCacheKey,
+  removeMask,
   setPrevRef,
   setUnmaskedValue,
 } from './maskHelpers';

@@ -1,4 +1,5 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, render, renderHook } from '@testing-library/react';
+import { createElement } from 'react';
 import inputmask from '../core/inputmask';
 import {
   beforeEach,
@@ -217,6 +218,52 @@ describe('useMaskInput', () => {
     rerender();
 
     expect(inputmask).toHaveBeenCalled();
+  });
+
+  it('removes the mask when React detaches the ref', () => {
+    const remove = vi.fn();
+    vi.mocked(inputmask).mockReturnValue({
+      mask: vi.fn((element: HTMLInputElement) => {
+        const target = element;
+        target.inputmask = { remove } as never;
+      }),
+    } as any);
+
+    function Field() {
+      const ref = useMaskInput({ mask: '99-99' });
+      return createElement('input', { ref });
+    }
+
+    const { unmount } = render(createElement(Field));
+    expect(remove).not.toHaveBeenCalled();
+
+    unmount();
+
+    expect(remove).toHaveBeenCalledTimes(1);
+  });
+
+  it('masks the new element after a teardown and remount', () => {
+    const masked: HTMLElement[] = [];
+    const remove = vi.fn();
+    vi.mocked(inputmask).mockReturnValue({
+      mask: vi.fn((element: HTMLInputElement) => {
+        const target = element;
+        masked.push(target);
+        target.inputmask = { remove } as never;
+      }),
+    } as any);
+
+    function Field() {
+      const ref = useMaskInput({ mask: '999-99' });
+      return createElement('input', { ref });
+    }
+
+    render(createElement(Field)).unmount();
+    render(createElement(Field)).unmount();
+
+    expect(masked).toHaveLength(2);
+    expect(masked[0]).not.toBe(masked[1]);
+    expect(remove).toHaveBeenCalledTimes(2);
   });
 
   it('handles case where findInputElement returns valid element', () => {
