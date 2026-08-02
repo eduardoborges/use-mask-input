@@ -109,4 +109,42 @@ describe('option behavior via the real engine (issue #192)', () => {
       expect(input.inputMode).toBe('numeric');
     });
   });
+
+  describe('new built-in aliases via the real engine', () => {
+    it('cep: formats a Brazilian postal code', () => {
+      expect(formatWithMask('01310100', 'cep')).toBe('01310-100');
+    });
+
+    it('phone-br: keepStatic picks the mobile (9-digit) form without getting stuck on the landline form', () => {
+      expect(formatWithMask('11987654321', 'phone-br')).toBe('(11) 98765-4321');
+    });
+
+    it('phone-br: still formats an 8-digit landline number', () => {
+      expect(formatWithMask('1198765432', 'phone-br')).toBe('(11) 9876-5432');
+    });
+
+    it('date-br: alias datetime + inputFormat dd/mm/yyyy', () => {
+      expect(formatWithMask('24072026', 'date-br')).toBe('24/07/2026');
+    });
+
+    it('time: alias datetime + inputFormat HH:mm (uppercase MM is month, not minutes)', () => {
+      expect(formatWithMask('1430', 'time')).toBe('14:30');
+    });
+
+    it('credit-card: keepStatic picks the 16-digit grouping', () => {
+      expect(formatWithMask('4111111111111111', 'credit-card')).toBe('4111 1111 1111 1111');
+    });
+
+    it('credit-card: keepStatic picks the 15-digit Amex grouping', () => {
+      expect(formatWithMask('378282246310005', 'credit-card')).toBe('3782 822463 10005');
+    });
+
+    it('br-plate: formats and upper-cases the old format', () => {
+      expect(formatWithMask('abc1234', 'br-plate')).toBe('ABC-1234');
+    });
+
+    it('br-plate: formats the Mercosul format', () => {
+      expect(formatWithMask('ABC1D23', 'br-plate')).toBe('ABC1D23');
+    });
+  });
 });

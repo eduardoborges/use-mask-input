@@ -172,6 +172,65 @@ describe('maskConfig', () => {
       });
     });
 
+    it('returns options for cep mask', () => {
+      const options = getMaskOptions('cep');
+      expect(options).toEqual({
+        mask: '99999-999',
+        placeholder: '_____-___',
+        jitMasking: false,
+      });
+    });
+
+    it('returns options for phone-br mask', () => {
+      const options = getMaskOptions('phone-br');
+      expect(options).toEqual({
+        mask: ['(99) 9999-9999', '(99) 99999-9999'],
+        keepStatic: true,
+        placeholder: '',
+        jitMasking: false,
+      });
+    });
+
+    it('returns options for date-br mask', () => {
+      const options = getMaskOptions('date-br');
+      expect(options).toEqual({
+        alias: 'datetime',
+        inputFormat: 'dd/mm/yyyy',
+        placeholder: 'dd/mm/yyyy',
+        jitMasking: false,
+      });
+    });
+
+    it('returns options for time mask', () => {
+      const options = getMaskOptions('time');
+      expect(options).toEqual({
+        alias: 'datetime',
+        inputFormat: 'HH:mm',
+        placeholder: 'HH:mm',
+        jitMasking: false,
+      });
+    });
+
+    it('returns options for credit-card mask', () => {
+      const options = getMaskOptions('credit-card');
+      expect(options).toEqual({
+        mask: ['9999 999999 99999', '9999 9999 9999 9999'],
+        keepStatic: true,
+        placeholder: '',
+        jitMasking: false,
+      });
+    });
+
+    it('returns options for br-plate mask', () => {
+      const options = getMaskOptions('br-plate');
+      expect(options).toEqual({
+        mask: ['AAA-9999', 'AAA9A99'],
+        casing: 'upper',
+        placeholder: '',
+        jitMasking: false,
+      });
+    });
+
     it('returns custom mask string', () => {
       const options = getMaskOptions('999-999');
       expect(options).toEqual({
@@ -194,6 +253,16 @@ describe('maskConfig', () => {
       expect(options).toEqual({
         mask: '999.999.999-99',
         placeholder: '___',
+        jitMasking: false,
+      });
+    });
+
+    it('lets user options override the credit-card alias defaults', () => {
+      const options = getMaskOptions('credit-card', { keepStatic: false });
+      expect(options).toEqual({
+        mask: ['9999 999999 99999', '9999 9999 9999 9999'],
+        keepStatic: false,
+        placeholder: '',
         jitMasking: false,
       });
     });
