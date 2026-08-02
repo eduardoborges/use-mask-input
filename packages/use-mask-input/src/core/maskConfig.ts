@@ -43,6 +43,24 @@ const ALIAS_MASKS: Record<string, InputmaskOptions> = {
     mask: '9{1,5}[-][9]', // Agency numbers: 1234, 12345, 1234-5
     placeholder: '',
   },
+  cep: { mask: '99999-999', placeholder: '_____-___' },
+  'phone-br': {
+    mask: ['(99) 9999-9999', '(99) 99999-9999'], // landline (8 digits) or mobile (9 digits)
+    keepStatic: true,
+    placeholder: '',
+  },
+  'date-br': { alias: 'datetime', inputFormat: 'dd/mm/yyyy', placeholder: 'dd/mm/yyyy' },
+  time: { alias: 'datetime', inputFormat: 'HH:mm', placeholder: 'HH:mm' },
+  'credit-card': {
+    mask: ['9999 999999 99999', '9999 9999 9999 9999'], // 15-digit (Amex) and 16-digit forms
+    keepStatic: true,
+    placeholder: '',
+  },
+  'plate-br': {
+    mask: ['AAA-9999', 'AAA9A99'], // old format and Mercosul format
+    casing: 'upper',
+    placeholder: '',
+  },
 };
 
 /**

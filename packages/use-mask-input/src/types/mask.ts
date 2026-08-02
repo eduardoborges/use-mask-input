@@ -24,6 +24,12 @@ export type Mask = 'datetime'
   | 'cnpj'
   | 'br-bank-account'
   | 'br-bank-agency'
+  | 'cep'
+  | 'phone-br'
+  | 'date-br'
+  | 'time'
+  | 'credit-card'
+  | 'plate-br'
   | (string & {})
   | (string[] & {})
   | null;
