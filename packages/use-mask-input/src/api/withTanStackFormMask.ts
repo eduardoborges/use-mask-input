@@ -1,6 +1,6 @@
 import { applyMaskToElement } from '../core';
 import {
-  getUnmaskedValue, makeMaskCacheKey, setPrevRef, setUnmaskedValue,
+  getUnmaskedValue, makeMaskCacheKey, removeMask, setPrevRef, setUnmaskedValue,
 } from '../utils';
 
 import type { RefCallback } from 'react';
@@ -34,6 +34,7 @@ export default function withTanStackFormMask<T extends TanStackFormInputProps>(
     const result = {
       ...inputProps,
       ref: ((input: HTMLElement | null) => {
+        if (!input) removeMask(currentElement);
         currentElement = input;
         if (input) applyMaskToElement(input, mask, options);
       }) as RefCallback<HTMLElement | null>,
@@ -53,6 +54,7 @@ export default function withTanStackFormMask<T extends TanStackFormInputProps>(
 
   if (!maskCache?.has(cacheKey)) {
     const maskedRef = ((input: HTMLElement | null) => {
+      if (!input) removeMask(maskedRef.currentElement ?? null);
       maskedRef.currentElement = input;
       if (input) applyMaskToElement(input, mask, options);
       ref(input);

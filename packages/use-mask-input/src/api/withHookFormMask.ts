@@ -1,6 +1,6 @@
 import { applyMaskToElement } from '../core';
 import {
-  getUnmaskedValue, makeMaskCacheKey, setPrevRef, setUnmaskedValue,
+  getUnmaskedValue, makeMaskCacheKey, removeMask, setPrevRef, setUnmaskedValue,
 } from '../utils';
 
 import type { RefCallback } from 'react';
@@ -55,6 +55,7 @@ export default function withHookFormMask(
 
   if (!maskCache?.has(cacheKey)) {
     const maskedRef = ((input: HTMLElement | null) => {
+      if (!input) removeMask(maskedRef.currentElement ?? null);
       maskedRef.currentElement = input;
       if (input) applyMaskToElement(input, mask, options);
       return ref(input);

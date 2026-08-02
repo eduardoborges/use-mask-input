@@ -13,8 +13,8 @@ type MaskedElement = HTMLElement & {
  * `v-mask-input` — the only thing in the Vue entry that applies a mask.
  *
  * Getting real lifecycle hooks is why this, and not the composable, is the
- * primitive: the React surface has no equivalent of `unmounted`, which is why
- * it never tears Inputmask down.
+ * primitive. The React surface has no `unmounted`, so it tears Inputmask down
+ * from the detach branch of its ref callbacks instead (see `utils/removeMask`).
  *
  * Note there is no `v-model` handling here, and none is needed. Inputmask
  * replaces the element's `value` property with its own accessor, so `v-model`

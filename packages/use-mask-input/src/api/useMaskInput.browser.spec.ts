@@ -47,11 +47,13 @@ function mount(element: ReactElement): HTMLInputElement {
   return input;
 }
 
-afterEach(() => {
+function unmountActive(): void {
   active?.root.unmount();
   active?.host.remove();
   active = null;
-});
+}
+
+afterEach(unmountActive);
 
 /**
  * The text the user actually sees.
@@ -174,6 +176,45 @@ describe('maxLength on a masked input (#191)', () => {
     const input = renderHooked('numeric', undefined, { maxLength: 5 });
 
     expect(input.getAttribute('maxlength')).toBe('5');
+  });
+});
+
+describe('teardown when the ref detaches', () => {
+  /**
+   * jsdom can only show that `remove()` was called on a stub. What the leak
+   * actually was, listeners still bound and the `value` property still pointing
+   * at Inputmask's accessor instead of the native one, is only observable
+   * against a real DOM.
+   */
+  it('gives the element its native value accessor back on unmount', async () => {
+    const input = renderHooked('cpf');
+    const native = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
+    await focus(input);
+    await userEvent.type(input, '12345678901');
+
+    expect(input.inputmask).toBeDefined();
+    expect(Object.getOwnPropertyDescriptor(input, 'value')?.get).not.toBe(native?.get);
+
+    unmountActive();
+
+    expect(input.inputmask).toBeUndefined();
+    expect(Object.getOwnPropertyDescriptor(input, 'value')?.get).toBe(native?.get);
+  });
+
+  it('masks a fresh element after the previous one was torn down', async () => {
+    const first = renderHooked('cpf');
+    await focus(first);
+    await userEvent.type(first, '12345678901');
+    expect(displayed(first)).toBe('123.456.789-01');
+
+    unmountActive();
+
+    const second = renderHooked('cpf');
+    await focus(second);
+    await userEvent.type(second, '98765432100');
+
+    expect(displayed(second)).toBe('987.654.321-00');
   });
 });
 

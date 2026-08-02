@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo, useRef } from 'react';
 
 import { applyMaskToElement } from '../core';
 import {
-  flow, getUnmaskedValue, makeMaskCacheKey, setPrevRef, setUnmaskedValue,
+  flow, getUnmaskedValue, makeMaskCacheKey, removeMask, setPrevRef, setUnmaskedValue,
 } from '../utils';
 
 import type { RefCallback } from 'react';
@@ -74,6 +74,7 @@ export default function useHookFormMask<
         };
 
         const applyMaskToRef = (_ref: HTMLElement | null) => {
+          if (!_ref) removeMask(nextEntry.element);
           nextEntry.element = _ref;
           if (_ref) applyMaskToElement(_ref, mask, options as Options);
           return _ref;
