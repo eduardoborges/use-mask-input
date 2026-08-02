@@ -5,6 +5,7 @@ export {
   getUnmaskedValue,
   makeMaskCacheKey,
   removeMask,
+  sameOptions,
   setPrevRef,
   setUnmaskedValue,
 } from './maskHelpers';

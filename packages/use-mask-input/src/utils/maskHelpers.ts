@@ -1,6 +1,8 @@
 import { findInputElement, resolveInputRef } from '../core/elementResolver';
 
-import type { Input, Mask, UnmaskedValueApi } from '../types';
+import type {
+  Input, Mask, Options, UnmaskedValueApi,
+} from '../types';
 
 // Kept self-contained (not relying on the ambient src/@types augmentation) so
 // this module type-checks when consumers compile the package source directly,
@@ -15,6 +17,30 @@ type MaskedElement = (HTMLInputElement | HTMLTextAreaElement) & {
  */
 export function makeMaskCacheKey(fieldName: string, mask: Mask): string {
   return `${fieldName}:${Array.isArray(mask) ? mask.join(',') : String(mask)}`;
+}
+
+/**
+ * Shallow equality over mask options. Shared by both binding layers so their
+ * "did this actually change?" guards cannot drift apart.
+ *
+ * Compares structurally, not by identity: callers pass inline object literals
+ * (`options={{ prefix: 'R$ ' }}`, `v-mask-input="{ mask: 'cpf' }"`) that
+ * allocate a fresh object every render and would otherwise never look equal.
+ *
+ * ponytail: shallow on purpose. An options object mutated in place, or one
+ * holding functions, won't compare equal-then-changed correctly — but deep
+ * comparison on every re-render is exactly the cost this guard exists to
+ * avoid. Documented as "replace options, don't mutate them".
+ */
+export function sameOptions(a?: Options, b?: Options): boolean {
+  if (a === b) return true;
+  if (!a || !b) return false;
+
+  const keysA = Object.keys(a) as (keyof Options)[];
+  const keysB = Object.keys(b) as (keyof Options)[];
+  if (keysA.length !== keysB.length) return false;
+
+  return keysA.every((key) => Object.is(a[key], b[key]));
 }
 
 /**

@@ -2,10 +2,12 @@ import {
   useCallback, useEffect, useRef,
 } from 'react';
 
-import { resolveInputRef } from '../core';
+import { applyMaskToElement, resolveInputRef } from '../core';
 import withMask from './withMask';
 import isServer from '../utils/isServer';
-import { getUnmaskedValue, removeMask, setUnmaskedValue } from '../utils';
+import {
+  getUnmaskedValue, makeMaskCacheKey, removeMask, sameOptions, setUnmaskedValue,
+} from '../utils';
 
 import type {
   Input, Mask, Options, UseMaskInputReturn,
@@ -49,6 +51,39 @@ export default function useMaskInput(props: UseMaskInputOptions): UseMaskInputRe
     ref.current = resolveInputRef(input);
     withMask(maskRef.current, optionsRef.current)(ref.current);
   }, []);
+
+  /**
+   * `refCallback` masks the element once, on attach, and its identity is stable
+   * on purpose — so React never re-invokes it and a later `mask` or `options`
+   * would otherwise be ignored for the life of the component. This is the Vue
+   * directive's `updated` hook, minus the lifecycle React doesn't give us.
+   *
+   * The guard is the point: re-masking rebuilds Inputmask's buffer and sends the
+   * caret to the end, so an unrelated re-render must not reach the apply. Both
+   * comparisons are structural because callers pass inline literals.
+   */
+  useEffect(() => {
+    if (isServer) return;
+
+    const unchanged = makeMaskCacheKey('', maskRef.current) === makeMaskCacheKey('', mask)
+      && sameOptions(optionsRef.current, options);
+
+    // Keep the refs current either way: if the element re-attaches later,
+    // `refCallback` must mask it with the mask we have now, not the mount-time one.
+    maskRef.current = mask;
+    optionsRef.current = options;
+
+    if (unchanged || !ref.current) return;
+
+    // A null mask is not "do nothing" — it has to tear the old mask off, or the
+    // field keeps formatting after the caller switched masking off.
+    if (mask === null || mask === undefined) {
+      removeMask(ref.current);
+      return;
+    }
+
+    applyMaskToElement(ref.current, mask, options);
+  }, [mask, options]);
 
   useEffect(() => {
     if (isServer || !ref.current || !register) return;
