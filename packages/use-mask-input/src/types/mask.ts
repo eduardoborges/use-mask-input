@@ -29,7 +29,7 @@ export type Mask = 'datetime'
   | 'date-br'
   | 'time'
   | 'credit-card'
-  | 'br-plate'
+  | 'plate-br'
   | (string & {})
   | (string[] & {})
   | null;

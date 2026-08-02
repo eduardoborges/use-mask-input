@@ -139,12 +139,12 @@ describe('option behavior via the real engine (issue #192)', () => {
       expect(formatWithMask('378282246310005', 'credit-card')).toBe('3782 822463 10005');
     });
 
-    it('br-plate: formats and upper-cases the old format', () => {
-      expect(formatWithMask('abc1234', 'br-plate')).toBe('ABC-1234');
+    it('plate-br: formats and upper-cases the old format', () => {
+      expect(formatWithMask('abc1234', 'plate-br')).toBe('ABC-1234');
     });
 
-    it('br-plate: formats the Mercosul format', () => {
-      expect(formatWithMask('ABC1D23', 'br-plate')).toBe('ABC1D23');
+    it('plate-br: formats the Mercosul format', () => {
+      expect(formatWithMask('ABC1D23', 'plate-br')).toBe('ABC1D23');
     });
   });
 });

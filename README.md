@@ -223,7 +223,7 @@ There is deliberately no `<MaskInput>` component and no vee-validate helper, bec
 
 ## Built-in Aliases
 
-`cpf` · `cnpj` · `cep` · `phone-br` · `date-br` · `br-plate` · `br-bank-account` · `br-bank-agency` · `currency` · `brl-currency` · `credit-card` · `time` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
+`cpf` · `cnpj` · `cep` · `phone-br` · `date-br` · `plate-br` · `br-bank-account` · `br-bank-agency` · `currency` · `brl-currency` · `credit-card` · `time` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
 
 ## Works With
 

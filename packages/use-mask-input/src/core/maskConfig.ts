@@ -56,7 +56,7 @@ const ALIAS_MASKS: Record<string, InputmaskOptions> = {
     keepStatic: true,
     placeholder: '',
   },
-  'br-plate': {
+  'plate-br': {
     mask: ['AAA-9999', 'AAA9A99'], // old format and Mercosul format
     casing: 'upper',
     placeholder: '',

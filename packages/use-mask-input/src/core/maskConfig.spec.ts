@@ -221,8 +221,8 @@ describe('maskConfig', () => {
       });
     });
 
-    it('returns options for br-plate mask', () => {
-      const options = getMaskOptions('br-plate');
+    it('returns options for plate-br mask', () => {
+      const options = getMaskOptions('plate-br');
       expect(options).toEqual({
         mask: ['AAA-9999', 'AAA9A99'],
         casing: 'upper',
