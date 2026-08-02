@@ -1,5 +1,5 @@
 import { applyMaskToElement } from '../core';
-import { makeMaskCacheKey } from '../utils';
+import { makeMaskCacheKey, sameOptions } from '../utils';
 import isServer from '../utils/isServer';
 
 import type { Mask, Options, VueMaskBinding, VueMaskConfig } from './types';
@@ -32,25 +32,6 @@ export function normalizeBinding(binding: VueMaskBinding): {
   }
 
   return { mask: binding as Mask };
-}
-
-/**
- * Shallow equality over mask options.
- *
- * ponytail: shallow on purpose. An options object mutated in place, or one
- * holding functions, won't compare equal-then-changed correctly — but deep
- * comparison on every re-render is exactly the cost this guard exists to
- * avoid. Documented as "replace options, don't mutate them".
- */
-function sameOptions(a?: Options, b?: Options): boolean {
-  if (a === b) return true;
-  if (!a || !b) return false;
-
-  const keysA = Object.keys(a) as (keyof Options)[];
-  const keysB = Object.keys(b) as (keyof Options)[];
-  if (keysA.length !== keysB.length) return false;
-
-  return keysA.every((key) => Object.is(a[key], b[key]));
 }
 
 /**

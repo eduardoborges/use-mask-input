@@ -258,4 +258,83 @@ describe('caret behaviour', () => {
     expect(displayed(input)).toBe(valueBefore);
     expect(input.selectionStart).toBe(4);
   });
+
+  it('keeps the caret when the options object is rebuilt with the same values', async () => {
+    let bump: (() => void) | undefined;
+
+    function Field() {
+      const [spare, setSpare] = useState(0);
+      // Fresh literal every render. Identity comparison would re-mask here.
+      const ref = useMaskInput({ mask: 'cpf', options: { placeholder: '_' } });
+      bump = () => setSpare((n) => n + 1);
+      return createElement('div', null, spare, createElement('input', { ref }));
+    }
+
+    const input = mount(createElement(Field));
+
+    await focus(input);
+    await userEvent.type(input, '12345678');
+
+    const valueBefore = displayed(input);
+    input.setSelectionRange(4, 4);
+
+    flushSync(() => { bump?.(); });
+    await nextFrame();
+
+    expect(displayed(input)).toBe(valueBefore);
+    expect(input.selectionStart).toBe(4);
+  });
+});
+
+/**
+ * The React counterpart of the Vue directive's `updated` hook. jsdom can only
+ * count calls into a mocked engine; formatting through the *new* mask needs the
+ * real one.
+ */
+describe('changing the mask after mount', () => {
+  function reactiveField(initial: Mask) {
+    let setMask: ((next: Mask) => void) | undefined;
+
+    function Field() {
+      const [mask, set] = useState<Mask>(initial);
+      const ref = useMaskInput({ mask });
+      setMask = set;
+      return createElement('input', { ref });
+    }
+
+    const input = mount(createElement(Field));
+
+    return {
+      input,
+      swap: (next: Mask) => {
+        flushSync(() => { setMask?.(next); });
+      },
+    };
+  }
+
+  it('formats through the new mask', async () => {
+    const { input, swap } = reactiveField('cpf');
+
+    swap('cnpj');
+    await nextFrame();
+
+    await focus(input);
+    await userEvent.type(input, '12345678000199');
+
+    // Still on cpf, this would stop after 11 digits as '123.456.780-00'.
+    expect(displayed(input)).toBe('12.345.678/0001-99');
+  });
+
+  it('stops masking when the mask becomes null', async () => {
+    const { input, swap } = reactiveField('cpf');
+
+    swap(null);
+    await nextFrame();
+
+    await focus(input);
+    await userEvent.type(input, 'hello');
+
+    // Under cpf the engine rejects every one of those characters.
+    expect(displayed(input)).toBe('hello');
+  });
 });
