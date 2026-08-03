@@ -12,9 +12,12 @@ allowBuilds:
 overrides:
   react: ^19.2.6
   react-dom: ^19.2.6
-  '@types/react': ^19.2.5
-  '@types/react-dom': ^19.2.3
-  react-hook-form: 7.82.0
+  # Exact pins, not ranges: two copies of @types/react make React's RefCallback
+  # nominally distinct ("two different types with this name exist"), which breaks
+  # the demo apps' type-check against the built d.ts.
+  '@types/react': 19.2.18
+  '@types/react-dom': 19.2.4
+  react-hook-form: 7.84.0
   'qs@>=6.7.0 <=6.14.1': '>=6.14.2'
   'minimatch@<3.1.3': '>=3.1.3'
   'rollup@>=4.0.0 <4.59.0': '>=4.59.0'
@@ -24,15 +27,12 @@ overrides:
   'ajv@>=7.0.0-alpha.0 <8.18.0': '>=8.18.0'
   'svgo@>=3.0.0 <3.3.3': '>=3.3.3'
   'undici@>=7.0.0 <7.24.0': '>=7.24.0'
-  'next@>=16.0.0 <16.2.6': '>=16.2.6'
+  'next@>=16.0.0 <16.2.11': '>=16.2.11'
   'vite@>=7.0.0 <=7.3.1': '>=7.3.2'
   '@babel/plugin-transform-modules-systemjs@>=7.12.0 <=7.29.3': '>=7.29.4'
   'brace-expansion@>=4.0.0 <5.0.5': '>=5.0.5'
-  # brace-expansion 2.1.3 was published inside the minimumReleaseAge window CI
-  # enforces, and it only reached this repo as a transitive dep of the Vue
-  # devDependencies. Pinned to the previous release, which is weeks old.
-  # Drop this line once 2.1.3 has aged past the cutoff.
-  'brace-expansion@2.1.3': 2.1.2
+  'brace-expansion@<1.1.17': '>=1.1.17 <2'
+  'brace-expansion@>=2.0.0 <2.1.3': '>=2.1.3 <3'
   'picomatch@<2.3.2': '>=2.3.2'
   'picomatch@>=4.0.0 <4.0.4': '>=4.0.4'
   picomatch: 4.0.4
@@ -40,9 +40,10 @@ overrides:
   'follow-redirects@<=1.15.11': '>=1.16.0'
   'lodash@<=4.17.23': '>=4.18.0'
   'path-to-regexp@0.1.12': 0.1.13
-  'fast-uri@3.1.0': 3.1.2
+  'fast-uri@>=3.0.0 <3.1.4': '>=3.1.4 <4'
   'picomatch@4.0.3': 4.0.4
   'esbuild@<0.28.1': '>=0.28.1'
+  'sharp@<0.35.0': '>=0.35.0'
   'ws@>=8.0.0 <8.21.0': '>=8.21.0'
   'uuid@<11.1.1': '>=11.1.1 <12'
   # js-yaml: no fix within v3; docusaurus relies on the removed yaml.safeLoad (js-yaml 4).

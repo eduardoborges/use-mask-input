@@ -42,7 +42,7 @@ Tests are colocated as `*.spec.ts(x)`. SSR paths tested in `*-server.spec.tsx`.
 1. **SSR-safe**: hooks return a no-op on the server (`isServer` check). Don't break this — `apps/next-project` exists to catch it.
 2. **Element resolution**: `resolveInputRef` digs the real `<input>` out of wrapper components (Ant Design etc). Both native and wrapped refs must work.
 3. **RHF/TanStack integration** wraps the library's `ref` callback around the form's `register` ref. `with*` variants exist for `React.memo` cases.
-4. **inputmask is bundled** (`noExternal` in tsdown), not a peer dep.
+4. **inputmask is bundled** (`noExternal` in tsdown), not a peer dep. Pinned to `5.0.10-beta.61` on purpose — the `5.0.10` stable release dropped the `lib/global/window` shim and calls bare `matchMedia()`/`navigator` at module scope, which throws on import under SSR. Don't "upgrade" to stable until upstream restores that guard; the `*-server.spec` files catch it.
 5. **Alias options merge**: user options always override an alias's defaults (`getMaskOptions`).
 6. **Demo apps are upstream boilerplate** (`create-next-app`, `create-vite`, shadcn, TanStack). Keep their deps matching the official scaffold — do NOT bump ahead. Only the published package tracks latest.
 
