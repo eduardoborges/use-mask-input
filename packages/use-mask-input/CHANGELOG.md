@@ -1,3 +1,14 @@
+## 3.13.0
+
+### Minor Changes
+
+- afa40c0: Add cep, phone-br, date-br, time, credit-card and plate-br built-in mask aliases.
+
+### Patch Changes
+
+- 0228fcf: Remove Inputmask from the element when a React ref detaches, instead of leaving its listeners and value accessor behind.
+- 3fcf9d9: `useMaskInput` now re-applies the mask when the mask or options change instead of keeping whichever one rendered first.
+
 ## 3.12.0
 
 ### Minor Changes
