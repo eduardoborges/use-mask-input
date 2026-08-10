@@ -9,18 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-form": "^1.33.0",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
+    "@tanstack/react-form": "^1.33.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "use-mask-input": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^25.9.3",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.2",
-    "oxlint": "1.66.0",
+    "@types/node": "^25.9.5",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "oxlint": "1.77.0",
     "typescript": "~6.0.3",
-    "vite": "^8.0.16"
+    "vite": "^8.2.1"
   }
 }
