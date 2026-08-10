@@ -37,10 +37,10 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",
-    "oxlint": "1.76.0",
-    "turbo": "^2.10.8",
+    "oxlint": "1.77.0",
+    "turbo": "^2.10.9",
     "typescript": "~7.0.2",
-    "wrangler": "^4.118.0"
+    "wrangler": "^4.120.0"
   },
   "engines": {
     "node": ">=16",
