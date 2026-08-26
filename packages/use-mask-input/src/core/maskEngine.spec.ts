@@ -153,18 +153,29 @@ describe('maskEngine', () => {
   });
 
   describe('isValidWithMask', () => {
-    it('delegates to Inputmask.isValid with the resolved alias options', () => {
+    it('formats first, then hands the masked string to Inputmask.isValid', () => {
       const isValidFn = vi.fn().mockReturnValue(true);
+      vi.mocked(inputmask).format = vi.fn().mockReturnValue('123.456.789-00');
       vi.mocked(inputmask).isValid = isValidFn;
 
-      expect(isValidWithMask('123.456.789-00', 'cpf')).toBe(true);
+      expect(isValidWithMask('12345678900', 'cpf')).toBe(true);
       expect(isValidFn).toHaveBeenCalledWith(
         '123.456.789-00',
         expect.objectContaining({ mask: '999.999.999-99' }),
       );
     });
 
+    it('rejects a non-empty value the engine formats to nothing', () => {
+      vi.mocked(inputmask).format = vi.fn().mockReturnValue('');
+      const isValidFn = vi.fn().mockReturnValue(true);
+      vi.mocked(inputmask).isValid = isValidFn;
+
+      expect(isValidWithMask('abc', 'numeric')).toBe(false);
+      expect(isValidFn).not.toHaveBeenCalled();
+    });
+
     it('coerces a non-boolean engine result to false', () => {
+      vi.mocked(inputmask).format = vi.fn().mockReturnValue('12');
       vi.mocked(inputmask).isValid = vi.fn().mockReturnValue(undefined);
       expect(isValidWithMask('12', 'cpf')).toBe(false);
     });
