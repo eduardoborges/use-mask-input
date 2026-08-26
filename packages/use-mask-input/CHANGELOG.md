@@ -1,3 +1,11 @@
+## 3.14.0
+
+### Minor Changes
+
+- a85e41f: Add `isComplete()` next to `unmaskedValue()` on every hook and `with*` return (React and Vue), plus three standalone helpers: `isValidWithMask(value, mask)` for schema validators, `getUnmaskedValue(element)` for reading the raw value from `event.target`, and `isMaskComplete(element)`.
+
+  `useHookFormMaskAntd` now actually carries `unmaskedValue()` and `isComplete()`; its return type always promised them.
+
 ## 3.13.0
 
 ### Minor Changes
