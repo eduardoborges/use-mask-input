@@ -8,7 +8,11 @@ import type {
 // this module type-checks when consumers compile the package source directly,
 // e.g. the example apps that alias `use-mask-input` to `src` and build with `tsc`.
 type MaskedElement = (HTMLInputElement | HTMLTextAreaElement) & {
-  inputmask?: { unmaskedvalue?: () => string; remove?: () => void };
+  inputmask?: {
+    unmaskedvalue?: () => string;
+    isComplete?: () => boolean | undefined;
+    remove?: () => void;
+  };
 };
 
 /**
@@ -82,6 +86,25 @@ export function getUnmaskedValue(input: Input | null): string {
 }
 
 /**
+ * Whether every required position of the mask on `input` is filled.
+ *
+ * No element yet (unmounted, SSR) reads as incomplete. An element with no mask
+ * attached, or a mask Inputmask cannot judge (`repeat: '*'` yields `undefined`),
+ * reads as complete: there is no pattern left to finish.
+ */
+export function isMaskComplete(input: Input | null): boolean {
+  const element = resolveUnmaskedInput(input);
+  if (!element) return false;
+
+  const { inputmask } = element as MaskedElement;
+  if (inputmask && typeof inputmask.isComplete === 'function') {
+    return inputmask.isComplete() !== false;
+  }
+
+  return true;
+}
+
+/**
  * Detaches Inputmask from an element, restoring the native `value` accessor it
  * overrode and dropping the listeners it installed.
  *
@@ -100,16 +123,28 @@ export function removeMask(input: Input | null): void {
   element?.inputmask?.remove?.();
 }
 
-export function setUnmaskedValue<T extends object>(
+/**
+ * Hangs `unmaskedValue()` and `isComplete()` on a hook result as non-enumerable
+ * properties, so spreading the result into JSX props does not leak them.
+ *
+ * @param result - The ref callback or props object being returned to the caller
+ * @param getElement - Resolves the currently masked element, or null
+ */
+export function setValueApi<T extends object>(
   result: T,
-  getter: () => string,
+  getElement: () => Input | null,
 ): T & UnmaskedValueApi {
-  Object.defineProperty(result, 'unmaskedValue', {
-    value: getter,
-    enumerable: false,
-    writable: true,
-    configurable: true,
-  });
+  const define = (key: keyof UnmaskedValueApi, value: () => unknown) => {
+    Object.defineProperty(result, key, {
+      value,
+      enumerable: false,
+      writable: true,
+      configurable: true,
+    });
+  };
+
+  define('unmaskedValue', () => getUnmaskedValue(getElement()));
+  define('isComplete', () => isMaskComplete(getElement()));
 
   return result as T & UnmaskedValueApi;
 }

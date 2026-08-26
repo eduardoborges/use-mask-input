@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import withMask from '../api/withMask';
 import { resolveInputRef } from '../core';
 import isServer from '../utils/isServer';
-import { getUnmaskedValue, removeMask, setUnmaskedValue } from '../utils';
+import { removeMask, setValueApi } from '../utils';
 
 import type { InputRef } from 'antd';
 
@@ -32,7 +32,6 @@ export default function useMaskInputAntd(props: UseMaskInputOptions): UseMaskInp
   const maskRef = useRef(mask);
   const optionsRef = useRef(options);
   const maskedElementRef = useRef<HTMLInputElement | null>(null);
-  const unmaskedValue = useCallback(() => getUnmaskedValue(ref.current), []);
 
   maskRef.current = mask;
   optionsRef.current = options;
@@ -63,8 +62,8 @@ export default function useMaskInputAntd(props: UseMaskInputOptions): UseMaskInp
       // server doesn't have dom, so just do nothing
     }) as unknown as UseMaskInputAntdReturn;
 
-    return setUnmaskedValue(noop, () => '');
+    return setValueApi(noop, () => null);
   }
 
-  return setUnmaskedValue(refCallback as UseMaskInputAntdReturn, unmaskedValue);
+  return setValueApi(refCallback as UseMaskInputAntdReturn, () => ref.current);
 }

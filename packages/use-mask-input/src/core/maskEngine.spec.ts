@@ -4,7 +4,7 @@ import {
 } from 'vitest';
 
 import {
-  applyMaskToElement, createMaskInstance, formatWithMask, unformatWithMask,
+  applyMaskToElement, createMaskInstance, formatWithMask, isValidWithMask, unformatWithMask,
 } from './maskEngine';
 
 type MaskInstance = ReturnType<typeof createMaskInstance>;
@@ -18,7 +18,7 @@ vi.mock('./inputmask', () => {
     mask: vi.fn(),
     options,
   }));
-  return { default: Object.assign(mockInputmask, { format: vi.fn(), unmask: vi.fn() }) };
+  return { default: Object.assign(mockInputmask, { format: vi.fn(), unmask: vi.fn(), isValid: vi.fn() }) };
 });
 
 describe('maskEngine', () => {
@@ -149,6 +149,24 @@ describe('maskEngine', () => {
         '999999',
         expect.objectContaining({ mask: '999-999', placeholder: '_' }),
       );
+    });
+  });
+
+  describe('isValidWithMask', () => {
+    it('delegates to Inputmask.isValid with the resolved alias options', () => {
+      const isValidFn = vi.fn().mockReturnValue(true);
+      vi.mocked(inputmask).isValid = isValidFn;
+
+      expect(isValidWithMask('123.456.789-00', 'cpf')).toBe(true);
+      expect(isValidFn).toHaveBeenCalledWith(
+        '123.456.789-00',
+        expect.objectContaining({ mask: '999.999.999-99' }),
+      );
+    });
+
+    it('coerces a non-boolean engine result to false', () => {
+      vi.mocked(inputmask).isValid = vi.fn().mockReturnValue(undefined);
+      expect(isValidWithMask('12', 'cpf')).toBe(false);
     });
   });
 

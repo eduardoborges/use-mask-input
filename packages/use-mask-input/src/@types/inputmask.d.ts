@@ -11,6 +11,8 @@
 
 interface InputmaskInstance {
   unmaskedvalue?: () => string;
+  /** True once every required mask position is filled; `undefined` for `repeat: '*'`. */
+  isComplete?: () => boolean | undefined;
   /** Resolved configuration, after alias defaults are merged with user options. */
   opts?: Record<string, unknown>;
   /** Detaches the mask from its element. Used by the Vue directive on unmount. */

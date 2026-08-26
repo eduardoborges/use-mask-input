@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 
 import { applyMaskToElement, resolveInputRef } from '../core';
-import { makeMaskCacheKey, removeMask, setPrevRef } from '../utils';
+import {
+  makeMaskCacheKey, removeMask, setPrevRef, setValueApi,
+} from '../utils';
 
 import type { InputRef } from 'antd';
 import type { RefCallback } from 'react';
@@ -12,6 +14,10 @@ import type {
 } from 'react-hook-form';
 
 import type { Mask, Options, UseHookFormMaskReturn } from '../types';
+
+type MaskedRefCallback = RefCallback<InputRef | null> & {
+  currentElement?: HTMLElement | null;
+};
 
 export type UseHookFormMaskAntdReturn<T extends FieldValues> = Omit<
   UseHookFormMaskReturn<T>,
@@ -33,7 +39,7 @@ export default function useHookFormMaskAntd<
   D & Options) | Options | D) => UseHookFormMaskAntdReturn<T>) {
   //
   return useMemo(() => {
-    const refCache = new Map<string, RefCallback<InputRef | null>>();
+    const refCache = new Map<string, MaskedRefCallback>();
 
     return (fieldName: Path<T>, mask: Mask, options?: (
       D & Options) | Options | D): UseHookFormMaskAntdReturn<T> => {
@@ -49,20 +55,23 @@ export default function useHookFormMaskAntd<
         // unmask. Remember the one we masked.
         let maskedElement: HTMLElement | null = null;
 
-        const refWithMask: RefCallback<InputRef | null> = (inputRef) => {
+        const refWithMask: MaskedRefCallback = (inputRef) => {
           const element = inputRef ? resolveInputRef(inputRef.input) : null;
           if (!element) removeMask(maskedElement);
           maskedElement = element;
+          refWithMask.currentElement = element;
           if (element) applyMaskToElement(element, mask, options as Options);
           if (ref) ref(element);
         };
         refCache.set(cacheKey, refWithMask);
       }
 
+      const maskedRef = refCache.get(cacheKey);
       const result = {
         ...registerReturn,
-        ref: refCache.get(cacheKey),
+        ref: maskedRef,
       } as UseHookFormMaskAntdReturn<T>;
+      setValueApi(result, () => maskedRef?.currentElement ?? null);
 
       setPrevRef(result, ref);
 

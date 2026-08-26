@@ -1,6 +1,6 @@
 import { applyMaskToElement } from '../core';
 import {
-  getUnmaskedValue, makeMaskCacheKey, removeMask, setPrevRef, setUnmaskedValue,
+  makeMaskCacheKey, removeMask, setPrevRef, setValueApi,
 } from '../utils';
 
 import type { RefCallback } from 'react';
@@ -42,7 +42,7 @@ export default function withHookFormMask(
       ...register,
       ref: null as unknown as RefCallback<HTMLElement | null>,
     } as UseHookFormMaskReturn<FieldValues>;
-    setUnmaskedValue(result, () => '');
+    setValueApi(result, () => null);
     setPrevRef(result, ref);
     return result;
   }
@@ -69,7 +69,7 @@ export default function withHookFormMask(
     ...register,
     ref: maskedRef,
   } as UseHookFormMaskReturn<FieldValues>;
-  setUnmaskedValue(result, () => getUnmaskedValue(maskedRef?.currentElement ?? null));
+  setValueApi(result, () => maskedRef?.currentElement ?? null);
 
   setPrevRef(result, ref);
 

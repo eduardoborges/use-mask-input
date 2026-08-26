@@ -49,6 +49,21 @@ export function unformatWithMask(value: string, mask: Mask, options?: Options): 
 }
 
 /**
+ * Whether a value satisfies the mask, without needing a mounted element.
+ * Useful inside schema validators (zod, yup, vee-validate rules) that only see
+ * the raw form value.
+ *
+ * @param value - The value to check, masked or unmasked
+ * @param mask - The mask pattern
+ * @param options - Optional configuration options
+ * @returns True when the value is a complete, valid entry for the mask
+ */
+export function isValidWithMask(value: string, mask: Mask, options?: Options): boolean {
+  const inputmaskInstance = moduleInterop(inputmask);
+  return inputmaskInstance.isValid(value, getMaskOptions(mask, options)) === true;
+}
+
+/**
  * Drops the native `maxlength` when the mask renders characters the user never types.
  *
  * A mask like `999.999.999-99` keeps its literals and placeholder in the value, so
