@@ -127,15 +127,14 @@ describe('useMaskInputAntd', () => {
 describe('useHookFormMaskAntd', () => {
   it('round trips autoUnmask through an antd-wrapped field', async () => {
     let form: UseFormReturn<Values> | undefined;
+    let field: ReturnType<ReturnType<typeof useHookFormMaskAntd<Values, never>>> | undefined;
 
     function Form() {
       const api = useForm<Values>({ defaultValues: { cpf: '' } });
       form = api;
       const registerWithMask = useHookFormMaskAntd(api.register);
-      return createElement(Input, {
-        ...registerWithMask('cpf', 'cpf', { autoUnmask: true }),
-        prefix: '#',
-      });
+      field = registerWithMask('cpf', 'cpf', { autoUnmask: true });
+      return createElement(Input, { ...field, prefix: '#' });
     }
 
     const input = mount(createElement(Form));
@@ -145,6 +144,8 @@ describe('useHookFormMaskAntd', () => {
 
     expect(displayed(input)).toBe('123.456.789-01');
     expect(form?.getValues('cpf')).toBe(CPF);
+    expect(field?.unmaskedValue()).toBe(CPF);
+    expect(field?.isComplete()).toBe(true);
   });
 
   it('registers the first delete after the user fills the field', async () => {

@@ -40,4 +40,6 @@ export type Input = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
 
 export interface UnmaskedValueApi {
   unmaskedValue: () => string;
+  /** Whether every required position of the mask is filled. */
+  isComplete: () => boolean;
 }

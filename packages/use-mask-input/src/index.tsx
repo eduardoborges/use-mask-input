@@ -7,7 +7,8 @@ export {
   withTanStackFormMask,
 } from './api';
 
-export { formatWithMask, unformatWithMask } from './core';
+export { formatWithMask, isValidWithMask, unformatWithMask } from './core';
+export { getUnmaskedValue, isMaskComplete } from './utils';
 
 export type {
   Input,

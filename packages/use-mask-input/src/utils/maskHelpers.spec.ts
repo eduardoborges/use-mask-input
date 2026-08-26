@@ -71,3 +71,25 @@ describe('maskHelpers', () => {
     });
   });
 });
+
+describe('isMaskComplete', () => {
+  it('is false without an element and true for an element with no mask', async () => {
+    const { isMaskComplete } = await import('./maskHelpers');
+    expect(isMaskComplete(null)).toBe(false);
+    expect(isMaskComplete(document.createElement('input'))).toBe(true);
+  });
+
+  it('tracks the real inputmask instance as the value fills the mask', async () => {
+    const { isMaskComplete } = await import('./maskHelpers');
+    const { applyMaskToElement } = await import('../core');
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+    applyMaskToElement(input, 'cpf');
+
+    input.inputmask?.setValue?.('123');
+    expect(isMaskComplete(input)).toBe(false);
+
+    input.inputmask?.setValue?.('12345678901');
+    expect(isMaskComplete(input)).toBe(true);
+  });
+});

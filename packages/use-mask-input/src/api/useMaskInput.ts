@@ -6,7 +6,7 @@ import { applyMaskToElement, resolveInputRef } from '../core';
 import withMask from './withMask';
 import isServer from '../utils/isServer';
 import {
-  getUnmaskedValue, makeMaskCacheKey, removeMask, sameOptions, setUnmaskedValue,
+  makeMaskCacheKey, removeMask, sameOptions, setValueApi,
 } from '../utils';
 
 import type {
@@ -34,7 +34,6 @@ export default function useMaskInput(props: UseMaskInputOptions): UseMaskInputRe
   const ref = useRef<HTMLInputElement | null>(null);
   const maskRef = useRef(mask);
   const optionsRef = useRef(options);
-  const unmaskedValue = useCallback(() => getUnmaskedValue(ref.current), []);
 
   const refCallback = useCallback((input: Input | null): void => {
     if (!input) {
@@ -95,8 +94,8 @@ export default function useMaskInput(props: UseMaskInputOptions): UseMaskInputRe
       // server doesn't have dom, so just do nothing
     }) as unknown as UseMaskInputReturn;
 
-    return setUnmaskedValue(noop, () => '');
+    return setValueApi(noop, () => null);
   }
 
-  return setUnmaskedValue(refCallback, unmaskedValue);
+  return setValueApi(refCallback, () => ref.current);
 }

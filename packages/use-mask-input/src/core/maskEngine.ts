@@ -49,6 +49,34 @@ export function unformatWithMask(value: string, mask: Mask, options?: Options): 
 }
 
 /**
+ * Whether a value is a complete, valid entry for the mask, without needing a
+ * mounted element. Useful inside schema validators (zod, yup, vee-validate
+ * rules) that only see the raw form value.
+ *
+ * Accepts the value masked or unmasked. `Inputmask.isValid` on its own only
+ * accepts the exact masked string, so the value is run through `format` first;
+ * the answer then matches what `isComplete()` reports on a field holding it.
+ *
+ * ponytail: the engine drops input it cannot place, the same way the field
+ * does, so `'123456789012'` formats to a full cpf and passes. Length limits
+ * belong in the schema. A non-empty value that formats to nothing is rejected
+ * here, or `numeric` would call `'abc'` valid.
+ *
+ * @param value - The value to check, masked or unmasked
+ * @param mask - The mask pattern
+ * @param options - Optional configuration options
+ * @returns True when the value is a complete, valid entry for the mask
+ */
+export function isValidWithMask(value: string, mask: Mask, options?: Options): boolean {
+  const inputmaskInstance = moduleInterop(inputmask);
+  const maskOptions = getMaskOptions(mask, options);
+  const formatted = inputmaskInstance.format(value, maskOptions);
+  if (value !== '' && formatted === '') return false;
+
+  return inputmaskInstance.isValid(formatted, maskOptions) === true;
+}
+
+/**
  * Drops the native `maxlength` when the mask renders characters the user never types.
  *
  * A mask like `999.999.999-99` keeps its literals and placeholder in the value, so

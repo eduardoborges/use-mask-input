@@ -27,6 +27,7 @@ const createRegister = (
   onBlur: vi.fn(),
   name: 'phone',
   unmaskedValue: vi.fn(() => ''),
+  isComplete: vi.fn(() => false),
   ...overrides,
 });
 

@@ -1,7 +1,8 @@
 export { default as vMaskInput } from './directive';
 export { default as useMaskInput } from './useMaskInput';
 
-export { formatWithMask, unformatWithMask } from '../core';
+export { formatWithMask, isValidWithMask, unformatWithMask } from '../core';
+export { getUnmaskedValue, isMaskComplete } from '../utils';
 
 export type {
   Mask,

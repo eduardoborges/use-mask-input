@@ -1,6 +1,6 @@
 import applyMask from './applyMask';
 import resolveVueElement from './resolveVueElement';
-import { getUnmaskedValue } from '../utils';
+import { getUnmaskedValue, isMaskComplete } from '../utils';
 import isServer from '../utils/isServer';
 
 import type {
@@ -39,6 +39,7 @@ export default function useMaskInput(mask: Mask, options?: Options): UseMaskInpu
         // server doesn't have dom, so just do nothing
       },
       unmaskedValue: () => '',
+      isComplete: () => false,
     };
   }
 
@@ -52,5 +53,6 @@ export default function useMaskInput(mask: Mask, options?: Options): UseMaskInpu
   return {
     maskRef,
     unmaskedValue: () => getUnmaskedValue(element),
+    isComplete: () => isMaskComplete(element),
   };
 }

@@ -32,4 +32,6 @@ export interface UseMaskInputReturn {
    * value the template should track, bind `v-model` with `autoUnmask: true`.
    */
   unmaskedValue: () => string;
+  /** Whether every required position of the mask is filled. Not reactive, same as `unmaskedValue`. */
+  isComplete: () => boolean;
 }

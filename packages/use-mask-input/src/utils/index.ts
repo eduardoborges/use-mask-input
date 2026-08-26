@@ -3,9 +3,10 @@ export { default as isServer } from './isServer';
 export { default as moduleInterop } from './moduleInterop';
 export {
   getUnmaskedValue,
+  isMaskComplete,
   makeMaskCacheKey,
   removeMask,
   sameOptions,
   setPrevRef,
-  setUnmaskedValue,
+  setValueApi,
 } from './maskHelpers';

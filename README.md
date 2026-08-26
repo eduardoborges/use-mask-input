@@ -218,8 +218,18 @@ There is deliberately no `<MaskInput>` component and no vee-validate helper, bec
 | `useHookFormMaskAntd` | Hook. `useHookFormMask` for Ant Design. |
 | `formatWithMask` | Function. Formats a raw value using a mask, without a mounted element. |
 | `unformatWithMask` | Function. Removes the mask from a formatted value, without a mounted element. |
+| `isValidWithMask` | Function. Whether a value, masked or raw, is a complete valid entry for a mask. For schema validators. |
+| `getUnmaskedValue` | Function. Reads the unmasked value off an element, e.g. `event.target` in `onChange`. |
+| `isMaskComplete` | Function. Whether the mask on an element is fully filled. |
 | `vMaskInput` | Vue directive. `use-mask-input/vue`. The Vue default choice. |
-| `useMaskInput` (Vue) | Composable. `use-mask-input/vue`. Returns `{ maskRef, unmaskedValue }`. |
+| `useMaskInput` (Vue) | Composable. `use-mask-input/vue`. Returns `{ maskRef, unmaskedValue, isComplete }`. |
+
+Every hook and `with*` helper also carries `unmaskedValue()` and `isComplete()` on what it returns:
+
+```tsx
+const cpf = useMaskInput({ mask: 'cpf' });
+<input ref={cpf} onChange={(e) => console.log(getUnmaskedValue(e.target), cpf.isComplete())} />
+```
 
 ## Built-in Aliases
 

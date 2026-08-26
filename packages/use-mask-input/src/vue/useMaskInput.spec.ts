@@ -26,21 +26,25 @@ describe('useMaskInput', () => {
     expect(input.inputmask?.opts?.prefix).toBe('R$ ');
   });
 
-  it('returns the unmasked value', () => {
-    const { maskRef, unmaskedValue } = useMaskInput('cpf');
+  it('returns the unmasked value and completeness', () => {
+    const { maskRef, unmaskedValue, isComplete } = useMaskInput('cpf');
     const input = document.createElement('input');
     document.body.appendChild(input);
 
     maskRef(input);
-    input.inputmask?.setValue?.('12345678901');
+    input.inputmask?.setValue?.('123');
+    expect(isComplete()).toBe(false);
 
+    input.inputmask?.setValue?.('12345678901');
     expect(input.value).toBe('123.456.789-01');
     expect(unmaskedValue()).toBe('12345678901');
+    expect(isComplete()).toBe(true);
   });
 
-  it('returns an empty string before the ref is attached', () => {
-    const { unmaskedValue } = useMaskInput('cpf');
+  it('returns an empty string and incomplete before the ref is attached', () => {
+    const { unmaskedValue, isComplete } = useMaskInput('cpf');
     expect(unmaskedValue()).toBe('');
+    expect(isComplete()).toBe(false);
   });
 
   it('clears its element when the ref detaches on unmount', () => {
