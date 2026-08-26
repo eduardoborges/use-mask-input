@@ -12,12 +12,13 @@ describe('useMaskInput server-side', () => {
     vi.resetModules();
   });
 
-  it('returns a no-op ref and an empty unmasked value', async () => {
+  it('returns a no-op ref, an empty unmasked value and incomplete', async () => {
     const { default: useMaskInput } = await import('./useMaskInput');
-    const { maskRef, unmaskedValue } = useMaskInput('cpf');
+    const { maskRef, unmaskedValue, isComplete } = useMaskInput('cpf');
 
     expect(typeof maskRef).toBe('function');
     expect(unmaskedValue()).toBe('');
+    expect(isComplete()).toBe(false);
   });
 
   it('does not mask when the ref is called on the server', async () => {
