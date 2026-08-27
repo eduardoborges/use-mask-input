@@ -1,5 +1,8 @@
 ---
 sidebar_position: 4
+title: "TanStack Form input masks"
+sidebar_label: "TanStack Form"
+description: "Mask TanStack Form fields with useTanStackFormMask, or withTanStackFormMask when the field is wrapped in React.memo."
 ---
 
 # TanStack Form Integration

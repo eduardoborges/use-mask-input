@@ -1,5 +1,8 @@
 ---
 sidebar_position: 3
+title: "Ant Design input masks"
+sidebar_label: "Ant Design"
+description: "Mask Ant Design Input and Form fields. Dedicated hooks unwrap Ant Design's InputRef for you, so masks work without touching the component internals."
 ---
 
 # Ant Design Integration
@@ -312,7 +315,7 @@ function AntdForm() {
 
 ## API Reference
 
-For full API documentation of all exports (including standard hooks, higher-order functions, and types), see the **[API Reference](./api-reference)** page.
+For full API documentation of all exports (including standard hooks, higher-order functions, and types), see the **[API Reference](/api-reference)** page.
 
 Below is a quick reference for the Ant Design-specific hooks.
 
@@ -402,7 +405,7 @@ function CreditCardInput() {
 
 ## Next Steps
 
-- Explore [mask types](./tutorial-basics/static-mask)
-- Check out [all available aliases](./tutorial-basics/alias-mask)
-- Learn about [optional masks](./tutorial-basics/optional-mask)
-- Discover [dynamic masks](./tutorial-basics/dynamic-mask)
+- Explore [mask types](/tutorial-basics/static-mask)
+- Check out [all available aliases](/tutorial-basics/alias-mask)
+- Learn about [optional masks](/tutorial-basics/optional-mask)
+- Discover [dynamic masks](/tutorial-basics/dynamic-mask)

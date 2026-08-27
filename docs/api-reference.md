@@ -1,5 +1,8 @@
 ---
 sidebar_position: 2
+title: "API reference"
+sidebar_label: "API Reference"
+description: "Every export of use-mask-input: useMaskInput, withMask, useHookFormMask, useTanStackFormMask, the Vue directive vMaskInput, options and built-in aliases."
 ---
 
 # API Reference
@@ -416,7 +419,7 @@ function PhoneInput() {
 }
 ```
 
-See the full [Ant Design Integration](./antd) guide for Form.Item, useWatch, and validation examples.
+See the full [Ant Design Integration](/antd) guide for Form.Item, useWatch, and validation examples.
 
 ---
 

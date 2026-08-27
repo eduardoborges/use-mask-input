@@ -1,5 +1,6 @@
 ---
 sidebar_position: 100
+description: "Machine-readable discovery files published by this site: robots.txt, llms.txt, llms-full.txt and /.well-known/ endpoints for crawlers and AI agents."
 ---
 
 # Agent discovery

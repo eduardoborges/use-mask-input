@@ -1,5 +1,8 @@
 ---
 sidebar_position: 1
+title: "Static masks"
+sidebar_label: "Static Mask"
+description: "Masks with a fixed pattern, the most common kind. Learn the mask characters and how to format phone numbers, dates and documents."
 ---
 
 # Static Mask

@@ -1,5 +1,8 @@
 ---
 sidebar_position: 4
+title: "Alias masks"
+sidebar_label: "Alias Mask"
+description: "Ready-made masks for dates, currency, email, CPF, CNPJ and more. Pass the alias name instead of writing the pattern by hand."
 ---
 
 # Alias Mask

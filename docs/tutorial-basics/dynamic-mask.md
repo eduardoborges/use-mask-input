@@ -1,5 +1,8 @@
 ---
 sidebar_position: 3
+title: "Dynamic masks"
+sidebar_label: "Dynamic Mask"
+description: "Use curly braces to repeat parts of a mask, for inputs whose length varies such as emails and variable-length numbers."
 ---
 
 # Dynamic Mask
