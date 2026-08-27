@@ -1,5 +1,12 @@
 # vue-project
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [dcca455]
+  - use-mask-input@3.14.1
+
 ## 0.0.3
 
 ### Patch Changes
