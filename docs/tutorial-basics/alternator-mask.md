@@ -1,5 +1,8 @@
 ---
 sidebar_position: 5
+title: "Alternator masks"
+sidebar_label: "Alternator Mask"
+description: "Accept several patterns in one field with the pipe character, so a single input matches any of the masks you list."
 ---
 
 # Alternator Mask

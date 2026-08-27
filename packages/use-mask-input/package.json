@@ -4,6 +4,7 @@
   "private": false,
   "description": "Input masks for React and Vue 3. Works with React Hook Form, TanStack Form, vee-validate, and Ant Design.",
   "license": "MIT",
+  "homepage": "https://use-mask-input.eduardoborges.dev",
   "author": "Eduardo Borges<euduardoborges@gmail.com>",
   "type": "module",
   "repository": {

@@ -403,7 +403,7 @@ function Stats() {
 export default function Home(): React.JSX.Element {
   return (
     <Layout
-      title="use-mask-input — Input masks for React and Vue"
+      title="Input masks for React and Vue 3"
       description="Input masks for React and Vue 3. Works with plain inputs, React Hook Form, TanStack Form, vee-validate, shadcn/ui and Ant Design."
     >
       <main className={styles.homepage}>

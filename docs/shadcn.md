@@ -1,5 +1,8 @@
 ---
 sidebar_position: 5
+title: "shadcn/ui input masks"
+sidebar_label: "shadcn/ui"
+description: "Mask shadcn/ui Input fields with no adapter. The component forwards a native input ref, so the base hooks handle it directly."
 ---
 
 # shadcn/ui Integration

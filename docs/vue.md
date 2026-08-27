@@ -1,10 +1,13 @@
 ---
 sidebar_position: 6
+title: "Vue 3 input masks"
+sidebar_label: "Vue 3"
+description: "Mask inputs in Vue 3 with the vMaskInput directive or the useMaskInput composable, including vee-validate forms. Same mask engine and aliases as the React API."
 ---
 
 # Vue 3
 
-**use-mask-input** ships a Vue 3 entry point alongside the React one. It reuses the same mask engine and the same [built-in aliases](./api-reference.md), so a `cpf` mask behaves identically in both frameworks.
+**use-mask-input** ships a Vue 3 entry point alongside the React one. It reuses the same mask engine and the same [built-in aliases](/api-reference.md), so a `cpf` mask behaves identically in both frameworks.
 
 ```ts
 import { vMaskInput, useMaskInput } from 'use-mask-input/vue';
@@ -171,7 +174,7 @@ Aliases carry defaults that your options override individually. This keeps the a
 <input v-mask-input="{ mask: 'brl-currency', options: { prefix: 'US$ ' } }" />
 ```
 
-Anything that is not a known alias is treated as a raw pattern, so `'(99) 99999-9999'` and `'AAA-9A99'` work directly. Full option list in the [API Reference](./api-reference#options).
+Anything that is not a known alias is treated as a raw pattern, so `'(99) 99999-9999'` and `'AAA-9A99'` work directly. Full option list in the [API Reference](/api-reference#options).
 
 ## TypeScript
 

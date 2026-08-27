@@ -26,6 +26,10 @@ const config: Config = {
   organizationName: 'eduardoborges', // Usually your GitHub org/user name.
   projectName: 'use-mask-input', // Usually your repo name.
 
+  // Cloudflare Pages 308-redirects /path -> /path/. Match it so sitemap,
+  // canonical and the served URL all agree.
+  trailingSlash: true,
+
   onBrokenLinks: 'throw',
 
   // Even if you don't use internationalization, you can use this field to set

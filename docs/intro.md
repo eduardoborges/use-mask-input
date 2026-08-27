@@ -1,5 +1,8 @@
 ---
 sidebar_position: 1
+title: "use-mask-input — input masks for React and Vue 3"
+sidebar_label: "use-mask-input"
+description: "Add input masks to React and Vue 3 forms: CPF, phone, currency, date. One hook, no controlled state, works with React Hook Form and vee-validate."
 ---
 
 # use-mask-input
@@ -105,7 +108,7 @@ function MyForm() {
 }
 ```
 
-See the full [TanStack Form Integration](./tanstack-form) guide.
+See the full [TanStack Form Integration](/tanstack-form) guide.
 
 ## With Ant Design
 
@@ -119,7 +122,7 @@ function EmailInput() {
 }
 ```
 
-See the full [Ant Design Integration](./antd) guide.
+See the full [Ant Design Integration](/antd) guide.
 
 ## With shadcn/ui
 
@@ -135,7 +138,7 @@ function CepField() {
 }
 ```
 
-See the full [shadcn/ui Integration](./shadcn) guide.
+See the full [shadcn/ui Integration](/shadcn) guide.
 
 ## With Vue 3
 
@@ -155,7 +158,7 @@ const cpf = ref('');
 </template>
 ```
 
-`v-model` works without an adapter, and so does vee-validate. See the full [Vue 3](./vue) guide.
+`v-model` works without an adapter, and so does vee-validate. See the full [Vue 3](/vue) guide.
 
 ## APIs
 
@@ -163,36 +166,36 @@ const cpf = ref('');
 
 | API | When to use |
 |-----|-------------|
-| [`useMaskInput`](./api-reference#usemaskinput) | Default choice. Returns a ref callback. |
-| [`useHookFormMask`](./api-reference#usehookformmask) | Wraps React Hook Form's `register`. |
-| [`useTanStackFormMask`](./api-reference#usetanstackformmask) | Wraps TanStack Form input props with mask support. |
-| [`withMask`](./api-reference#withmask) | Non-hook ref callback. **Requires `React.memo`.** |
-| [`withHookFormMask`](./api-reference#withhookformmask) | Non-hook mask for registered fields. **Requires `React.memo`.** |
-| [`withTanStackFormMask`](./api-reference#withtanstackformmask) | Non-hook mask for TanStack input props. **Requires `React.memo`.** |
-| [`useMaskInputAntd`](./api-reference#usemaskinputantd) | `useMaskInput` for Ant Design. |
-| [`useHookFormMaskAntd`](./api-reference#usehookformmaskantd) | `useHookFormMask` for Ant Design. |
+| [`useMaskInput`](/api-reference#usemaskinput) | Default choice. Returns a ref callback. |
+| [`useHookFormMask`](/api-reference#usehookformmask) | Wraps React Hook Form's `register`. |
+| [`useTanStackFormMask`](/api-reference#usetanstackformmask) | Wraps TanStack Form input props with mask support. |
+| [`withMask`](/api-reference#withmask) | Non-hook ref callback. **Requires `React.memo`.** |
+| [`withHookFormMask`](/api-reference#withhookformmask) | Non-hook mask for registered fields. **Requires `React.memo`.** |
+| [`withTanStackFormMask`](/api-reference#withtanstackformmask) | Non-hook mask for TanStack input props. **Requires `React.memo`.** |
+| [`useMaskInputAntd`](/api-reference#usemaskinputantd) | `useMaskInput` for Ant Design. |
+| [`useHookFormMaskAntd`](/api-reference#usehookformmaskantd) | `useHookFormMask` for Ant Design. |
 
 ### Vue
 
 | API | When to use |
 |-----|-------------|
-| [`vMaskInput`](./api-reference#vmaskinput) | Default choice. A directive, usable as `v-mask-input`. |
-| [`useMaskInput` (Vue)](./api-reference#usemaskinput-vue) | Composable, for imperative reads and `unmaskedValue()`. |
+| [`vMaskInput`](/api-reference#vmaskinput) | Default choice. A directive, usable as `v-mask-input`. |
+| [`useMaskInput` (Vue)](/api-reference#usemaskinput-vue) | Composable, for imperative reads and `unmaskedValue()`. |
 
 ### Both
 
 | API | When to use |
 |-----|-------------|
-| [`formatWithMask`](./api-reference#formatwithmask) | Format a stored value without a mounted element. |
-| [`unformatWithMask`](./api-reference#unformatwithmask) | Strip a mask from a formatted value. |
+| [`formatWithMask`](/api-reference#formatwithmask) | Format a stored value without a mounted element. |
+| [`unformatWithMask`](/api-reference#unformatwithmask) | Strip a mask from a formatted value. |
 
-Full signatures and parameters in the [API Reference](./api-reference).
+Full signatures and parameters in the [API Reference](/api-reference).
 
 ## Mask Types
 
-- [Static Mask](./tutorial-basics/static-mask): fixed patterns like `999-999`
-- [Dynamic Mask](./tutorial-basics/dynamic-mask): variable-length patterns
-- [Optional Mask](./tutorial-basics/optional-mask): masks with optional parts
-- [Alias Mask](./tutorial-basics/alias-mask): built-in presets (`email`, `currency`, `datetime`, ...)
-- [Alternator Mask](./tutorial-basics/alternator-mask): multiple patterns
-- [Preprocessing Mask](./tutorial-basics/preprocessing-mask): dynamic masks with functions
+- [Static Mask](/tutorial-basics/static-mask): fixed patterns like `999-999`
+- [Dynamic Mask](/tutorial-basics/dynamic-mask): variable-length patterns
+- [Optional Mask](/tutorial-basics/optional-mask): masks with optional parts
+- [Alias Mask](/tutorial-basics/alias-mask): built-in presets (`email`, `currency`, `datetime`, ...)
+- [Alternator Mask](/tutorial-basics/alternator-mask): multiple patterns
+- [Preprocessing Mask](/tutorial-basics/preprocessing-mask): dynamic masks with functions

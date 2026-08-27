@@ -1,5 +1,8 @@
 ---
 sidebar_position: 6
+title: "Preprocessing masks"
+sidebar_label: "Preprocessing Mask"
+description: "Define the mask as a function to pick the pattern at runtime, for conditional logic or masks loaded dynamically."
 ---
 
 # Preprocessing Mask

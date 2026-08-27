@@ -1,5 +1,8 @@
 ---
 sidebar_position: 2
+title: "Optional masks"
+sidebar_label: "Optional Mask"
+description: "Use square brackets to make parts of a mask optional, so one pattern accepts phone numbers with or without an area code."
 ---
 
 # Optional Mask
