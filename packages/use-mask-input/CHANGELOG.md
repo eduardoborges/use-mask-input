@@ -1,3 +1,9 @@
+## 3.14.1
+
+### Patch Changes
+
+- dcca455: Add the `homepage` field to `package.json` so the npm page links to the documentation site.
+
 ## 3.14.0
 
 ### Minor Changes
