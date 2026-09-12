@@ -12,7 +12,9 @@
 
 ---
 
-**[Documentation](http://use-mask-input.eduardoborges.dev)** · **[API Reference](http://use-mask-input.eduardoborges.dev/api-reference)** · **[TanStack Form](http://use-mask-input.eduardoborges.dev/tanstack-form)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
+**[Documentation](https://use-mask-input.eduardoborges.dev)** · **[API Reference](https://use-mask-input.eduardoborges.dev/api-reference)** · **[TanStack Form](https://use-mask-input.eduardoborges.dev/tanstack-form)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
+
+> This README covers the common cases. The full guides, every option and the complete API are on the [documentation site](https://use-mask-input.eduardoborges.dev).
 
 ## Install
 
@@ -30,6 +32,58 @@ function PhoneInput() {
   return <input ref={ref} />;
 }
 ```
+
+### Mask syntax
+
+| Token | Accepts | Example |
+|-------|---------|---------|
+| `9` | A digit | `'999.999.999-99'` |
+| `a` | A letter | `'aa-9999'` |
+| `A` | A letter, uppercased | `'AAA-9999'` |
+| `*` | A letter or a digit | `'***-****'` |
+| `[ ]` | An optional part | `'99 [9]9999-9999'` |
+| `{n}`, `{n,m}` | The previous token, n times or n to m times | `'9{1,5}'` |
+| An array | Whichever mask fits the input | `['(99) 9999-9999', '(99) 99999-9999']` |
+
+Each one has a guide on the site: [static](https://use-mask-input.eduardoborges.dev/tutorial-basics/static-mask), [optional](https://use-mask-input.eduardoborges.dev/tutorial-basics/optional-mask), [dynamic](https://use-mask-input.eduardoborges.dev/tutorial-basics/dynamic-mask), [alternator](https://use-mask-input.eduardoborges.dev/tutorial-basics/alternator-mask) and [preprocessing](https://use-mask-input.eduardoborges.dev/tutorial-basics/preprocessing-mask) masks.
+
+### Numbers and currency
+
+The numeric aliases (`numeric`, `integer`, `decimal`, `currency`, `brl-currency`, `percentage`) format while the user types. Set the separators and the decimal places in `options`:
+
+```tsx
+function PriceInput() {
+  const ref = useMaskInput({
+    mask: 'decimal',
+    options: { radixPoint: ',', groupSeparator: '.', digits: 2 },
+  });
+  return <input ref={ref} />; // typing 1234567,89 shows 1.234.567,89
+}
+```
+
+The unmasked value keeps the radix point you chose (`'1234,56'`). For a real number, add `autoUnmask` and `unmaskAsNumber`. The input below shows `R$ 1.234,56` while `input.value` is the number `1234.56`:
+
+```tsx
+const ref = useMaskInput({
+  mask: 'brl-currency',
+  options: { autoUnmask: true, unmaskAsNumber: true },
+});
+```
+
+To follow a locale, read the separators from `Intl.NumberFormat`:
+
+```tsx
+const parts = new Intl.NumberFormat('de-DE').formatToParts(1000.1);
+const groupSeparator = parts.find((p) => p.type === 'group')?.value; // '.'
+const radixPoint = parts.find((p) => p.type === 'decimal')?.value; // ','
+
+function PriceInput() {
+  const ref = useMaskInput({ mask: 'decimal', options: { groupSeparator, radixPoint } });
+  return <input ref={ref} />;
+}
+```
+
+More numeric examples, including `min`/`max` and percentages, are in the [alias guide](https://use-mask-input.eduardoborges.dev/tutorial-basics/alias-mask).
 
 ### With React Hook Form
 
@@ -231,13 +285,28 @@ const cpf = useMaskInput({ mask: 'cpf' });
 <input ref={cpf} onChange={(e) => console.log(getUnmaskedValue(e.target), cpf.isComplete())} />
 ```
 
+The formatters need no mounted element, so they also work in table cells and schema validators:
+
+```ts
+import { formatWithMask, unformatWithMask, isValidWithMask } from 'use-mask-input';
+
+formatWithMask('12345678901', 'cpf'); // '123.456.789-01'
+unformatWithMask('123.456.789-01', 'cpf'); // '12345678901'
+isValidWithMask('123.456', 'cpf'); // false
+formatWithMask('1234,5', 'brl-currency'); // 'R$ 1.234,50'
+```
+
+Signatures and every option are in the [API Reference](https://use-mask-input.eduardoborges.dev/api-reference).
+
 ## Built-in Aliases
 
 `cpf` · `cnpj` · `cep` · `phone-br` · `date-br` · `plate-br` · `br-bank-account` · `br-bank-agency` · `currency` · `brl-currency` · `credit-card` · `time` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
 
+Examples and options for each alias are in the [alias guide](https://use-mask-input.eduardoborges.dev/tutorial-basics/alias-mask).
+
 ## Works With
 
-- **TanStack Form** (`useTanStackFormMask`, `withTanStackFormMask`). See the [TanStack Form guide](http://use-mask-input.eduardoborges.dev/tanstack-form).
+- **TanStack Form** (`useTanStackFormMask`, `withTanStackFormMask`). See the [TanStack Form guide](https://use-mask-input.eduardoborges.dev/tanstack-form).
 - React Hook Form
 - Ant Design (`use-mask-input/antd`)
 - React Final Form
