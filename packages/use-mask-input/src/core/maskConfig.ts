@@ -7,7 +7,8 @@ const ALIAS_MASKS: Record<string, InputmaskOptions> = {
   datetime: { alias: 'datetime' },
   email: { alias: 'email', placeholder: '' },
   numeric: { alias: 'numeric', placeholder: '' },
-  currency: { alias: 'currency', prefix: '$ ', placeholder: '' },
+  // No empty placeholder: with fixed decimals, inputmask drops the integer part ('$ .56')
+  currency: { alias: 'currency', prefix: '$ ' },
   decimal: { alias: 'decimal', placeholder: '' },
   integer: { alias: 'integer', placeholder: '' },
   percentage: { alias: 'percentage', placeholder: ' %', suffix: ' %' },

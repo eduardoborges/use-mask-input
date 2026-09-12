@@ -50,7 +50,6 @@ describe('maskConfig', () => {
       expect(options).toEqual({
         alias: 'currency',
         prefix: '$ ',
-        placeholder: '',
         jitMasking: false,
       });
     });
