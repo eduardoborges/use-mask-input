@@ -1,3 +1,10 @@
+## 3.14.2
+
+### Patch Changes
+
+- fe22604: Fix the `currency` alias dropping the integer part, so `1234.56` formatted as `$ .56`. The alias no longer sets an empty placeholder, which inputmask cannot handle when the number of decimals is fixed.
+- 6b6479d: Expand the README with the mask syntax, number and currency formatting, and the standalone formatters, and point to the documentation site for the full guides.
+
 ## 3.14.1
 
 ### Patch Changes
