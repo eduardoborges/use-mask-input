@@ -9,21 +9,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.7.1",
-    "antd": "^6.5.4",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-hook-form": "7.85.0",
+    "@hookform/resolvers": "^5.9.1",
+    "antd": "^6.6.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-hook-form": "7.89.0",
     "use-mask-input": "workspace:*",
-    "zod": "^4.4.3"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/node": "^25.9.5",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
-    "@vitejs/plugin-react": "^6.0.5",
+    "@types/node": "^25.9.9",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
     "oxlint": "1.77.0",
     "typescript": "~6.0.3",
-    "vite": "^8.2.1"
+    "vite": "^8.3.4"
   }
 }

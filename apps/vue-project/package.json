@@ -11,15 +11,15 @@
   "dependencies": {
     "use-mask-input": "workspace:*",
     "vee-validate": "^4.15.1",
-    "vue": "^3.5.41"
+    "vue": "^3.5.43"
   },
   "devDependencies": {
-    "@types/node": "^25.9.5",
-    "@vitejs/plugin-vue": "^6.0.8",
+    "@types/node": "^25.9.9",
+    "@vitejs/plugin-vue": "^6.0.9",
     "@vue/tsconfig": "^0.9.1",
     "oxlint": "1.77.0",
     "typescript": "~6.0.3",
-    "vite": "^8.2.1",
-    "vue-tsc": "^3.3.9"
+    "vite": "^8.3.4",
+    "vue-tsc": "^3.3.12"
   }
 }
