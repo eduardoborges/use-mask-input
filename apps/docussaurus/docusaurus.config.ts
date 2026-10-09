@@ -2,6 +2,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import path from 'path';
+import { version } from '../../packages/use-mask-input/package.json';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -150,6 +151,21 @@ const config: Config = {
   } satisfies Preset.ThemeConfig,
 
   plugins: [
+    [
+      'docusaurus-plugin-llms',
+      {
+        docsDir: '../../docs',
+        version,
+        description:
+          'Input masks for React and Vue 3, built on Inputmask. Works with plain React, React Hook Form, TanStack Form, Ant Design, and Vue 3 with vee-validate. TypeScript-first and SSR safe.',
+        rootContent: 'Install with `npm install use-mask-input`. Each page below is also served as Markdown at the same path with a `.md` extension.',
+        includeOrder: ['intro.md', 'api-reference.md', 'tutorial-basics/*', 'vue.md', '*'],
+        includeUnmatchedLast: true,
+        excludeImports: true,
+        removeDuplicateHeadings: true,
+        generateMarkdownFiles: true,
+      },
+    ],
     function (context, options) {
       return {
         name: 'webpack-alias-plugin',

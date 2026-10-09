@@ -46,10 +46,9 @@ There is no `/.well-known/oauth-authorization-server` because this hostname does
 
 The homepage registers WebMCP tools when `navigator.modelContext` is available (Chrome experimental). See `apps/docussaurus/src/components/WebMcpTools.tsx`.
 
-## Markdown for Agents (Cloudflare)
+## Markdown pages
 
-HTML-to-markdown negotiation (`Accept: text/markdown`) is a **zone-level Cloudflare** feature. Enable **Markdown for Agents** under [AI Crawl Control](https://dash.cloudflare.com/) for the zone that serves `use-mask-input.eduardoborges.dev`. Disable managed robots.txt in the dashboard if it overrides the static file from this repo.
-
+Every page is also published as Markdown at the same path with `.md` appended, for example [`/intro.md`](https://use-mask-input.eduardoborges.dev/intro.md). `docusaurus-plugin-llms` generates these files, plus `llms.txt` and `llms-full.txt`, from `docs/` at build time, so they stay in sync with the docs.
 
 ## LLM context
 
