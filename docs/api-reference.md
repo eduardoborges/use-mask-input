@@ -7,7 +7,7 @@ description: "Every export of use-mask-input: useMaskInput, withMask, useHookFor
 
 # API Reference
 
-**use-mask-input** has two entry points. `use-mask-input` holds the React API: six main exports plus two Ant Design hooks. `use-mask-input/vue` holds the Vue 3 API: a directive and a composable. Both share the same mask engine, the same aliases, and the two standalone formatting utilities.
+**use-mask-input** has two entry points. `use-mask-input` holds the React API: six main exports plus two Ant Design hooks. `use-mask-input/vue` holds the Vue 3 API: a directive and a composable. Both share the same mask engine, the same aliases, and the standalone utilities.
 
 ### React, from `use-mask-input`
 
@@ -36,6 +36,9 @@ description: "Every export of use-mask-input: useMaskInput, withMask, useHookFor
 |-----|------|-------------|
 | [`formatWithMask`](#formatwithmask) | Function | Both |
 | [`unformatWithMask`](#unformatwithmask) | Function | Both |
+| [`isValidWithMask`](#isvalidwithmask) | Function | Both |
+| [`getUnmaskedValue`](#getunmaskedvalue) | Function | Both |
+| [`isMaskComplete`](#ismaskcomplete) | Function | Both |
 
 ---
 
@@ -66,7 +69,7 @@ function useMaskInput(props: {
 **Returns**
 
 A stable ref callback. Attach it to any `<input>` (or compatible element) via the `ref` prop.
-The returned callback also exposes `unmaskedValue()` so you can read the current unmasked value directly from the hook result.
+The returned callback also exposes `unmaskedValue()` and `isComplete()`, so you can read the unmasked value or check whether the mask is filled straight from the hook result. `isComplete()` returns `true` once every required position is filled, and `false` before the input mounts.
 
 **Example**
 
@@ -107,7 +110,7 @@ function useHookFormMask<T extends FieldValues>(
 **Returns**
 
 A function with the signature `(fieldName, mask, options?) => { ref, name, onChange, onBlur, ... }`. Use it by spreading the result onto your input.
-The returned object also exposes `unmaskedValue()` for the resolved field.
+The returned object also exposes `unmaskedValue()` and `isComplete()` for the resolved field.
 
 **Example**
 
@@ -229,7 +232,7 @@ function withMask(
 **Returns**
 
 A ref callback function to pass to an element's `ref` prop.
-The returned callback also exposes `unmaskedValue()`.
+The returned callback also exposes `unmaskedValue()` and `isComplete()`.
 
 **Caching behavior**: when called without `options`, the callback is cached by mask key so the same function identity is returned for the same mask. When `options` is provided, a new callback is created each call, so `memo` is needed.
 
@@ -299,7 +302,7 @@ function withHookFormMask(
 **Returns**
 
 A new register return object with the `ref` replaced by a mask-applying ref callback. Spread it onto your input.
-The returned object also exposes `unmaskedValue()`.
+The returned object also exposes `unmaskedValue()` and `isComplete()`.
 
 **Example**
 
@@ -405,7 +408,7 @@ function useMaskInputAntd(props: {
 **Returns**
 
 A stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element.
-The returned callback also exposes `unmaskedValue()`.
+The returned callback also exposes `unmaskedValue()` and `isComplete()`.
 
 **Example**
 
@@ -547,6 +550,7 @@ Composable form, for imperative reads and for a ref you can hold.
 function useMaskInput(mask: Mask, options?: Options): {
   maskRef: (target: MaskRefTarget) => void;
   unmaskedValue: () => string;
+  isComplete: () => boolean;
 }
 ```
 
@@ -563,6 +567,7 @@ function useMaskInput(mask: Mask, options?: Options): {
 |------|------|-------------|
 | `maskRef` | `(target) => void` | Ref callback. Bind with `:ref="maskRef"`. |
 | `unmaskedValue` | `() => string` | The current raw value, or `''` before mount. |
+| `isComplete` | `() => boolean` | Whether every required position of the mask is filled. `false` before mount. |
 
 ```html
 <script setup>
@@ -581,7 +586,7 @@ function submit() {
 </template>
 ```
 
-`unmaskedValue()` is **not reactive**. Calling it in a template renders once and never updates, because reading the DOM registers no reactive dependency. Use it from event handlers; for a value the template tracks, use `v-model` with `autoUnmask`.
+`unmaskedValue()` and `isComplete()` are **not reactive**. Calling it in a template renders once and never updates, because reading the DOM registers no reactive dependency. Use it from event handlers; for a value the template tracks, use `v-model` with `autoUnmask`.
 
 The directive already covers wrapper components, so reach for the composable when you specifically need `unmaskedValue()` or an imperative handle.
 
@@ -610,7 +615,7 @@ This is what makes PrimeVue, Element Plus and Ant Design Vue work without a dedi
 
 ## Utilities
 
-`formatWithMask` and `unformatWithMask` work directly on plain values, with no DOM element required. Use them to format data for display (e.g. rendering a persisted value) or to sanitize data before sending it to the backend.
+These functions take a plain value or an element you already have, outside any hook. `formatWithMask`, `unformatWithMask` and `isValidWithMask` need no DOM element: use them to format data for display, sanitize it before sending it to the backend, or validate it in a schema. `getUnmaskedValue` and `isMaskComplete` read from an element, such as `event.target`.
 
 ### formatWithMask
 
@@ -677,6 +682,112 @@ The raw, unmasked value.
 import { unformatWithMask } from 'use-mask-input';
 
 unformatWithMask('123.456.789-00', 'cpf'); // '12345678900'
+```
+
+---
+
+### isValidWithMask
+
+Checks whether a value is a complete, valid entry for the mask. The value can be masked or raw. It needs no mounted element, so it works inside schema validators (zod, yup, vee-validate rules) that only see the form value.
+
+```ts
+function isValidWithMask(
+  value: string,
+  mask: Mask,
+  options?: Options
+): boolean
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `value` | `string` | Yes | The value to check, masked or raw. |
+| `mask` | `Mask` | Yes | The mask pattern or alias. |
+| `options` | `Options` | No | Inputmask configuration options. |
+
+**Returns**
+
+`true` when the value fills the mask. An empty string passes only for open-ended masks such as `numeric`.
+
+**Example**
+
+```ts
+import { isValidWithMask } from 'use-mask-input';
+import { z } from 'zod';
+
+isValidWithMask('12345678901', 'cpf'); // true
+isValidWithMask('123.456.789-01', 'cpf'); // true
+isValidWithMask('123', 'cpf'); // false
+isValidWithMask('abc', 'numeric'); // false
+
+const schema = z.object({
+  cpf: z.string().refine((value) => isValidWithMask(value, 'cpf'), 'Incomplete CPF'),
+});
+```
+
+Characters the mask cannot place are dropped, the same way the field drops them, so `'123456789012'` still passes for `cpf`. Put length limits in the schema.
+
+---
+
+### getUnmaskedValue
+
+Reads the unmasked value from an element. It accepts the input, an element that wraps it, or a component ref, resolved the same way the hooks resolve them.
+
+```ts
+function getUnmaskedValue(input: Input | null): string
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `input` | `Input \| null` | Yes | The element to read. |
+
+**Returns**
+
+The unmasked value. For an element with no mask, its plain `value`. `''` when `input` is `null`.
+
+**Example**
+
+```tsx
+import { useMaskInput, getUnmaskedValue } from 'use-mask-input';
+
+function CpfInput() {
+  const ref = useMaskInput({ mask: 'cpf' });
+  return <input ref={ref} onChange={(e) => console.log(getUnmaskedValue(e.target))} />;
+}
+```
+
+---
+
+### isMaskComplete
+
+Checks whether every required position of the mask on an element is filled.
+
+```ts
+function isMaskComplete(input: Input | null): boolean
+```
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|------|------|:--------:|-------------|
+| `input` | `Input \| null` | Yes | The element to check. |
+
+**Returns**
+
+`true` when the mask is filled. `false` when `input` is `null`, which happens before mount and on the server. An element with no mask, or a mask with no fixed end such as `repeat: '*'`, counts as complete.
+
+**Example**
+
+```tsx
+import { useMaskInput, isMaskComplete } from 'use-mask-input';
+
+function CpfInput() {
+  const ref = useMaskInput({ mask: 'cpf' });
+  return <input ref={ref} onBlur={(e) => console.log(isMaskComplete(e.target))} />;
+}
 ```
 
 ---

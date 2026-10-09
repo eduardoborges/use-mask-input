@@ -232,12 +232,13 @@ function submit() {
 |----------|-------------|
 | `maskRef` | Ref callback. Bind with `:ref="maskRef"`. |
 | `unmaskedValue()` | Returns the current raw value, or `''` before mount. |
+| `isComplete()` | Whether every required position of the mask is filled. `false` before mount. |
 
 For most cases the directive is the better choice. It covers wrapper components too, and it gets proper teardown on unmount.
 
 ## Server-side rendering
 
-The Vue entry is SSR-safe. The composable returns a no-op on the server and `unmaskedValue()` returns `''`; the directive contributes no props during server rendering and emits no unhandled-directive warning.
+The Vue entry is SSR-safe. The composable returns a no-op on the server, where `unmaskedValue()` returns `''` and `isComplete()` returns `false`; the directive contributes no props during server rendering and emits no unhandled-directive warning.
 
 ## Nuxt
 
@@ -256,7 +257,7 @@ The mask applies on the client after hydration. Server-rendered markup contains 
 
 ## Caveats
 
-### `unmaskedValue()` is not reactive
+### `unmaskedValue()` and `isComplete()` are not reactive
 
 ```html
 <template>
