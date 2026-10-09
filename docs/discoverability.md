@@ -13,7 +13,7 @@ This documentation site publishes machine-readable discovery files for crawlers 
 
 - `User-agent: *` and explicit blocks for AI crawlers (`GPTBot`, `Claude-Web`, `Google-Extended`, and others)
 - `Allow` / `Disallow` for docs, LLM files, and `/.well-known/`
-- `Content-Signal` preferences: `ai-train=no`, `search=yes`, `ai-input=yes`
+- `Content-Signal` preferences: `ai-train=yes`, `search=yes`, `ai-input=yes`
 
 Source: `apps/docussaurus/static/robots.txt`
 

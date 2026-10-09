@@ -9,69 +9,69 @@ Allow: /llms.txt
 Allow: /llms-full.txt
 Allow: /.well-known/
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: GPTBot
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: OAI-SearchBot
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: Claude-Web
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: Google-Extended
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: Amazonbot
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: anthropic-ai
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: Bytespider
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: CCBot
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 User-agent: Applebot-Extended
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /404.html
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 Sitemap: https://use-mask-input.eduardoborges.dev/sitemap.xml
