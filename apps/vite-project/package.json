@@ -9,13 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.9.1",
-    "antd": "^6.6.5",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "react-hook-form": "7.89.0",
+    "@hookform/resolvers": "^5.9.2",
+    "antd": "^6.6.8",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-hook-form": "7.91.0",
     "use-mask-input": "workspace:*",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^25.9.9",
@@ -24,6 +24,6 @@
     "@vitejs/plugin-react": "^6.1.2",
     "oxlint": "1.77.0",
     "typescript": "~6.0.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.5"
   }
 }

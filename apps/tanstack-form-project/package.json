@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@tanstack/react-form": "^1.33.5",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "use-mask-input": "workspace:*"
   },
   "devDependencies": {
@@ -21,6 +21,6 @@
     "@vitejs/plugin-react": "^6.1.2",
     "oxlint": "1.77.0",
     "typescript": "~6.0.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.5"
   }
 }
