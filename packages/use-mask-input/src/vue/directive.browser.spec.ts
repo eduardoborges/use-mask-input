@@ -1,5 +1,5 @@
 /* eslint-disable import-x/no-extraneous-dependencies */
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 import { createApp, ref } from 'vue';
 import {
   afterEach, describe, expect, it,

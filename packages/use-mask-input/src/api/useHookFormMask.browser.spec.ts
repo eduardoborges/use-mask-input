@@ -1,5 +1,5 @@
 /* eslint-disable import-x/no-extraneous-dependencies */
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 import { createElement, useEffect } from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
