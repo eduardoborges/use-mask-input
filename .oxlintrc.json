@@ -199,6 +199,10 @@
     "import-x/no-named-default": "error",
     "import-x/no-self-import": "error",
     "import-x/no-webpack-loader-syntax": "error",
+    "react/globals": "off",
+    "react/immutability": "off",
+    "react/incompatible-library": "off",
+    "react/refs": "off",
     "react/button-has-type": "error",
     "react/jsx-boolean-value": [
       "error",
