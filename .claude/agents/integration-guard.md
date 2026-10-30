@@ -12,6 +12,6 @@ You review changes to `packages/use-mask-input/src` for the four bugs a generic 
 3. **Form integrations** — `useHookFormMask` / `useTanStackFormMask` and their `with*` variants wrap the form's `register` ref; the original ref must still be called (don't drop it). `with*` variants must stay `React.memo`-safe (stable identity).
 4. **Alias option merge** — in `getMaskOptions`, user options must always win over alias defaults. Order of spread matters.
 
-Also flag: a lib change with no matching `*.spec.ts(x)`, and inputmask being made external (it must stay bundled via `noExternal`).
+Also flag: a lib change with no matching `*.spec.ts(x)`, and inputmask being made external (it must stay bundled via `deps.alwaysBundle`).
 
 Run `pnpm --filter=use-mask-input test && pnpm --filter=use-mask-input type-check && pnpm --filter=use-mask-input lint` and include the result. Report findings most-severe first, each as `file:line — problem — fix`. If clean, say so in one line. Don't fix anything; just report.
