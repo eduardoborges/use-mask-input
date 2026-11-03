@@ -1,6 +1,6 @@
 <div align="center">
   <h1>🥸 use-mask-input</h1>
-  <p>Input masks for <strong>React</strong> and <strong>Vue 3</strong>. Works with React Hook Form, TanStack Form, vee-validate, Ant Design, and plain inputs.</p>
+  <p>Input masks for <strong>React</strong> and <strong>Vue 3</strong>, built on <a href="https://github.com/RobinHerbots/Inputmask">Inputmask</a>. Works with React Hook Form, TanStack Form, vee-validate, Ant Design, and plain inputs.</p>
 
   [![npm](https://img.shields.io/npm/v/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
   [![npm downloads](https://img.shields.io/npm/dw/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
@@ -13,6 +13,8 @@
 ---
 
 **[Documentation](https://use-mask-input.eduardoborges.dev)** · **[API Reference](https://use-mask-input.eduardoborges.dev/api-reference)** · **[TanStack Form](https://use-mask-input.eduardoborges.dev/tanstack-form)** · **[Sponsor](https://ko-fi.com/E1E71VQENQ)**
+
+Pass the ref to an input and the mask is on. You keep your own `<input>`, with no wrapper component and no controlled state to manage. It supports React 17 or later (tested on React 19), Vue 3.4 or later, and Next.js, and ships its own TypeScript types.
 
 > This README covers the common cases. The full guides, every option and the complete API are on the [documentation site](https://use-mask-input.eduardoborges.dev).
 
@@ -162,6 +164,29 @@ function EmailInput() {
 }
 ```
 
+### With Next.js
+
+The hooks need a client component, so add `'use client'` at the top of the file. On the server they return a no-op, and the input renders unmasked until it hydrates.
+
+## Coming from react-input-mask
+
+`react-input-mask`'s latest release, 2.0.4, came out in 2018. It calls `ReactDOM.findDOMNode`, which React 19 removed. The tokens `9`, `a` and `*` mean the same thing here, so masks built from them carry over unchanged.
+
+```tsx
+// Before
+import InputMask from 'react-input-mask';
+
+<InputMask mask="999.999.999-99" value={value} onChange={(e) => setValue(e.target.value)} />
+
+// After
+import { useMaskInput } from 'use-mask-input';
+
+const ref = useMaskInput({ mask: '999.999.999-99' });
+<input ref={ref} value={value} onChange={(e) => setValue(e.target.value)} />
+```
+
+`maskChar="-"` becomes `options: { placeholder: '-' }`. Controlled inputs with `useState` keep working, and `onChange` receives the masked value unless you set `autoUnmask: true`.
+
 ## Vue 3
 
 Everything above is React. Vue 3 has its own entry point:
@@ -298,13 +323,13 @@ formatWithMask('1234,5', 'brl-currency'); // 'R$ 1.234,50'
 
 Signatures and every option are in the [API Reference](https://use-mask-input.eduardoborges.dev/api-reference).
 
-## Built-in Aliases
+## Built-in aliases
 
 `cpf` · `cnpj` · `cep` · `phone-br` · `date-br` · `plate-br` · `br-bank-account` · `br-bank-agency` · `currency` · `brl-currency` · `credit-card` · `time` · `datetime` · `email` · `numeric` · `decimal` · `integer` · `percentage` · `url` · `ip` · `mac` · `ssn`
 
 Examples and options for each alias are in the [alias guide](https://use-mask-input.eduardoborges.dev/tutorial-basics/alias-mask).
 
-## Works With
+## Works with
 
 - **TanStack Form** (`useTanStackFormMask`, `withTanStackFormMask`). See the [TanStack Form guide](https://use-mask-input.eduardoborges.dev/tanstack-form).
 - React Hook Form
