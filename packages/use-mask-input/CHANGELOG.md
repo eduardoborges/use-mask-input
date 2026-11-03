@@ -1,3 +1,10 @@
+## 3.14.3
+
+### Patch Changes
+
+- c244cd8: Mention Inputmask and Next.js in the package description and add more npm keywords.
+- c244cd8: Add a migration section for react-input-mask users, a Next.js note and the supported versions to the README.
+
 ## 3.14.2
 
 ### Patch Changes

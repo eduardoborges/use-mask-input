@@ -1,5 +1,13 @@
 # vue-project
 
+## 0.0.6
+
+### Patch Changes
+
+- Updated dependencies [c244cd8]
+- Updated dependencies [c244cd8]
+  - use-mask-input@3.14.3
+
 ## 0.0.5
 
 ### Patch Changes
