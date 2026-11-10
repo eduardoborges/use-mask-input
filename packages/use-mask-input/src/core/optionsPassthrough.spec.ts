@@ -123,8 +123,13 @@ describe('option behavior via the real engine (issue #192)', () => {
       expect(formatWithMask('1198765432', 'phone-br')).toBe('(11) 9876-5432');
     });
 
-    it('date-br: alias datetime + inputFormat dd/mm/yyyy', () => {
+    it('date-br: alias datetime + inputFormat dd/MM/yyyy', () => {
       expect(formatWithMask('24072026', 'date-br')).toBe('24/07/2026');
+    });
+
+    it('date-br: the middle part is the month, so it never goes past 12', () => {
+      const [, month] = formatWithMask('15132024', 'date-br').split('/');
+      expect(Number(month)).toBeLessThanOrEqual(12);
     });
 
     it('time: alias datetime + inputFormat HH:mm (uppercase MM is month, not minutes)', () => {

@@ -50,7 +50,9 @@ const ALIAS_MASKS: Record<string, InputmaskOptions> = {
     keepStatic: true,
     placeholder: '',
   },
-  'date-br': { alias: 'datetime', inputFormat: 'dd/mm/yyyy', placeholder: 'dd/mm/yyyy' },
+  'date-br': {
+    alias: 'datetime', inputFormat: 'dd/MM/yyyy', placeholder: 'dd/mm/yyyy', prefillYear: false,
+  },
   time: { alias: 'datetime', inputFormat: 'HH:mm', placeholder: 'HH:mm' },
   'credit-card': {
     mask: ['9999 999999 99999', '9999 9999 9999 9999'], // 15-digit (Amex) and 16-digit forms
