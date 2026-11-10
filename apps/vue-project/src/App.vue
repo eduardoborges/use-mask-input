@@ -85,21 +85,21 @@ const persisted = '12345678901'
     <h2>3. Dates</h2>
     <MaskDemo
       label="datetime, dd/mm/yyyy"
-      source="{ mask: 'datetime', options: { inputFormat: 'dd/mm/yyyy' } }"
-      :binding="{ mask: 'datetime', options: { inputFormat: 'dd/mm/yyyy' } }"
+      source="{ mask: 'datetime', options: { inputFormat: 'dd/MM/yyyy' } }"
+      :binding="{ mask: 'datetime', options: { inputFormat: 'dd/MM/yyyy' } }"
       placeholder="dd/mm/yyyy"
       note="always pass inputFormat: the bare alias defaults to a full ISO datetime"
     />
     <MaskDemo
       label="datetime, mm/dd/yyyy"
-      source="{ mask: 'datetime', options: { inputFormat: 'mm/dd/yyyy' } }"
-      :binding="{ mask: 'datetime', options: { inputFormat: 'mm/dd/yyyy' } }"
+      source="{ mask: 'datetime', options: { inputFormat: 'MM/dd/yyyy' } }"
+      :binding="{ mask: 'datetime', options: { inputFormat: 'MM/dd/yyyy' } }"
       placeholder="mm/dd/yyyy"
     />
     <MaskDemo
       label="datetime with time"
-      source="{ mask: 'datetime', options: { inputFormat: 'dd/mm/yyyy HH:MM' } }"
-      :binding="{ mask: 'datetime', options: { inputFormat: 'dd/mm/yyyy HH:MM' } }"
+      source="{ mask: 'datetime', options: { inputFormat: 'dd/MM/yyyy HH:mm' } }"
+      :binding="{ mask: 'datetime', options: { inputFormat: 'dd/MM/yyyy HH:mm' } }"
       placeholder="dd/mm/yyyy HH:MM"
     />
   </section>

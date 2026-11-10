@@ -41,7 +41,7 @@ function DateInput() {
   const dateMask = useMaskInput({
     mask: 'datetime',
     options: {
-      inputFormat: 'dd/mm/yyyy',
+      inputFormat: 'dd/MM/yyyy',
     },
   });
 
@@ -76,8 +76,8 @@ function DateTimeInput() {
   const dateTimeMask = useMaskInput({
     mask: 'datetime',
     options: {
-      inputFormat: 'dd/mm/yyyy HH:MM',
-      outputFormat: 'yyyy-mm-dd HH:MM',
+      inputFormat: 'dd/MM/yyyy HH:mm',
+      outputFormat: 'yyyy-MM-dd HH:mm',
     },
   });
 
