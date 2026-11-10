@@ -1,9 +1,7 @@
-/* eslint-disable import-x/no-extraneous-dependencies */
 import inputmask from './inputmask';
 
 import { getMaskOptions } from './maskConfig';
 import { isHTMLElement } from './elementResolver';
-import { moduleInterop } from '../utils';
 
 import type { Mask, Options } from '../types';
 
@@ -16,8 +14,7 @@ import type { Mask, Options } from '../types';
  * @returns A mask instance
  */
 export function createMaskInstance(mask: Mask, options?: Options): ReturnType<typeof inputmask> {
-  const inputmaskInstance = moduleInterop(inputmask);
-  return inputmaskInstance(getMaskOptions(mask, options));
+  return inputmask(getMaskOptions(mask, options));
 }
 
 /**
@@ -30,8 +27,7 @@ export function createMaskInstance(mask: Mask, options?: Options): ReturnType<ty
  * @returns The masked value
  */
 export function formatWithMask(value: string, mask: Mask, options?: Options): string {
-  const inputmaskInstance = moduleInterop(inputmask);
-  return inputmaskInstance.format(value, getMaskOptions(mask, options));
+  return inputmask.format(value, getMaskOptions(mask, options));
 }
 
 /**
@@ -44,8 +40,8 @@ export function formatWithMask(value: string, mask: Mask, options?: Options): st
  * @returns The raw, unmasked value
  */
 export function unformatWithMask(value: string, mask: Mask, options?: Options): string {
-  const inputmaskInstance = moduleInterop(inputmask);
-  return inputmaskInstance.unmask(value, getMaskOptions(mask, options));
+  // With `unmaskAsNumber` the engine hands back a number, as Inputmask always has.
+  return inputmask.unmask(value, getMaskOptions(mask, options)) as string;
 }
 
 /**
@@ -53,7 +49,7 @@ export function unformatWithMask(value: string, mask: Mask, options?: Options): 
  * mounted element. Useful inside schema validators (zod, yup, vee-validate
  * rules) that only see the raw form value.
  *
- * Accepts the value masked or unmasked. `Inputmask.isValid` on its own only
+ * Accepts the value masked or unmasked. The engine's `isValid` on its own only
  * accepts the exact masked string, so the value is run through `format` first;
  * the answer then matches what `isComplete()` reports on a field holding it.
  *
@@ -68,12 +64,11 @@ export function unformatWithMask(value: string, mask: Mask, options?: Options): 
  * @returns True when the value is a complete, valid entry for the mask
  */
 export function isValidWithMask(value: string, mask: Mask, options?: Options): boolean {
-  const inputmaskInstance = moduleInterop(inputmask);
   const maskOptions = getMaskOptions(mask, options);
-  const formatted = inputmaskInstance.format(value, maskOptions);
+  const formatted = inputmask.format(value, maskOptions);
   if (value !== '' && formatted === '') return false;
 
-  return inputmaskInstance.isValid(formatted, maskOptions) === true;
+  return inputmask.isValid(formatted, maskOptions) === true;
 }
 
 /**
@@ -81,7 +76,7 @@ export function isValidWithMask(value: string, mask: Mask, options?: Options): b
  *
  * A mask like `999.999.999-99` keeps its literals and placeholder in the value, so
  * `maxlength` counts characters nobody typed: the browser stops accepting keystrokes,
- * and inputmask copies the attribute into a validator that rejects any buffer longer
+ * and the engine copies the attribute into a validator that rejects any buffer longer
  * than it. Either way the field takes no input at all.
  *
  * Open-ended masks (`numeric`, `integer`, `decimal`) render nothing while empty, so

@@ -1,12 +1,8 @@
 /**
- * Inputmask attaches its instance to the masked DOM element under the
- * `inputmask` property. The upstream `@types/inputmask` package only augments
- * the global `HTMLElement` from inside a module-scoped `declare global`, so the
- * augmentation is not picked up unless that module is imported by its bare name
- * (this project imports `inputmask/lib/inputmask.js` instead).
- *
- * Declaring it here, in an ambient script file included by tsconfig, makes the
- * property visible on the input elements we mask.
+ * The mask engine attaches itself to the masked element as its `inputmask`
+ * property. Declaring it here, in an ambient script file the tsconfig
+ * includes, makes the property visible on the input elements this library
+ * masks.
  */
 
 interface InputmaskInstance {

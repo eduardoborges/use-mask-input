@@ -13,7 +13,6 @@ export default defineConfig({
   target: 'es2022',
   deps: {
     neverBundle: ['react', 'react-dom', 'vue'],
-    alwaysBundle: ['inputmask'],
   },
   dts: true,
   sourcemap: true,

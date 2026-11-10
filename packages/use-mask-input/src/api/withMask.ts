@@ -1,11 +1,9 @@
-/* eslint-disable import-x/no-extraneous-dependencies */
 import inputmask from '../core/inputmask';
 
 import { getMaskOptions } from '../core/maskConfig';
 import { stripMaxLength } from '../core/maskEngine';
 import { makeMaskCacheKey, setValueApi } from '../utils';
 import isServer from '../utils/isServer';
-import interopDefaultSync from '../utils/moduleInterop';
 
 import type { Input, Mask, Options, UseMaskInputReturn } from '../types';
 
@@ -34,7 +32,7 @@ export default function withMask(mask: Mask, options?: Options): UseMaskInputRet
     if (isServer || mask === null || !input) return;
 
     currentInput = input;
-    const maskInput = interopDefaultSync(inputmask)(getMaskOptions(mask, options));
+    const maskInput = inputmask(getMaskOptions(mask, options));
     stripMaxLength(input, mask, options);
     maskInput.mask(input as HTMLElement);
   }) as UseMaskInputReturn;
