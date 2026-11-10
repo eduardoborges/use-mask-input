@@ -10,7 +10,7 @@ import { defineConfig } from 'vitest/config';
  * lifecycle.
  *
  * `browser` covers only what jsdom demonstrably gets wrong, for both frameworks.
- * jsdom reports `ontouchstart`, so Inputmask takes its mobile path and clears
+ * jsdom reports `ontouchstart`, so the mask engine takes its mobile path and clears
  * `maxlength` itself (see maxLength.spec.ts); caret and selection APIs are
  * approximations; and simulated keystrokes do not round-trip through the engine
  * the way a real browser does. Those cases live in `*.browser.spec.ts` — which
@@ -36,6 +36,8 @@ export default defineConfig({
         '**/*.test.ts',
         '**/*.test.tsx',
         '**/types/**',
+        // The engine's test harness.
+        '**/__parity__/**',
       ],
     },
     projects: [
@@ -57,6 +59,13 @@ export default defineConfig({
         test: {
           name: 'browser',
           include: ['src/**/*.browser.spec.ts'],
+          // The page has no `process.env`. These are the variables the engine
+          // parity harness (src/core/engine/__parity__) reads there.
+          env: {
+            PARITY_RECORD: process.env.PARITY_RECORD ?? '',
+            PARITY_BATCH: process.env.PARITY_BATCH ?? '',
+            PARITY_FRAMES: process.env.PARITY_FRAMES ?? '',
+          },
           browser: {
             enabled: true,
             provider: playwright(),

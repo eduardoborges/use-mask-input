@@ -56,6 +56,9 @@
     "lint": "oxlint ./src",
     "test": "vitest --project=unit --dir ./src --run --coverage",
     "test:browser": "vitest --project=browser --run",
+    "parity": "vitest --project=unit --run src/core/engine/__parity__/parity.spec.ts",
+    "parity:browser": "vitest --project=browser --run src/core/engine/__parity__/parity.browser.spec.ts",
+    "parity:record": "PARITY_RECORD=1 vitest --project=unit --run src/core/engine/__parity__/record.spec.ts && PARITY_RECORD=1 vitest --project=browser --run src/core/engine/__parity__/record.browser.spec.ts",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist",
     "postbuild": "node scripts/assert-entry-isolation.mjs && cp ../../README.md README.md"
@@ -64,6 +67,7 @@
     "dist",
     "src",
     "!src/**/*.spec.*",
+    "!src/**/__parity__/**",
     "!dist/*-stats.json",
     "README.md",
     "CHANGELOG.md"
