@@ -1,6 +1,6 @@
 {
   "name": "use-mask-input",
-  "version": "3.14.3",
+  "version": "3.14.4",
   "private": false,
   "description": "Input masks for React and Vue 3, built on Inputmask. Works with React Hook Form, TanStack Form, vee-validate, Ant Design and Next.js.",
   "license": "MIT",
