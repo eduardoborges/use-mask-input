@@ -194,8 +194,9 @@ describe('maskConfig', () => {
       const options = getMaskOptions('date-br');
       expect(options).toEqual({
         alias: 'datetime',
-        inputFormat: 'dd/mm/yyyy',
+        inputFormat: 'dd/MM/yyyy',
         placeholder: 'dd/mm/yyyy',
+        prefillYear: false,
         jitMasking: false,
       });
     });
