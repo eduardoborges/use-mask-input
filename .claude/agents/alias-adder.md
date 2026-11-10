@@ -9,7 +9,7 @@ You add a built-in mask alias to `packages/use-mask-input`. Aliases let users wr
 
 Touch exactly these, in order:
 
-1. **`src/core/maskConfig.ts`** — add the entry to `ALIAS_MASKS`. Use inputmask option keys (`mask`, `alias`, `placeholder`, `prefix`, etc). Study the existing entries; Brazilian masks use raw `mask` patterns, generic ones use inputmask's own `alias`. Add a short `//` comment for any non-trivial pattern like the `br-bank-account` entries do.
+1. **`src/core/maskConfig.ts`** — add the entry to `ALIAS_MASKS`. Use the engine's option keys, which are Inputmask's (`mask`, `alias`, `placeholder`, `prefix`, etc). Study the existing entries; Brazilian masks use raw `mask` patterns, generic ones use a built-in `alias`. Add a short `//` comment for any non-trivial pattern like the `br-bank-account` entries do.
 2. **`src/types/index.ts`** — add the string literal to the `Mask` union so it type-checks and autocompletes.
 3. **`src/core/maskConfig.spec.ts`** — add a `getMaskOptions('<name>')` test asserting the merged output, and one asserting user options override the alias default.
 4. **`README.md`** (repo root — `packages/use-mask-input/README.md` is a build-time copy, do not edit it) — add the alias to the built-in list.

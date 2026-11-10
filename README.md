@@ -1,6 +1,6 @@
 <div align="center">
   <h1>🥸 use-mask-input</h1>
-  <p>Input masks for <strong>React</strong> and <strong>Vue 3</strong>, built on <a href="https://github.com/RobinHerbots/Inputmask">Inputmask</a>. Works with React Hook Form, TanStack Form, vee-validate, Ant Design, and plain inputs.</p>
+  <p>Input masks for <strong>React</strong> and <strong>Vue 3</strong>, with no runtime dependencies. The mask engine is a TypeScript port of <a href="https://github.com/RobinHerbots/Inputmask">Inputmask</a>, so its mask syntax and options work as they do there. Works with React Hook Form, TanStack Form, vee-validate, Ant Design, and plain inputs.</p>
 
   [![npm](https://img.shields.io/npm/v/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
   [![npm downloads](https://img.shields.io/npm/dw/use-mask-input)](https://www.npmjs.com/package/use-mask-input)
@@ -343,3 +343,5 @@ Examples and options for each alias are in the [alias guide](https://use-mask-in
 ## License
 
 MIT
+
+The mask engine in `src/core/engine` is ported from [Inputmask](https://github.com/RobinHerbots/Inputmask), copyright Robin Herbots, also under MIT. Its notice ships in `src/core/engine/LICENSE`.

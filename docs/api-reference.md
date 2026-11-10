@@ -64,7 +64,7 @@ function useMaskInput(props: {
 |------|------|:--------:|-------------|
 | `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
 | `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element (useful for third-party form libraries). |
-| `options` | `Options` | No | Inputmask configuration options (placeholder, autoUnmask, etc.). |
+| `options` | `Options` | No | Mask options (placeholder, autoUnmask, etc.). |
 
 **Returns**
 
@@ -160,7 +160,7 @@ The returned function accepts:
 |------|------|:--------:|-------------|
 | `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
 | `inputProps` | `TanStackFormInputProps` | Yes | Input props generated from TanStack `field` state and handlers. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -227,7 +227,7 @@ function withMask(
 | Name | Type | Required | Description |
 |------|------|:--------:|-------------|
 | `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -297,7 +297,7 @@ function withHookFormMask(
 |------|------|:--------:|-------------|
 | `register` | `UseFormRegisterReturn` | Yes | The object returned by calling `register('fieldName')`. |
 | `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
-| `options` | `Options` | No | Inputmask and/or React Hook Form register options. |
+| `options` | `Options` | No | Mask options and/or React Hook Form register options. |
 
 **Returns**
 
@@ -350,7 +350,7 @@ function withTanStackFormMask<T extends TanStackFormInputProps>(
 |------|------|:--------:|-------------|
 | `inputProps` | `TanStackFormInputProps` | Yes | Input props object from TanStack field state and handlers. |
 | `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -403,7 +403,7 @@ function useMaskInputAntd(props: {
 |------|------|:--------:|-------------|
 | `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
 | `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -534,7 +534,7 @@ User options always take precedence over an alias's defaults, and the rest of th
 
 **Works with `v-model`**
 
-Inputmask replaces the element's `value` property with its own accessor, so `v-model` reads and writes through the engine rather than around it. No adapter is needed, and directive order does not matter.
+The mask engine replaces the element's `value` property with its own accessor, so `v-model` reads and writes through the mask rather than around it. No adapter is needed, and directive order does not matter.
 
 ```html
 <input v-model="cpf" v-mask-input="{ mask: 'cpf', options: { autoUnmask: true } }" />
@@ -559,7 +559,7 @@ function useMaskInput(mask: Mask, options?: Options): {
 | Name | Type | Required | Description |
 |------|------|:--------:|-------------|
 | `mask` | `Mask` | Yes | The mask pattern or alias. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -635,7 +635,7 @@ function formatWithMask(
 |------|------|:--------:|-------------|
 | `value` | `string` | Yes | The raw value to format. |
 | `mask` | `Mask` | Yes | The mask pattern or alias. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -670,7 +670,7 @@ function unformatWithMask(
 |------|------|:--------:|-------------|
 | `value` | `string` | Yes | The masked value to unformat. |
 | `mask` | `Mask` | Yes | The mask pattern or alias. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -704,7 +704,7 @@ function isValidWithMask(
 |------|------|:--------:|-------------|
 | `value` | `string` | Yes | The value to check, masked or raw. |
 | `mask` | `Mask` | Yes | The mask pattern or alias. |
-| `options` | `Options` | No | Inputmask configuration options. |
+| `options` | `Options` | No | Mask options. |
 
 **Returns**
 
@@ -825,7 +825,7 @@ type MaskRefTarget = Element | { $el?: unknown } | null;
 
 ### Options
 
-Inputmask configuration options. Commonly used:
+Mask options, the same set Inputmask 5 takes. Commonly used:
 
 | Option | Type | Description |
 |--------|------|-------------|
@@ -842,7 +842,7 @@ Inputmask configuration options. Commonly used:
 | `min` | `number` | Minimum allowed value (numeric aliases). |
 | `max` | `number` | Maximum allowed value (numeric aliases). |
 
-For the complete list, see the [Inputmask documentation](https://robinherbots.github.io/Inputmask/).
+The engine is a port of Inputmask, so the [Inputmask documentation](https://robinherbots.github.io/Inputmask/) lists every option.
 
 ### Input
 

@@ -182,7 +182,7 @@ function WatchExample() {
 
 #### Submitting and accessing values
 
-Call `form.getFieldsValue()` or use the `onFinish` callback to get the form values. The values reflect what Inputmask writes to the DOM (masked by default, or unmasked if `autoUnmask: true` is set in options).
+Call `form.getFieldsValue()` or use the `onFinish` callback to get the form values. The values reflect what the mask writes to the DOM (masked by default, or unmasked if `autoUnmask: true` is set in options).
 
 ## useHookFormMaskAntd
 
@@ -333,7 +333,7 @@ function useMaskInputAntd(props: {
 |-----------|------|:--------:|-------------|
 | `mask` | `Mask` | Yes | The mask pattern, alias, or array of patterns. |
 | `register` | `(element: HTMLElement) => void` | No | Callback that receives the resolved DOM element. |
-| `options` | `Options` | No | Inputmask configuration options (placeholder, autoUnmask, etc.). |
+| `options` | `Options` | No | Mask options (placeholder, autoUnmask, etc.). |
 
 **Returns** a stable ref callback that accepts Ant Design's `InputRef` and applies the mask to the underlying input element. Uses `useCallback` internally, so no need for `React.memo`.
 

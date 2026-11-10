@@ -267,7 +267,7 @@ function Features() {
   const items = [
     {
       title: 'Lightweight',
-      body: 'A thin layer over Inputmask, the only runtime dependency. Importing the Vue entry never pulls React into your bundle.',
+      body: 'No runtime dependencies: the mask engine ships inside the package. Importing the Vue entry never pulls React into your bundle.',
     },
     {
       title: 'Composable',

@@ -18,7 +18,7 @@ description: "Add input masks to React and Vue 3 forms: CPF, phone, currency, da
   <img src="https://img.shields.io/npm/dw/use-mask-input" alt="npm downloads" />
 </div>
 
-Input masks for React and Vue 3, built on the [Inputmask](https://robinherbots.github.io/Inputmask/) engine.
+Input masks for React and Vue 3, with no runtime dependencies. The mask engine is a TypeScript port of [Inputmask](https://robinherbots.github.io/Inputmask/), so its mask syntax and options apply here.
 
 On React it works with plain inputs, React Hook Form, TanStack Form, shadcn/ui and Ant Design. On Vue it ships a directive and a composable, and needs no adapter for vee-validate.
 

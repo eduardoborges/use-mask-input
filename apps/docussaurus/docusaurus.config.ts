@@ -8,7 +8,7 @@ import { version } from '../../packages/use-mask-input/package.json';
 
 const config: Config = {
   title: 'use-mask-input',
-  tagline: 'Input masks for React and Vue 3, built on Inputmask',
+  tagline: 'Input masks for React and Vue 3, with no runtime dependencies',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -156,7 +156,7 @@ const config: Config = {
         docsDir: '../../docs',
         version,
         description:
-          'Input masks for React and Vue 3, built on Inputmask. Works with plain React, React Hook Form, TanStack Form, Ant Design, and Vue 3 with vee-validate. TypeScript-first and SSR safe.',
+          'Input masks for React and Vue 3, with no runtime dependencies. Works with plain React, React Hook Form, TanStack Form, Ant Design, and Vue 3 with vee-validate. TypeScript-first and SSR safe.',
         rootContent: 'Install with `npm install use-mask-input`. Each page below is also served as Markdown at the same path with a `.md` extension.',
         includeOrder: ['intro.md', 'api-reference.md', 'tutorial-basics/*', 'vue.md', '*'],
         includeUnmatchedLast: true,

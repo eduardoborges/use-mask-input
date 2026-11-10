@@ -3,7 +3,7 @@
 Guidance for AI agents in `use-mask-input`. Only non-obvious stuff lives here; scripts, deps, and file layout are discoverable from `package.json` and the tree.
 
 ## What this is
-Input-mask library wrapping [inputmask](https://github.com/RobinHerbots/Inputmask). React (plain inputs, React Hook Form, TanStack Form, Ant Design) and Vue 3 (directive, composable, vee-validate). pnpm + Turborepo monorepo.
+Input-mask library for React (plain inputs, React Hook Form, TanStack Form, Ant Design) and Vue 3 (directive, composable, vee-validate), with its own mask engine: a TypeScript port of [Inputmask](https://github.com/RobinHerbots/Inputmask) 5.0.10-beta.61. pnpm + Turborepo monorepo.
 
 Published package: `packages/use-mask-input`. Everything else is a consumer/smoke-test.
 
@@ -32,7 +32,7 @@ pnpm changeset     # REQUIRED for any change to the published lib
 
 ## Source map (`packages/use-mask-input/src`)
 - `api/` — public hooks: `useMaskInput`, `useHookFormMask`, `useTanStackFormMask`, and `withMask`/`with*` ref-callback variants
-- `core/` — `maskConfig` (aliases live here — source of truth, don't duplicate the list), `maskEngine`, `elementResolver`, `inputmask`
+- `core/` — `maskConfig` (aliases live here — source of truth, don't duplicate the list), `maskEngine`, `elementResolver`, `engine/` (the mask engine), `inputmask` (re-exports the engine; specs mock this path)
 - `antd/` — Ant Design entry (`use-mask-input/antd`)
 - `utils/`, `types/`
 
@@ -42,9 +42,10 @@ Tests are colocated as `*.spec.ts(x)`. SSR paths tested in `*-server.spec.tsx`.
 1. **SSR-safe**: hooks return a no-op on the server (`isServer` check). Don't break this — `apps/next-project` exists to catch it.
 2. **Element resolution**: `resolveInputRef` digs the real `<input>` out of wrapper components (Ant Design etc). Both native and wrapped refs must work.
 3. **RHF/TanStack integration** wraps the library's `ref` callback around the form's `register` ref. `with*` variants exist for `React.memo` cases.
-4. **inputmask is bundled** (`deps.alwaysBundle` in tsdown), not a peer dep. Pinned to `5.0.10-beta.61` on purpose — the `5.0.10` stable release dropped the `lib/global/window` shim and calls bare `matchMedia()`/`navigator` at module scope, which throws on import under SSR. Don't "upgrade" to stable until upstream restores that guard; the `*-server.spec` files catch it.
+4. **The engine is a port, quirks included.** `src/core/engine` reproduces Inputmask 5.0.10-beta.61 bug for bug, and each method's `@upstream` tag names the function it came from. `__parity__/` holds about 1100 scenarios recorded from that version and replays them in jsdom and Chromium. A change that moves a fixture changes what users see: re-record (`pnpm parity:record`) only on purpose, and review the fixture diff.
 5. **Alias options merge**: user options always override an alias's defaults (`getMaskOptions`).
 6. **Demo apps are upstream boilerplate** (`create-next-app`, `create-vite`, shadcn, TanStack). Keep their deps matching the official scaffold — do NOT bump ahead. Only the published package tracks latest.
+7. **Demo apps compile the library's `src`** with their own tsconfig, which has `noUnusedParameters`. The library's `tsc` does not catch an unused parameter; their build does. Prefix an unused positional parameter with `_`.
 
 ## Shipping a change to the lib
 Changeset required, semantic PR title (`feat:`/`fix:`/`chore:`/`docs:`…), and green test/lint/type-check. New alias → edit `core/maskConfig.ts` + `types/index.ts` + a spec + README. Releases and docs deploy are automated via `.github/workflows`.

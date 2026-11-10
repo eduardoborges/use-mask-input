@@ -63,7 +63,7 @@ jobs:
           fail_ci_if_error: false
 
       # Real Chromium, for the handful of behaviours jsdom gets wrong:
-      # it reports `ontouchstart`, so Inputmask takes its mobile path and
+      # it reports `ontouchstart`, so the mask engine takes its mobile path and
       # clears `maxlength` itself, and simulated keystrokes don't round-trip
       # through the engine the way a real browser does.
       - name: Install Playwright browsers

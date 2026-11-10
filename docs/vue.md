@@ -76,7 +76,7 @@ createApp(App).directive('mask-input', vMaskInput);
 
 ### Lifecycle
 
-The directive re-applies the mask when the bound mask changes and removes the Inputmask instance when the element unmounts. An unrelated re-render does not re-apply it, so the caret is not thrown to the end while the user is typing.
+The directive re-applies the mask when the bound mask changes and removes the mask when the element unmounts. An unrelated re-render does not re-apply it, so the caret is not thrown to the end while the user is typing.
 
 Because the binding is reactive, you can switch masking off by binding `null`, which tears down the existing mask rather than leaving it in place:
 
@@ -86,7 +86,7 @@ Because the binding is reactive, you can switch masking off by binding `null`, w
 
 ## Using `v-model`
 
-`v-model` needs no adapter. Inputmask replaces the element's `value` property with its own accessor, so `v-model` reads and writes *through* the mask engine rather than fighting it.
+`v-model` needs no adapter. The mask engine replaces the element's `value` property with its own accessor, so `v-model` reads and writes *through* the mask rather than fighting it.
 
 ```html
 <script setup>
