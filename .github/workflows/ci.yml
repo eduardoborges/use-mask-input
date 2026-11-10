@@ -14,11 +14,8 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: "ubuntu-latest"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
       - name: Semantic Pull Request
-        uses: amannn/action-semantic-pull-request@v6
+        uses: amannn/action-semantic-pull-request@2252a14e810aa9b85c2d560bd7070c802206ecf6 # v6.1.2
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
@@ -30,19 +27,15 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Install mise
-        uses: jdx/mise-action@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          install: true
-          cache: true
+          persist-credentials: false
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Cache Turbo
-        uses: actions/cache@v5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             node_modules/.cache/turbo
@@ -55,7 +48,7 @@ jobs:
         run: pnpm run test
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./packages/use-mask-input/coverage/lcov.info
